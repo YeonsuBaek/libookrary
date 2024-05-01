@@ -1,0 +1,10 @@
+{
+  "button": {
+    "save": "저장",
+    "add": "추가",
+    "modify": "수정",
+    "cancel": "취소",
+    "delete": "삭제",
+    "close": "닫기"
+  }
+}

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Providers from './providers'
 
 export const metadata: Metadata = {
   title: '라이북러리 | Libookrary',
@@ -12,7 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }
