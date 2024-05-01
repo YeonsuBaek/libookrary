@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+
 import '../styles/index.scss'
+import Providers from './providers'
 
 export const metadata: Metadata = {
   title: '라이북러리 | Libookrary',
@@ -13,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="theme-light polar">{children}</body>
+      <body className="theme-light polar">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }
