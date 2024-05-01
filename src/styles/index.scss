@@ -1,2 +1,5 @@
-@import './app/layout';
+@import './components/atom/book';
+@import './components/molecule/books';
 @import './components/organism/header';
+@import './app/layout';
+@import './app/home';
