@@ -1,4 +1,5 @@
 'use client'
+import BookList from '@/components/molecule/BookList'
 import Books from '@/components/molecule/Books'
 import { Segmented } from '@yeonsubaek/yeonsui'
 import { useState } from 'react'
@@ -19,6 +20,7 @@ export default function Home() {
           <Books />
         </>
       )}
+      {selectedOption === SEGMENTED_LIST[1] && <BookList />}
     </div>
   )
 }
