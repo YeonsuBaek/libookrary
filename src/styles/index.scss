@@ -1,5 +1,7 @@
 @import './components/atom/book';
 @import './components/atom/bookcard';
+@import './components/atom/pageTitle';
+
 @import './components/molecule/books';
 @import './components/molecule/booklist';
 @import './components/molecule/recommendedlist';
@@ -11,4 +13,3 @@
 @import './app/layout';
 @import './app/home';
 @import './app/login';
-@import './app/join';

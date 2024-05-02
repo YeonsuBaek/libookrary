@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '@/components/molecule/UserForm'
 import { useRouter } from 'next/navigation'
+import PageTitle from '@/components/atom/PageTitle'
 
 function page() {
   const router = useRouter()
@@ -10,7 +11,7 @@ function page() {
 
   return (
     <div className="login">
-      <h2 className="login-title">{t('user.login')}</h2>
+      <PageTitle>{t('user.login')}</PageTitle>
       <UserForm buttonName={t('user.button.login')}>
         <TextField placeholder={t('user.form.email')} />
         <TextField placeholder={t('user.form.password')} />

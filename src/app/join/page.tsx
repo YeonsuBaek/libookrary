@@ -1,4 +1,5 @@
 'use client'
+import PageTitle from '@/components/atom/PageTitle'
 import UserForm from '@/components/molecule/UserForm'
 import { TextField } from '@yeonsubaek/yeonsui'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +9,7 @@ function page() {
 
   return (
     <div className="join">
-      <h2 className="join-title">{t('user.join')}</h2>
+      <PageTitle>{t('user.join')}</PageTitle>
       <UserForm buttonName={t('user.button.join')}>
         <TextField label={t('user.form.email')} size="large" required />
         <TextField label={t('user.form.nickname')} size="large" required />
