@@ -1,0 +1,10 @@
+.recommended-list {
+  &-title {
+    font: var(--Font-Header-5);
+  }
+
+  &-books {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
