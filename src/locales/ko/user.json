@@ -1,11 +1,16 @@
 {
   "login": "로그인",
+  "join": "회원가입",
   "form": {
     "email": "이메일",
-    "password": "비밀번호"
+    "nickname": "닉네임",
+    "password": "비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "hintPassword": "비밀번호 힌트"
   },
   "button": {
     "login": "로그인",
+    "join": "회원가입",
     "findPassword": "비밀번호 찾기",
     "joinUs": "회원 가입하기"
   }

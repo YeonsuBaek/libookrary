@@ -3,8 +3,12 @@
 @import './components/molecule/books';
 @import './components/molecule/booklist';
 @import './components/molecule/recommendedlist';
+@import './components/molecule/userform';
+
 @import './components/organism/header';
 @import './components/organism/search';
+
 @import './app/layout';
 @import './app/home';
 @import './app/login';
+@import './app/join';
