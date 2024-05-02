@@ -1,0 +1,9 @@
+{
+  "search": {
+    "placeholder": "도서명 또는 저자로 검색해보세요.",
+    "recommended": {
+      "new": "New Special",
+      "best": "Best Seller"
+    }
+  }
+}
