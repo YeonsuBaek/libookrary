@@ -1,0 +1,12 @@
+{
+  "login": "Login",
+  "form": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "button": {
+    "login": "Login",
+    "findPassword": "Find password",
+    "joinUs": "Join us"
+  }
+}

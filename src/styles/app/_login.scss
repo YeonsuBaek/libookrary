@@ -1,0 +1,30 @@
+.login {
+  &-title {
+    margin-bottom: 32px;
+    font: var(--Font-Header-3);
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: end-start;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &-etc-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+}

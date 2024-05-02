@@ -1,0 +1,12 @@
+{
+  "login": "로그인",
+  "form": {
+    "email": "이메일",
+    "password": "비밀번호"
+  },
+  "button": {
+    "login": "로그인",
+    "findPassword": "비밀번호 찾기",
+    "joinUs": "회원 가입하기"
+  }
+}

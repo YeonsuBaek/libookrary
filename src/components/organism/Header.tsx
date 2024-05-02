@@ -3,8 +3,10 @@ import { IconButton } from '@yeonsubaek/yeonsui'
 import Link from 'next/link'
 import { useState } from 'react'
 import Search from './Search'
+import { useRouter } from 'next/navigation'
 
 function Header() {
+  const router = useRouter()
   const [openSearch, setOpenSearch] = useState(false)
 
   return (
@@ -17,9 +19,7 @@ function Header() {
         </div>
         <div className="header-buttons">
           <IconButton icon="Search" size="large" onClick={() => setOpenSearch(true)} />
-          <Link href="/account">
-            <IconButton icon="User" size="large" />
-          </Link>
+          <IconButton icon="User" size="large" onClick={() => router.push('/login')} />
         </div>
       </header>
       {openSearch && <Search onClose={() => setOpenSearch(false)} />}
