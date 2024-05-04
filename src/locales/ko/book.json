@@ -1,0 +1,25 @@
+{
+  "reading": {
+    "startDate": "시작 날짜",
+    "endDate": "마무리 날짜",
+    "bookmark": "북마크 목록",
+    "special": "특별한 책으로 선정",
+    "reread": "다시 읽고 싶은 책",
+    "recommend": "추천하고 싶은 책"
+  },
+  "info": {
+    "author": "저자",
+    "publisher": "출판사",
+    "publishDate": "출판일",
+    "desc": "설명",
+    "category": "카테고리",
+    "isbn": "ISBN",
+    "price": "정가"
+  },
+  "button": {
+    "edit": "수정",
+    "delete": "삭제",
+    "cancel": "취소",
+    "add": "추가"
+  }
+}

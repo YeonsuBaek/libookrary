@@ -1,0 +1,14 @@
+.user-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: end-start;
+  align-items: flex-end;
+  gap: 16px;
+
+  &-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

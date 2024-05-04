@@ -1,0 +1,16 @@
+{
+  "login": "Login",
+  "join": "Join",
+  "form": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "hintPassword": "Password Hint"
+  },
+  "button": {
+    "login": "Login",
+    "join": "Join",
+    "findPassword": "Find password",
+    "joinUs": "Join us"
+  }
+}

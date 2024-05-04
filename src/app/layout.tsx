@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import '../styles/index.scss'
 import Providers from './providers'
+import Header from '@/components/organism/Header'
 
 export const metadata: Metadata = {
   title: '라이북러리 | Libookrary',
@@ -13,8 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>
-        <Providers>{children}</Providers>
+      <body className="theme-light polar">
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   )
