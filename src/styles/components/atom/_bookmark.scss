@@ -1,0 +1,22 @@
+.bookmark {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &-page {
+    display: flex;
+    gap: 4px;
+    font: var(--Font-Body-Medium);
+    color: var(--Primary-Color-7);
+
+    & > svg path {
+      fill: var(--Primary-Color-7);
+    }
+  }
+
+  &-text {
+    margin: 0;
+    font: var(--Font-Body-Micro);
+    color: var(--Font-Color-Primary);
+  }
+}
