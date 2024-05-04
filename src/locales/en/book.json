@@ -1,0 +1,22 @@
+{
+  "reading": {
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "bookmark": "Bookmarks",
+    "reread": "Book to Reread",
+    "recommend": "Recommended Book"
+  },
+  "info": {
+    "author": "Author",
+    "publisher": "Publisher",
+    "publishDate": "Publication Date",
+    "desc": "Description",
+    "category": "Category",
+    "isbn": "ISBN",
+    "price": "Price"
+  },
+  "button": {
+    "edit": "Edit",
+    "delete": "Delete"
+  }
+}

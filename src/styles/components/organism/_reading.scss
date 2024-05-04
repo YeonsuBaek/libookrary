@@ -1,0 +1,16 @@
+.reading {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  &-title {
+    margin: 0 0 8px 0;
+    font: var(--Font-Body-Bold);
+  }
+
+  &-date {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
