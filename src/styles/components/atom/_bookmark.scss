@@ -5,12 +5,17 @@
 
   &-page {
     display: flex;
+    align-items: center;
     gap: 4px;
     font: var(--Font-Body-Medium);
     color: var(--Primary-Color-7);
 
     & > svg path {
       fill: var(--Primary-Color-7);
+    }
+
+    .ui-textfield {
+      width: 72px;
     }
   }
 

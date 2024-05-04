@@ -3,6 +3,7 @@
     "startDate": "Start Date",
     "endDate": "End Date",
     "bookmark": "Bookmarks",
+    "special": "Select as a Special Book",
     "reread": "Book to Reread",
     "recommend": "Recommended Book"
   },
@@ -17,6 +18,8 @@
   },
   "button": {
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "add": "Add"
   }
 }

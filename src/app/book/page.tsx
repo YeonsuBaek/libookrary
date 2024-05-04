@@ -26,7 +26,7 @@ function page() {
       <ReadingInfo />
       <BookInfo />
       <div className="book-buttons">
-        <Button variant="link" color="success" onClick={() => router.push('/edit')}>
+        <Button variant="link" color="success" onClick={() => router.push('/book/edit')}>
           {t('book.button.edit')}
         </Button>
         <Button variant="link" color="error">

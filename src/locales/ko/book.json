@@ -3,6 +3,7 @@
     "startDate": "시작 날짜",
     "endDate": "마무리 날짜",
     "bookmark": "북마크 목록",
+    "special": "특별한 책으로 선정",
     "reread": "다시 읽고 싶은 책",
     "recommend": "추천하고 싶은 책"
   },
@@ -17,6 +18,8 @@
   },
   "button": {
     "edit": "수정",
-    "delete": "삭제"
+    "delete": "삭제",
+    "cancel": "취소",
+    "add": "추가"
   }
 }
