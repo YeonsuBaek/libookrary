@@ -3,6 +3,6 @@
     "bookshelf": "책꽂이",
     "list": "목록"
   },
-  "title": "{닉네임}님의 책꽂이",
+  "title": "{{nickname}}님의 책꽂이",
   "blank": "텅"
 }

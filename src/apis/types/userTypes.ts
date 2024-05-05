@@ -8,3 +8,11 @@ export interface SignInRequest {
   email: string
   password: string
 }
+
+export interface UserInfoResponse {
+  nickname: string
+  books: string[]
+}
+export interface UserInfoRequest {
+  userToken: string
+}

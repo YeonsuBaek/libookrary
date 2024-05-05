@@ -1,7 +1,9 @@
-import { UseMutationOptions, useMutation } from '@tanstack/react-query'
-import { UserCredential, signOut } from 'firebase/auth'
+import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from '@tanstack/react-query'
+import { UserCredential } from 'firebase/auth'
 import { SignInRequest, SignUpRequest } from '@/apis/types/userTypes'
 import { signInApi, signOutApi, signUpApi } from '@/apis/user'
+import { collection, getDocs, query } from 'firebase/firestore'
+import { db } from '../../firebase.config'
 
 const useSignUp = () => {
   const mutationOptions: UseMutationOptions<UserCredential, Error, SignUpRequest> = {
@@ -27,4 +29,21 @@ const useSignOut = () => {
   return useMutation(mutationOptions)
 }
 
-export { useSignUp, useSignIn, useSignOut }
+const useGetUserInfo = () => {
+  const queryOptions: UseQueryOptions<unknown, Error, unknown> = {
+    queryKey: ['getUserInfo'],
+    queryFn: async () => {
+      const userToken = localStorage.getItem('userToken')
+      const userQuery = query(collection(db, 'user'))
+      const dataSnapShot = await getDocs(userQuery)
+      const data = dataSnapShot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }))
+      return data.filter(({ id }) => id === userToken)[0]
+    },
+  }
+  return useQuery(queryOptions)
+}
+
+export { useSignUp, useSignIn, useSignOut, useGetUserInfo }

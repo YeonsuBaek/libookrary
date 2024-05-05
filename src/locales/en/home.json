@@ -3,6 +3,6 @@
     "bookshelf": "Bookshelf",
     "list": "List"
   },
-  "title": "{nickname}'s Bookshelf",
+  "title": "{{nickname}}'s Bookshelf",
   "blank": "Empty"
 }
