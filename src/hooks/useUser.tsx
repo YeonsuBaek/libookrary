@@ -1,7 +1,7 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query'
-import { UserCredential } from 'firebase/auth'
+import { UserCredential, signOut } from 'firebase/auth'
 import { SignInRequest, SignUpRequest } from '@/apis/types/userTypes'
-import { signInApi, signUpApi } from '@/apis/user'
+import { signInApi, signOutApi, signUpApi } from '@/apis/user'
 
 const useSignUp = () => {
   const mutationOptions: UseMutationOptions<UserCredential, Error, SignUpRequest> = {
@@ -12,11 +12,19 @@ const useSignUp = () => {
 }
 
 const useSignIn = () => {
-  const mutationOptions: UseMutationOptions<UserCredential, Error, SignUpRequest> = {
+  const mutationOptions: UseMutationOptions<UserCredential, Error, SignUpRequest, null> = {
     mutationFn: ({ email, password }: SignInRequest) => signInApi({ email, password }),
   }
 
   return useMutation(mutationOptions)
 }
 
-export { useSignUp, useSignIn }
+const useSignOut = () => {
+  const mutationOptions: UseMutationOptions<unknown, Error, unknown> = {
+    mutationFn: signOutApi,
+  }
+
+  return useMutation(mutationOptions)
+}
+
+export { useSignUp, useSignIn, useSignOut }
