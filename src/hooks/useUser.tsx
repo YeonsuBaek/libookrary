@@ -5,7 +5,7 @@ import { signInApi, signOutApi, signUpApi } from '@/apis/user'
 
 const useSignUp = () => {
   const mutationOptions: UseMutationOptions<UserCredential, Error, SignUpRequest> = {
-    mutationFn: ({ email, password }: SignUpRequest) => signUpApi({ email, password }),
+    mutationFn: ({ email, password, nickname }: SignUpRequest) => signUpApi({ email, password, nickname }),
   }
 
   return useMutation(mutationOptions)

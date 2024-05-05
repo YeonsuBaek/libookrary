@@ -27,7 +27,7 @@ function page() {
 
     if (isCheckedPassword) {
       mutate(
-        { email, password },
+        { email, password, nickname },
         {
           onSuccess: () => {
             alert('회원가입에 성공하였습니다.')
