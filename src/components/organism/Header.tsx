@@ -1,14 +1,17 @@
 'use client'
 import { IconButton } from '@yeonsubaek/yeonsui'
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Search from './Search'
 import { useRouter } from 'next/navigation'
+import useUserStore from '@/stores/user'
 
 function Header() {
   const router = useRouter()
+  const { isLoggedIn: loginState } = useUserStore()
   const [openSearch, setOpenSearch] = useState(false)
-  const isLoggedIn = useMemo(() => localStorage.getItem('userToken'), [localStorage.getItem('userToken')])
+  const token = localStorage.getItem('userToken')
+  const isLoggedIn = Boolean(token) || loginState
 
   return (
     <>

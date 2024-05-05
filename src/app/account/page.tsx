@@ -1,11 +1,13 @@
 'use client'
 import PageTitle from '@/components/atom/PageTitle'
 import { useSignOut } from '@/hooks/useUser'
+import useUserStore from '@/stores/user'
 import { Button } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
 
 function page() {
   const router = useRouter()
+  const { setIsLoggedIn } = useUserStore()
   const { mutate } = useSignOut()
 
   const onSignOut = () => {
@@ -13,6 +15,7 @@ function page() {
       onSuccess: () => {
         localStorage.removeItem('userToken')
         alert('로그아웃하였습니다.')
+        setIsLoggedIn(false)
         router.replace('/')
       },
       onError: (error: any) => {

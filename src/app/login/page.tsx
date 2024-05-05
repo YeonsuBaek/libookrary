@@ -6,10 +6,12 @@ import { useRouter } from 'next/navigation'
 import PageTitle from '@/components/atom/PageTitle'
 import { ChangeEvent, useState } from 'react'
 import { useSignIn } from '@/hooks/useUser'
+import useUserStore from '@/stores/user'
 
 function page() {
   const router = useRouter()
   const { t } = useTranslation('')
+  const { setIsLoggedIn } = useUserStore()
   const { mutate } = useSignIn()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,6 +28,7 @@ function page() {
         onSuccess: (res) => {
           alert('로그인에 성공하였습니다.')
           localStorage.setItem('userToken', res.user.accessToken)
+          setIsLoggedIn(true)
           router.replace('/')
         },
         onError: (error) => {

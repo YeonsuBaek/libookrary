@@ -12,7 +12,7 @@ const useSignUp = () => {
 }
 
 const useSignIn = () => {
-  const mutationOptions: UseMutationOptions<UserCredential, Error, SignUpRequest, null> = {
+  const mutationOptions: UseMutationOptions<UserCredential, Error, SignInRequest, null> = {
     mutationFn: ({ email, password }: SignInRequest) => signInApi({ email, password }),
   }
 
