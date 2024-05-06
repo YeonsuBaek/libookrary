@@ -1,7 +1,7 @@
 'use client'
 import PageTitle from '@/components/atom/PageTitle'
 import { useSignOut } from '@/hooks/useUser'
-import useUserStore from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 import { Button } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
 
@@ -16,7 +16,7 @@ function page() {
         localStorage.removeItem('userToken')
         alert('로그아웃하였습니다.')
         setIsLoggedIn(false)
-        router.replace('/')
+        router.push('/')
       },
       onError: (error: any) => {
         console.error(error)

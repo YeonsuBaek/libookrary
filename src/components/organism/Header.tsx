@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import Search from './Search'
 import { useRouter } from 'next/navigation'
-import useUserStore from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 
 function Header() {
   const router = useRouter()
