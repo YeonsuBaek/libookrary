@@ -1,5 +1,5 @@
 export interface FuncType {
-  onSuccess: () => void
+  onSuccess: (res?: any) => void
   onError: (error: any) => void
 }
 

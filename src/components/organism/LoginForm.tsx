@@ -3,22 +3,21 @@ import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../molecule/UserForm'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSignIn } from '@/hooks/useUser'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/user'
+import { signInApi } from '@/apis/user'
 
 function LoginForm() {
   const router = useRouter()
   const { t } = useTranslation('')
-  const { mutate } = useSignIn()
   const { setIsLoggedIn } = useUserStore()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClickSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    mutate(
+    await signInApi(
       {
         email,
         password,
@@ -38,7 +37,7 @@ function LoginForm() {
   }
 
   return (
-    <UserForm buttonName={t('user.button.login')} onSubmit={onSubmit}>
+    <UserForm buttonName={t('user.button.login')} onClick={handleClickSubmit}>
       <TextField
         placeholder={t('user.form.email')}
         value={email}

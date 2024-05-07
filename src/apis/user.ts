@@ -22,9 +22,15 @@ export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { 
   }
 }
 
-export const signInApi = async ({ email, password }: SignInRequest) => {
-  const auth = getAuth(app)
-  return await signInWithEmailAndPassword(auth, email, password)
+export const signInApi = async ({ email, password }: SignInRequest, { onSuccess, onError }: FuncType) => {
+  try {
+    const auth = getAuth(app)
+    const res = await signInWithEmailAndPassword(auth, email, password)
+
+    onSuccess(res)
+  } catch (error) {
+    onError(error)
+  }
 }
 
 export const signOutApi = async () => {
