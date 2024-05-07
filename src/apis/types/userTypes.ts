@@ -1,3 +1,8 @@
+export interface FuncType {
+  onSuccess: () => void
+  onError: (error: any) => void
+}
+
 export interface SignUpRequest {
   email: string
   password: string

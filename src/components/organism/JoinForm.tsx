@@ -4,12 +4,11 @@ import UserForm from '../molecule/UserForm'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
-import { useSignUp } from '@/hooks/useUser'
+import { signUpApi } from '@/apis/user'
 
 function JoinForm() {
   const { t } = useTranslation('')
   const router = useRouter()
-  const { mutate } = useSignUp()
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
   const [password, setPassword] = useState('')
@@ -19,18 +18,18 @@ function JoinForm() {
     return password.trim() === confirmPassword.trim()
   }
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleClickSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const isCheckedPassword = checkPassword()
 
     if (isCheckedPassword) {
-      mutate(
+      await signUpApi(
         { email, password, nickname },
         {
           onSuccess: () => {
             alert('회원가입에 성공하였습니다.')
-            router.replace('/')
+            router.push('/')
           },
           onError: (error: any) => {
             console.error(error)
@@ -43,7 +42,7 @@ function JoinForm() {
   }
 
   return (
-    <UserForm buttonName={t('user.button.join')} onSubmit={onSubmit}>
+    <UserForm buttonName={t('user.button.join')} onClick={handleClickSubmit}>
       <TextField
         label={t('user.form.email')}
         size="large"

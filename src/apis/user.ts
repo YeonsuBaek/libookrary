@@ -1,21 +1,25 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { app, db } from '../../firebase.config'
-import { UserInfoRequest, SignInRequest, SignUpRequest } from './types/userTypes'
+import { UserInfoRequest, SignInRequest, SignUpRequest, FuncType } from './types/userTypes'
 import { collection, doc, getDoc, getDocs, query, setDoc } from 'firebase/firestore'
 
-export const signUpApi = async ({ email, password, nickname }: SignUpRequest) => {
-  const auth = getAuth(app)
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { onSuccess, onError }: FuncType) => {
+  try {
+    const auth = getAuth(app)
+    await createUserWithEmailAndPassword(auth, email, password)
 
-  const collectionRef = collection(db, 'user')
-  const docRef = doc(collectionRef, email)
-  const response = await getDoc(docRef)
+    const collectionRef = collection(db, 'user')
+    const docRef = doc(collectionRef, email)
+    const response = await getDoc(docRef)
 
-  if (!response.exists()) {
-    await setDoc(docRef, { nickname, books: [] })
+    if (!response.exists()) {
+      await setDoc(docRef, { nickname, books: [] })
+    }
+
+    onSuccess()
+  } catch (error) {
+    onError(error)
   }
-
-  return userCredential
 }
 
 export const signInApi = async ({ email, password }: SignInRequest) => {

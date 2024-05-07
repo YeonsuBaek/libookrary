@@ -5,14 +5,6 @@ import { signInApi, signOutApi, signUpApi } from '@/apis/user'
 import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '../../firebase.config'
 
-const useSignUp = () => {
-  const mutationOptions: UseMutationOptions<UserCredential, Error, SignUpRequest> = {
-    mutationFn: ({ email, password, nickname }: SignUpRequest) => signUpApi({ email, password, nickname }),
-  }
-
-  return useMutation(mutationOptions)
-}
-
 const useSignIn = () => {
   const mutationOptions: UseMutationOptions<UserCredential, Error, SignInRequest, null> = {
     mutationFn: ({ email, password }: SignInRequest) => signInApi({ email, password }),
@@ -46,4 +38,4 @@ const useGetUserInfo = () => {
   return useQuery(queryOptions)
 }
 
-export { useSignUp, useSignIn, useSignOut, useGetUserInfo }
+export { useSignIn, useSignOut, useGetUserInfo }
