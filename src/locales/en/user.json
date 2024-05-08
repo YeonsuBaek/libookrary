@@ -1,6 +1,7 @@
 {
   "login": "Login",
   "join": "Join",
+  "info": "User Information",
   "form": {
     "email": "Email",
     "password": "Password",
@@ -11,6 +12,9 @@
     "login": "Login",
     "join": "Join",
     "findPassword": "Find password",
-    "joinUs": "Join us"
+    "joinUs": "Join us",
+    "logout": "Logout",
+    "unsubscribe": "Unsubscribe",
+    "edit": "Edit"
   }
 }

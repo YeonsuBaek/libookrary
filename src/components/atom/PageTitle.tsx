@@ -1,9 +1,14 @@
+'use client'
+import { useTranslation } from 'react-i18next'
+
 interface PageTitleProps {
-  children: React.ReactNode
+  route: string
 }
 
-function PageTitle({ children }: PageTitleProps) {
-  return <h2 className="title">{children}</h2>
+function PageTitle({ route }: PageTitleProps) {
+  const { t } = useTranslation('')
+
+  return <h2 className="title">{t(route)}</h2>
 }
 
 export default PageTitle

@@ -1,3 +1,4 @@
+'use client'
 import BookCard from '../atom/BookCard'
 
 interface BookType {
