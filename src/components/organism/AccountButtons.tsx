@@ -1,5 +1,5 @@
 'use client'
-import { useSignOut } from '@/hooks/useUser'
+import { signOutApi } from '@/apis/user'
 import { useUserStore } from '@/stores/user'
 import { Button } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
@@ -9,17 +9,16 @@ function AccountButtons() {
   const router = useRouter()
   const { t } = useTranslation()
   const { setIsLoggedIn } = useUserStore()
-  const { mutate } = useSignOut()
 
   const onSignOut = () => {
-    mutate(null, {
+    signOutApi({
       onSuccess: () => {
         localStorage.removeItem('userToken')
         alert('로그아웃하였습니다.')
         setIsLoggedIn(false)
         router.push('/')
       },
-      onError: (error: any) => {
+      onError: (error) => {
         console.error(error)
       },
     })

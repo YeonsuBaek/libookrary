@@ -33,9 +33,14 @@ export const signInApi = async ({ email, password }: SignInRequest, { onSuccess,
   }
 }
 
-export const signOutApi = async () => {
-  const auth = getAuth(app)
-  return await signOut(auth)
+export const signOutApi = async ({ onSuccess, onError }: FuncType) => {
+  try {
+    const auth = getAuth(app)
+    await signOut(auth)
+    onSuccess()
+  } catch (error) {
+    onError(error)
+  }
 }
 
 export const getUserInfo = async () => {
