@@ -7,6 +7,7 @@ interface UserStoreType {
   setEmail: (val: string) => void
   nickname: string
   setNickname: (val: string) => void
+  unsubscribe: () => void
 }
 
 export const useUserStore = create<UserStoreType>((set) => ({
@@ -16,4 +17,9 @@ export const useUserStore = create<UserStoreType>((set) => ({
   setEmail: (val: string) => set(() => ({ email: val })),
   nickname: '',
   setNickname: (val: string) => set(() => ({ nickname: val })),
+  unsubscribe: () => {
+    set(() => ({ isLoggedIn: false }))
+    set(() => ({ email: '' }))
+    set(() => ({ nickname: '' }))
+  },
 }))

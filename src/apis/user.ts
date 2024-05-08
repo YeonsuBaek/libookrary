@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, deleteUser, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { app, db } from '../../firebase.config'
 import { SignInRequest, SignUpRequest, FuncType, EditUserInfoRequest } from './types/userTypes'
 import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
@@ -66,6 +66,21 @@ export const editUserInfoApi = async ({ email, nickname }: EditUserInfoRequest, 
     const collectionRef = collection(db, 'user')
     const docRef = doc(collectionRef, email)
     await updateDoc(docRef, { email, nickname })
+    onSuccess()
+  } catch (error) {
+    onError(error)
+  }
+}
+
+export const unsubscribeApi = async ({ onSuccess, onError }: FuncType) => {
+  try {
+    const auth = getAuth()
+    const user = auth.currentUser
+
+    if (user) {
+      await deleteUser(user)
+    }
+
     onSuccess()
   } catch (error) {
     onError(error)
