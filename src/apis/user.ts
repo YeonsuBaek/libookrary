@@ -13,7 +13,9 @@ export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { 
     const response = await getDoc(docRef)
 
     if (!response.exists()) {
-      await setDoc(docRef, { nickname, books: [] })
+      await setDoc(docRef, { email, nickname, books: [] })
+    } else {
+      await updateDoc(docRef, { email, nickname })
     }
 
     onSuccess()
