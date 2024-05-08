@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { app, db } from '../../firebase.config'
-import { SignInRequest, SignUpRequest, FuncType } from './types/userTypes'
-import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore'
+import { SignInRequest, SignUpRequest, FuncType, EditUserInfoRequest } from './types/userTypes'
+import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
 
 export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { onSuccess, onError }: FuncType) => {
   try {
@@ -43,7 +43,7 @@ export const signOutApi = async ({ onSuccess, onError }: FuncType) => {
   }
 }
 
-export const getUserInfo = async () => {
+export const getUserInfoApi = async () => {
   try {
     const userToken = localStorage.getItem('userToken')
     const userQuery = query(collection(db, 'user'), where('email', '==', userToken))
@@ -58,5 +58,16 @@ export const getUserInfo = async () => {
     return userData
   } catch (error) {
     console.error('회원 정보를 가져오는 데 실패하였습니다.')
+  }
+}
+
+export const editUserInfoApi = async ({ email, nickname }: EditUserInfoRequest, { onSuccess, onError }: FuncType) => {
+  try {
+    const collectionRef = collection(db, 'user')
+    const docRef = doc(collectionRef, email)
+    await updateDoc(docRef, { email, nickname })
+    onSuccess()
+  } catch (error) {
+    onError(error)
   }
 }

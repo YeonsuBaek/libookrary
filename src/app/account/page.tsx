@@ -4,11 +4,10 @@ import AccountInfo from '@/components/organism/AccountInfo'
 
 function page() {
   return (
-    <div className="account">
-      <PageTitle route="user.info" />
+    <>
       <AccountInfo />
       <AccountButtons />
-    </div>
+    </>
   )
 }
 

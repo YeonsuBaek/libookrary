@@ -4,7 +4,7 @@ import Bookshelf from './Bookshelf'
 import BookList from '../molecule/BookList'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
-import { getUserInfo } from '@/apis/user'
+import { getUserInfoApi } from '@/apis/user'
 
 function Library() {
   const { t } = useTranslation('')
@@ -15,7 +15,7 @@ function Library() {
 
   useEffect(function fetchUserInfo() {
     ;(async () => {
-      const info = await getUserInfo()
+      const info = await getUserInfoApi()
       setNickname(info?.nickname || '')
       setBooks(info?.books || [])
     })()

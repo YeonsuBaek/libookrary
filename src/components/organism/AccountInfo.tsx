@@ -1,19 +1,25 @@
 'use client'
-import { getUserInfo } from '@/apis/user'
+import { getUserInfoApi } from '@/apis/user'
+import { useUserStore } from '@/stores/user'
 import { Button } from '@yeonsubaek/yeonsui'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 function AccountInfo() {
   const { t } = useTranslation()
+  const router = useRouter()
+  const { setEmail: setEmailStore, setNickname: setNicknameStore } = useUserStore()
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
 
   useEffect(function fetchUserInfo() {
     ;(async () => {
-      const info = await getUserInfo()
+      const info = await getUserInfoApi()
       setEmail(info?.email || '')
       setNickname(info?.nickname || '')
+      setEmailStore(info?.email || '')
+      setNicknameStore(info?.nickname || '')
     })()
   }, [])
 
@@ -30,7 +36,7 @@ function AccountInfo() {
         </div>
       </dl>
       <div className="account-button">
-        <Button>{t('user.button.edit')}</Button>
+        <Button onClick={() => router.push('/account/edit')}>{t('user.button.edit')}</Button>
       </div>
     </>
   )

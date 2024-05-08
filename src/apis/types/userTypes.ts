@@ -21,3 +21,8 @@ export interface UserInfoResponse {
 export interface UserInfoRequest {
   userToken: string | null
 }
+
+export interface EditUserInfoRequest {
+  email: string
+  nickname: string
+}
