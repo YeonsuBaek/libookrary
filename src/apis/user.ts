@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { app, db } from '../../firebase.config'
-import { UserInfoRequest, SignInRequest, SignUpRequest, FuncType } from './types/userTypes'
-import { collection, doc, getDoc, getDocs, query, setDoc } from 'firebase/firestore'
+import { SignInRequest, SignUpRequest, FuncType } from './types/userTypes'
+import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore'
 
 export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { onSuccess, onError }: FuncType) => {
   try {
@@ -38,9 +38,20 @@ export const signOutApi = async () => {
   return await signOut(auth)
 }
 
-export const getUserInfo = async ({ userToken }: UserInfoRequest) => {
-  const userQuery = query(collection(db, 'user'))
-  const dataSnapShot = await getDocs(userQuery)
-  const data = dataSnapShot.docs.filter((doc) => doc.id === userToken)
-  return data
+export const getUserInfo = async () => {
+  try {
+    const userToken = localStorage.getItem('userToken')
+    const userQuery = query(collection(db, 'user'), where('email', '==', userToken))
+    const dataSnapShot = await getDocs(userQuery)
+
+    if (dataSnapShot.empty) {
+      console.error('사용자를 찾을 수 없습니다.')
+      return null
+    }
+
+    const userData = dataSnapShot.docs[0].data()
+    return userData
+  } catch (error) {
+    console.error('회원 정보를 가져오는 데 실패하였습니다.')
+  }
 }

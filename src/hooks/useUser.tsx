@@ -11,21 +11,4 @@ const useSignOut = () => {
   return useMutation(mutationOptions)
 }
 
-const useGetUserInfo = () => {
-  const queryOptions: UseQueryOptions<unknown, Error, unknown> = {
-    queryKey: ['getUserInfo'],
-    queryFn: async () => {
-      const userToken = localStorage.getItem('userToken')
-      const userQuery = query(collection(db, 'user'))
-      const dataSnapShot = await getDocs(userQuery)
-      const data = dataSnapShot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      return data.filter(({ id }) => id === userToken)[0]
-    },
-  }
-  return useQuery(queryOptions)
-}
-
-export { useSignOut, useGetUserInfo }
+export { useSignOut }

@@ -19,5 +19,5 @@ export interface UserInfoResponse {
   books: string[]
 }
 export interface UserInfoRequest {
-  userToken: string
+  userToken: string | null
 }
