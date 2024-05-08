@@ -1,3 +1,8 @@
+export interface FuncType {
+  onSuccess: (res?: any) => void
+  onError: (error: any) => void
+}
+
 export interface SignUpRequest {
   email: string
   password: string
@@ -14,5 +19,10 @@ export interface UserInfoResponse {
   books: string[]
 }
 export interface UserInfoRequest {
-  userToken: string
+  userToken: string | null
+}
+
+export interface EditUserInfoRequest {
+  email: string
+  nickname: string
 }
