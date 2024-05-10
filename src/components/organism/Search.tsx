@@ -1,8 +1,10 @@
+'use client'
 import { IconButton, TextField } from '@yeonsubaek/yeonsui'
 import { useTranslation } from 'react-i18next'
 import RecommendedList from '../molecule/RecommendedList'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import BookList from '../molecule/BookList'
+import { debounce } from 'lodash'
 
 interface SearchProps {
   onClose: () => void
@@ -11,6 +13,30 @@ interface SearchProps {
 function Search({ onClose }: SearchProps) {
   const { t } = useTranslation('')
   const [word, setWord] = useState('')
+  const [books, setBooks] = useState([])
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`/api/book/search?query=${word}`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+
+      const data = await response.json()
+      setBooks(data.item)
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+  }
+
+  useEffect(() => {
+    const debounceFetch = debounce(fetchData, 500)
+    debounceFetch()
+
+    return () => {
+      debounceFetch.cancel()
+    }
+  }, [word])
 
   return (
     <div className="search">
@@ -31,7 +57,7 @@ function Search({ onClose }: SearchProps) {
       )}
       {word.length > 0 && (
         <div className="search-book">
-          <BookList />
+          <BookList books={books} />
         </div>
       )}
     </div>

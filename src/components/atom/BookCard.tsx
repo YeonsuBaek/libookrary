@@ -9,7 +9,7 @@ interface BookCardProps {
 function BookCard({ title, author, cover }: BookCardProps) {
   return (
     <li className="book-card" key={title}>
-      <Card title={title} info={author} cover={cover} />
+      <Card title={title} info={author} image={cover} />
     </li>
   )
 }
