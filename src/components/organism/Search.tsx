@@ -13,7 +13,37 @@ interface SearchProps {
 function Search({ onClose }: SearchProps) {
   const { t } = useTranslation('')
   const [word, setWord] = useState('')
+  const [newSpecial, setNewSpecial] = useState([])
+  const [bestseller, setBestseller] = useState([])
   const [books, setBooks] = useState([])
+
+  const fetchNewSpecial = async () => {
+    try {
+      const response = await fetch(`/api/book/newSpecial`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+
+      const data = await response.json()
+      setNewSpecial(data.item)
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+  }
+
+  const fetchBestseller = async () => {
+    try {
+      const response = await fetch(`/api/book/bestseller`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+
+      const data = await response.json()
+      setBestseller(data.item)
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+  }
 
   const fetchData = async () => {
     try {
@@ -30,8 +60,15 @@ function Search({ onClose }: SearchProps) {
   }
 
   useEffect(() => {
+    fetchNewSpecial()
+    fetchBestseller()
+  }, [])
+
+  useEffect(() => {
     const debounceFetch = debounce(fetchData, 500)
-    debounceFetch()
+    if (word.length > 0) {
+      debounceFetch()
+    }
 
     return () => {
       debounceFetch.cancel()
@@ -49,13 +86,13 @@ function Search({ onClose }: SearchProps) {
         value={word}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
       />
-      {word.length === 0 && (
+      {books?.length === 0 && (
         <div className="search-recommended">
-          <RecommendedList title={t('header.search.recommended.new')} />
-          <RecommendedList title={t('header.search.recommended.best')} />
+          <RecommendedList title={t('header.search.recommended.new')} books={newSpecial} />
+          <RecommendedList title={t('header.search.recommended.best')} books={bestseller} />
         </div>
       )}
-      {word.length > 0 && (
+      {books?.length > 0 && (
         <div className="search-book">
           <BookList books={books} />
         </div>
