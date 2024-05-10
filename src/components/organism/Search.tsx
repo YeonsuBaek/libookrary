@@ -6,13 +6,11 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import BookList from '../molecule/BookList'
 import { debounce } from 'lodash'
 import { fetchBestseller, fetchNewSpecial, fetchSearchBook } from '@/apis/book'
+import { useSearchStore } from '@/stores/search'
 
-interface SearchProps {
-  onClose: () => void
-}
-
-function Search({ onClose }: SearchProps) {
+function Search() {
   const { t } = useTranslation('')
+  const { isOpenSearch, setIsOpenSearch } = useSearchStore()
   const [word, setWord] = useState('')
   const [newSpecial, setNewSpecial] = useState([])
   const [bestseller, setBestseller] = useState([])
@@ -33,7 +31,7 @@ function Search({ onClose }: SearchProps) {
   useEffect(
     function fetchSearchBook() {
       const debounceFetch = debounce(fetchData, 500)
-      if (word.length > 0) {
+      if (isOpenSearch && word.length > 0) {
         debounceFetch()
       }
 
@@ -41,26 +39,31 @@ function Search({ onClose }: SearchProps) {
         debounceFetch.cancel()
       }
     },
-    [word]
+    [isOpenSearch, word]
   )
 
-  useEffect(function fetchRecommendation() {
-    ;(async () => {
-      await fetchNewSpecial({
-        onSuccess: setNewSpecial,
-        onError: console.error,
-      })
-      await fetchBestseller({
-        onSuccess: setBestseller,
-        onError: console.error,
-      })
-    })()
-  }, [])
+  useEffect(
+    function fetchRecommendation() {
+      if (isOpenSearch) {
+        ;(async () => {
+          await fetchNewSpecial({
+            onSuccess: setNewSpecial,
+            onError: console.error,
+          })
+          await fetchBestseller({
+            onSuccess: setBestseller,
+            onError: console.error,
+          })
+        })()
+      }
+    },
+    [isOpenSearch]
+  )
 
-  return (
+  return isOpenSearch ? (
     <div className="search">
       <header className="search-header">
-        <IconButton icon="Close" onClick={onClose} />
+        <IconButton icon="Close" onClick={() => setIsOpenSearch(false)} />
       </header>
       <TextField
         icon="Search"
@@ -80,7 +83,7 @@ function Search({ onClose }: SearchProps) {
         </div>
       )}
     </div>
-  )
+  ) : null
 }
 
 export default Search
