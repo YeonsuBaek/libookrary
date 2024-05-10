@@ -37,10 +37,14 @@ export const fetchSearchBook = async ({ search }: BookSearchRequest, { onSuccess
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }
-
     const data = await response.json()
-    const list = data.item
-    onSuccess(list)
+
+    if (data.errorCode && data.errorCode === 3) {
+      onSuccess([])
+    } else {
+      const list = data.item
+      onSuccess(list)
+    }
   } catch (error) {
     onError(error)
   }

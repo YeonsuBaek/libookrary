@@ -31,7 +31,7 @@ function Search() {
   useEffect(
     function fetchSearchBook() {
       const debounceFetch = debounce(fetchData, 500)
-      if (isOpenSearch && word.length > 0) {
+      if (isOpenSearch) {
         debounceFetch()
       }
 
