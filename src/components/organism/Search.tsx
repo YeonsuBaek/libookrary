@@ -77,12 +77,10 @@ function Search() {
         value={word}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
       />
-      {books?.length === 0 && (
-        <div className="search-recommended">
-          <RecommendedList title={t('header.search.recommended.new')} books={newSpecial} />
-          <RecommendedList title={t('header.search.recommended.best')} books={bestseller} />
-        </div>
-      )}
+      <div className={`search-recommended ${books?.length > 0 ? 'hidden' : ''}`}>
+        <RecommendedList title={t('header.search.recommended.new')} books={newSpecial} />
+        <RecommendedList title={t('header.search.recommended.best')} books={bestseller} />
+      </div>
       {books?.length > 0 && (
         <div className="search-book">
           <BookList books={books} />
