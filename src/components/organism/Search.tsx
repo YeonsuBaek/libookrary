@@ -16,6 +16,12 @@ function Search() {
   const [bestseller, setBestseller] = useState([])
   const [books, setBooks] = useState([])
 
+  const handleCloseSearch = () => {
+    setIsOpenSearch(false)
+    setWord('')
+    setBooks([])
+  }
+
   const fetchData = async () => {
     await fetchSearchBook(
       {
@@ -63,7 +69,7 @@ function Search() {
   return isOpenSearch ? (
     <div className="search">
       <header className="search-header">
-        <IconButton icon="Close" onClick={() => setIsOpenSearch(false)} />
+        <IconButton icon="Close" onClick={handleCloseSearch} />
       </header>
       <TextField
         icon="Search"
