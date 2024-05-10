@@ -5,6 +5,7 @@ import RecommendedList from '../molecule/RecommendedList'
 import { ChangeEvent, useEffect, useState } from 'react'
 import BookList from '../molecule/BookList'
 import { debounce } from 'lodash'
+import { fetchBestseller, fetchNewSpecial, fetchSearchBook } from '@/apis/book'
 
 interface SearchProps {
   onClose: () => void
@@ -17,63 +18,44 @@ function Search({ onClose }: SearchProps) {
   const [bestseller, setBestseller] = useState([])
   const [books, setBooks] = useState([])
 
-  const fetchNewSpecial = async () => {
-    try {
-      const response = await fetch(`/api/book/newSpecial`)
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-
-      const data = await response.json()
-      setNewSpecial(data.item)
-    } catch (error) {
-      console.error('Error: ' + error)
-    }
-  }
-
-  const fetchBestseller = async () => {
-    try {
-      const response = await fetch(`/api/book/bestseller`)
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-
-      const data = await response.json()
-      setBestseller(data.item)
-    } catch (error) {
-      console.error('Error: ' + error)
-    }
-  }
-
   const fetchData = async () => {
-    try {
-      const response = await fetch(`/api/book/search?query=${word}`)
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
+    await fetchSearchBook(
+      {
+        search: word,
+      },
+      {
+        onSuccess: setBooks,
+        onError: console.error,
       }
-
-      const data = await response.json()
-      setBooks(data.item)
-    } catch (error) {
-      console.error('Error: ' + error)
-    }
+    )
   }
 
-  useEffect(() => {
-    fetchNewSpecial()
-    fetchBestseller()
+  useEffect(
+    function fetchSearchBook() {
+      const debounceFetch = debounce(fetchData, 500)
+      if (word.length > 0) {
+        debounceFetch()
+      }
+
+      return () => {
+        debounceFetch.cancel()
+      }
+    },
+    [word]
+  )
+
+  useEffect(function fetchRecommendation() {
+    ;(async () => {
+      await fetchNewSpecial({
+        onSuccess: setNewSpecial,
+        onError: console.error,
+      })
+      await fetchBestseller({
+        onSuccess: setBestseller,
+        onError: console.error,
+      })
+    })()
   }, [])
-
-  useEffect(() => {
-    const debounceFetch = debounce(fetchData, 500)
-    if (word.length > 0) {
-      debounceFetch()
-    }
-
-    return () => {
-      debounceFetch.cancel()
-    }
-  }, [word])
 
   return (
     <div className="search">
