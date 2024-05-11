@@ -1,29 +1,20 @@
 'use client'
 import { useTranslation } from 'react-i18next'
 import Book from '../atom/Book'
+import { UserBookType } from '@/types/book'
 
-interface BookType {
-  title: string
-  page: number
-  sizeHeight: number
-  color: string
+interface BooksProps {
+  books: string[]
 }
 
-function Books({ dummyList = [] }: { dummyList?: any }) {
+function Books({ books }: BooksProps) {
   const { t } = useTranslation('')
 
-  if (dummyList.length === 0) {
+  if (books.length === 0) {
     return <div className="books-blank">{t('home.blank')}</div>
   }
 
-  return (
-    <ul className="books">
-      {dummyList &&
-        dummyList.map(({ title, page, sizeHeight, color }: BookType) => (
-          <Book title={title} page={page} key={title} height={sizeHeight} color={color} />
-        ))}
-    </ul>
-  )
+  return <ul className="books">{books && books.map((isbn) => <Book key={isbn} isbn={isbn} />)}</ul>
 }
 
 export default Books

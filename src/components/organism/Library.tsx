@@ -3,14 +3,14 @@ import { Segmented } from '@yeonsubaek/yeonsui'
 import Bookshelf from './Bookshelf'
 import BookList from '../molecule/BookList'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getUserInfoApi } from '@/apis/user'
 
 function Library() {
   const { t } = useTranslation('')
   const SEGMENTED_LIST = [t('home.segmented.bookshelf'), t('home.segmented.list')]
   const [nickname, setNickname] = useState<any>(null)
-  const [books, setBooks] = useState<any>([])
+  const [books, setBooks] = useState([])
   const [selectedOption, setSelectedOption] = useState(SEGMENTED_LIST[0])
 
   useEffect(function fetchUserInfo() {
@@ -25,7 +25,7 @@ function Library() {
     <>
       <Segmented options={SEGMENTED_LIST} selectedOption={selectedOption} onSelect={setSelectedOption} />
       {selectedOption === SEGMENTED_LIST[0] && <Bookshelf nickname={nickname} books={books} />}
-      {selectedOption === SEGMENTED_LIST[1] && <BookList />}
+      {selectedOption === SEGMENTED_LIST[1] && <BookList books={books} />}
     </>
   )
 }

@@ -4,7 +4,7 @@ import Books from '../molecule/Books'
 
 interface BookshelfProps {
   nickname: string
-  books: any
+  books: string[]
 }
 
 function Bookshelf({ nickname, books }: BookshelfProps) {
@@ -16,7 +16,7 @@ function Bookshelf({ nickname, books }: BookshelfProps) {
   return (
     <>
       <h2 className="home-title">{bookshelfTitle}</h2>
-      {Boolean(userToken) && <Books />}
+      {Boolean(userToken) && <Books books={books} />}
     </>
   )
 }
