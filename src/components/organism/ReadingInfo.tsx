@@ -1,5 +1,5 @@
 'use client'
-import { DatePicker } from '@yeonsubaek/yeonsui'
+import { DatePicker, RibbonBadge } from '@yeonsubaek/yeonsui'
 import { useTranslation } from 'react-i18next'
 import BookmarkList from '../molecule/BookmarkList'
 import { useEffect, useState } from 'react'
@@ -7,9 +7,11 @@ import { getUserBookDetailInfo } from '@/apis/book'
 
 interface ReadingInfoProps {
   id: string
+  title: string
+  cover: string
 }
 
-function ReadingInfo({ id }: ReadingInfoProps) {
+function ReadingInfo({ id, title, cover }: ReadingInfoProps) {
   const { t } = useTranslation('')
   const userToken = localStorage.getItem('userToken')
   const [startDate, setStartDate] = useState('')
@@ -24,10 +26,10 @@ function ReadingInfo({ id }: ReadingInfoProps) {
         if (userToken) {
           const info = await getUserBookDetailInfo({ isbn: id, userToken })
           setStartDate(info?.startDate || '')
-          setEndDate(info?.end || [])
-          setBookmarks(info?.bookmarks || '')
-          setWantToReRead(info?.special.wantToReRead || [])
-          setIsRecommended(info?.special.isRecommended || [])
+          setEndDate(info?.endDate || '')
+          setBookmarks(info?.bookmarks || [])
+          setWantToReRead(info?.special.wantToReRead || false)
+          setIsRecommended(info?.special.isRecommended || false)
         }
       })()
     },
@@ -35,22 +37,31 @@ function ReadingInfo({ id }: ReadingInfoProps) {
   )
 
   return (
-    <div className="reading">
-      <div className="reading-date">
-        <div>
-          <h3 className="reading-title">{t('book.reading.startDate')}</h3>
-          <DatePicker startDate={startDate} disabled />
-        </div>
-        <div>
-          <h3 className="reading-title">{t('book.reading.endDate')}</h3>
-          <DatePicker endDate={endDate} disabled />
+    <>
+      <div className="book-image">
+        <img src={cover} alt={title} />
+        <div className="book-image-badge">
+          {wantToReRead && <RibbonBadge value={t('book.reading.reread')} />}
+          {isRecommended && <RibbonBadge value={t('book.reading.recommend')} />}
         </div>
       </div>
-      <div className="reading-bookmark">
-        <h3 className="reading-title">{t('book.reading.bookmark')}</h3>
-        <BookmarkList bookmarks={bookmarks} />
+      <div className="reading">
+        <div className="reading-date">
+          <div>
+            <h3 className="reading-title">{t('book.reading.startDate')}</h3>
+            <DatePicker startDate={startDate} disabled />
+          </div>
+          <div>
+            <h3 className="reading-title">{t('book.reading.endDate')}</h3>
+            <DatePicker endDate={endDate} disabled />
+          </div>
+        </div>
+        <div className="reading-bookmark">
+          <h3 className="reading-title">{t('book.reading.bookmark')}</h3>
+          <BookmarkList bookmarks={bookmarks} />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

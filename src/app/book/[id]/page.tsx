@@ -46,14 +46,7 @@ function page({ params }: { params: { id: string } }) {
   return (
     <>
       <PageTitle route={title} />
-      <div className="book-image">
-        <img src={cover} alt={title} />
-        <div className="book-image-badge">
-          {wantToReRead && <RibbonBadge value={t('book.reading.reread')} />}
-          {isRecommended && <RibbonBadge value={t('book.reading.recommend')} />}
-        </div>
-      </div>
-      <ReadingInfo id={id} />
+      <ReadingInfo id={id} title={title} cover={cover} />
       <BookInfo
         author={author}
         publisher={publisher}
