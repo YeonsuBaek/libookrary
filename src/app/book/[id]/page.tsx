@@ -53,7 +53,7 @@ function page({ params }: { params: { id: string } }) {
           {isRecommended && <RibbonBadge value={t('book.reading.recommend')} />}
         </div>
       </div>
-      <ReadingInfo />
+      <ReadingInfo id={id} />
       <BookInfo
         author={author}
         publisher={publisher}

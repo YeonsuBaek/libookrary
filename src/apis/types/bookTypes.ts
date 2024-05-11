@@ -4,4 +4,5 @@ export interface BookSearchRequest {
 
 export interface BookInfoRequest {
   isbn: string
+  userToken: string
 }

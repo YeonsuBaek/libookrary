@@ -11,3 +11,9 @@ export interface UserBookType {
   height: number
   color: string
 }
+
+export interface BookmarkType {
+  id: number
+  page: number
+  content: string
+}

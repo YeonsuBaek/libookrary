@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { BookInfoRequest, BookSearchRequest } from './types/bookTypes'
 import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
@@ -65,6 +65,23 @@ export const getBookInfo = async ({ isbn }: BookInfoRequest) => {
     const bookData = dataSnapShot.docs[0].data()
     return bookData
   } catch (error) {
-    console.error('회원 정보를 가져오는 데 실패하였습니다.')
+    console.error('도서 정보를 가져오는 데 실패하였습니다.')
+  }
+}
+
+export const getUserBookDetailInfo = async ({ isbn, userToken }: BookInfoRequest) => {
+  try {
+    const docRef = doc(db, 'user_saved_books', userToken)
+    const docSnap = await getDoc(docRef)
+
+    if (!docSnap.exists()) {
+      console.error('도서 정보를 찾을 수 없습니다.')
+      return null
+    }
+
+    const bookInfo = docSnap.data()
+    return bookInfo[isbn]
+  } catch (error) {
+    console.error('도서 정보를 가져오는 데 실패하였습니다.')
   }
 }

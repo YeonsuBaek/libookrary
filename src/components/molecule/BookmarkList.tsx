@@ -1,29 +1,17 @@
+import { BookmarkType } from '@/types/book'
 import Bookmark from '../atom/Bookmark'
 
-interface bookmarkType {
-  id: number
-  page: number
-  text: string
+interface BookmarkListProps {
+  bookmarks: BookmarkType[]
 }
-const dummyBookmark: bookmarkType[] = [
-  {
-    id: 0,
-    page: 10,
-    text: 'blabla',
-  },
-  {
-    id: 1,
-    page: 12,
-    text: 'blablablabla',
-  },
-]
 
-function BookmarkList() {
+function BookmarkList({ bookmarks }: BookmarkListProps) {
   return (
     <ul className="bookmark-list">
-      {dummyBookmark.map(({ id, page, text }: bookmarkType) => {
-        return <Bookmark key={id} page={page} text={text} />
-      })}
+      {bookmarks &&
+        bookmarks.map(({ id, page, content }: BookmarkType) => {
+          return <Bookmark key={id} page={page} text={content} />
+        })}
     </ul>
   )
 }
