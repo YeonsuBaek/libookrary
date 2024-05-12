@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
-import { BookInfoRequest, BookSearchRequest } from './types/bookTypes'
+import { AladinBookInfoRequest, BookInfoRequest, BookSearchRequest } from './types/bookTypes'
 import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
 
@@ -36,6 +36,26 @@ export const fetchBestseller = async ({ onSuccess, onError }: FuncType) => {
 export const fetchSearchBook = async ({ search }: BookSearchRequest, { onSuccess, onError }: FuncType) => {
   try {
     const response = await fetch(`/api/book/search?search=${search}`)
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    const data = await response.json()
+
+    if (data.errorCode && data.errorCode === 3) {
+      onSuccess([])
+    } else {
+      const list = data.item
+      console.log(list)
+      onSuccess(list)
+    }
+  } catch (error) {
+    onError(error)
+  }
+}
+
+export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest, { onSuccess, onError }: FuncType) => {
+  try {
+    const response = await fetch(`/api/book/info?isbn=${isbn}`)
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }

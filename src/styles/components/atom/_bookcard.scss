@@ -2,6 +2,11 @@
   margin: 0;
   list-style-type: none;
 
+  &-button {
+    background-color: transparent;
+    border: 0;
+  }
+
   .ui-card {
     margin: 0;
   }
