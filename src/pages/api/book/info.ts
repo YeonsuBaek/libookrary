@@ -2,7 +2,7 @@ export default async function async(req: any, res: any) {
   const { isbn } = req.query
   try {
     const KEY = process.env.ALADIN_KEY
-    const aladinAPIUrl = `http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=${KEY}&itemIdType=ISBN&ItemId=${isbn}&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList`
+    const aladinAPIUrl = `http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=${KEY}&itemIdType=ISBN&ItemId=${isbn}&output=js&Version=20131101&OptResult=packing`
     const response = await fetch(aladinAPIUrl)
 
     if (!response.ok) {

@@ -1,5 +1,5 @@
 'use client'
-import { fetchAladinBookInfo } from '@/apis/book'
+import { addBookToUser, fetchAladinBookInfo, saveBookInfo } from '@/apis/book'
 import PageTitle from '@/components/atom/PageTitle'
 import BookInfo from '@/components/molecule/BookInfo'
 import ReadingEdit from '@/components/organism/ReadingEdit'
@@ -20,6 +20,33 @@ function page({ params }: { params: { id: string } }) {
   const [desc, setDesc] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState(0)
+
+  const handleAddBook = () => {
+    addBookToUser(
+      {
+        isbn: id,
+      },
+      {
+        onSuccess: async () => {
+          await fetchAladinBookInfo(
+            { isbn: id },
+            {
+              onSuccess: (res) => {
+                saveBookInfo(res[0], {
+                  onSuccess: () => {},
+                  onError: console.error,
+                })
+              },
+              onError: console.error,
+            }
+          )
+          alert('성공적으로 저장하였습니다.')
+          router.push('/')
+        },
+        onError: console.error,
+      }
+    )
+  }
 
   useEffect(
     function fetchBookInfo() {
@@ -60,11 +87,11 @@ function page({ params }: { params: { id: string } }) {
         isbn={id}
         price={price}
       />
-      <div className="book-buttons">
-        <Button variant="text" onClick={() => router.push('/')}>
+      <div className='book-buttons'>
+        <Button variant='text' onClick={() => router.push('/')}>
           {t('book.button.cancel')}
         </Button>
-        <Button>{t('book.button.add')}</Button>
+        <Button onClick={handleAddBook}>{t('book.button.add')}</Button>
       </div>
     </>
   )

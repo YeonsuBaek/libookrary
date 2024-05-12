@@ -1,5 +1,5 @@
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
-import { AladinBookInfoRequest, BookInfoRequest, BookSearchRequest } from './types/bookTypes'
+import { collection, doc, getDoc, getDocs, query, where, updateDoc, setDoc } from 'firebase/firestore'
+import { AladinBookInfoRequest, BookInfoRequest, BookSearchRequest, BookToUserRequest } from './types/bookTypes'
 import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
 
@@ -103,5 +103,68 @@ export const getUserBookDetailInfo = async ({ isbn, userToken }: BookInfoRequest
     return bookInfo[isbn]
   } catch (error) {
     console.error('도서 정보를 가져오는 데 실패하였습니다.')
+  }
+}
+
+export const addBookToUser = async ({ isbn }: BookToUserRequest, { onSuccess, onError }: FuncType) => {
+  try {
+    const userToken = localStorage.getItem('userToken')
+    const collectionRef = collection(db, 'user')
+    const docRef = doc(collectionRef, userToken)
+    const response = await getDoc(docRef)
+
+    if (!response.exists()) {
+      console.error('회원 정보를 찾을 수 없습니다.')
+    } else {
+      const docData = response.data()
+      const updatedBooks = [...docData.books, isbn]
+      const nonDuplicateBooks = new Set(updatedBooks)
+      await updateDoc(docRef, { books: Array.from(nonDuplicateBooks) })
+      onSuccess()
+    }
+  } catch (error) {
+    onError(error)
+  }
+}
+
+export const saveBookInfo = async (info: BookInfoRequest, { onSuccess, onError }: FuncType) => {
+  try {
+    const {
+      author,
+      categoryName: category,
+      cover,
+      description: desc,
+      isbn13: isbn,
+      link,
+      priceStandard: price,
+      pubDate: pubdate,
+      publisher,
+      title,
+      subInfo,
+    } = info
+    const collectionRef = collection(db, 'book')
+    const docRef = doc(collectionRef, isbn)
+    const response = await getDoc(docRef)
+
+    if (!response.exists()) {
+      await setDoc(docRef, {
+        author,
+        category,
+        cover,
+        depth: subInfo.packing.sizeDepth,
+        desc,
+        height: subInfo.packing.sizeHeight,
+        isbn,
+        link,
+        price,
+        pubdate,
+        publisher,
+        title,
+      })
+    }
+
+    onSuccess()
+  } catch (error) {
+    onError(error)
   }
 }

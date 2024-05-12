@@ -11,7 +11,7 @@ function BookList({ books, sort = 'wrap' }: BookListProps) {
   return (
     <ul className={`book-list ${sort}`}>
       {books &&
-        books.map(({ isbn, title, author, cover }: BookType) => (
+        books.map(({ isbn13: isbn, title, author, cover }: BookType) => (
           <BookCard key={isbn} isbn={isbn} title={title} author={author} cover={cover} />
         ))}
     </ul>

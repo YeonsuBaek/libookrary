@@ -1,5 +1,5 @@
 export interface BookType {
-  isbn: string
+  isbn13: string
   title: string
   author: string
   cover: string
