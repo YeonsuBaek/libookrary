@@ -1,6 +1,6 @@
 'use client'
 import { useTranslation } from 'react-i18next'
-import Books from '../molecule/Books'
+import BookshelfList from '../molecule/BookshelfList'
 
 interface BookshelfProps {
   nickname: string
@@ -16,7 +16,7 @@ function Bookshelf({ nickname, books }: BookshelfProps) {
   return (
     <>
       <h2 className="home-title">{bookshelfTitle}</h2>
-      {Boolean(userToken) && <Books books={books} />}
+      {Boolean(userToken) && <BookshelfList books={books} />}
     </>
   )
 }

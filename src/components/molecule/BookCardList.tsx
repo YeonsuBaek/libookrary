@@ -2,12 +2,12 @@
 import { BookType } from '@/types/book'
 import BookCard from '../atom/BookCard'
 
-interface BookListProps {
+interface BookCardListProps {
   books: any[]
   sort?: 'wrap' | 'nowrap'
 }
 
-function BookList({ books, sort = 'wrap' }: BookListProps) {
+function BookCardList({ books, sort = 'wrap' }: BookCardListProps) {
   return (
     <ul className={`book-list ${sort}`}>
       {books &&
@@ -18,4 +18,4 @@ function BookList({ books, sort = 'wrap' }: BookListProps) {
   )
 }
 
-export default BookList
+export default BookCardList

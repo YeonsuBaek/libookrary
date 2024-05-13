@@ -3,10 +3,10 @@ import { IconButton, TextField } from '@yeonsubaek/yeonsui'
 import { useTranslation } from 'react-i18next'
 import RecommendedList from '../molecule/RecommendedList'
 import { ChangeEvent, useEffect, useState } from 'react'
-import BookList from '../molecule/BookList'
 import { debounce } from 'lodash'
 import { fetchBestseller, fetchNewSpecial, fetchSearchBook } from '@/apis/book'
 import { useSearchStore } from '@/stores/search'
+import BookCardList from '../molecule/BookCardList'
 
 function Search() {
   const { t } = useTranslation('')
@@ -83,7 +83,7 @@ function Search() {
       </div>
       {books?.length > 0 && (
         <div className="search-book">
-          <BookList books={books} />
+          <BookCardList books={books} />
         </div>
       )}
     </div>

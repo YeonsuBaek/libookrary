@@ -3,14 +3,14 @@ import { getBookInfo } from '@/apis/book'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
-interface BookProps {
+interface BookshelfItemProps {
   isbn: string
 }
 
 const MIN_DEPTH = 20
 const MAX_HEIGHT = 168
 
-function Book({ isbn }: BookProps) {
+function BookshelfItem({ isbn }: BookshelfItemProps) {
   const router = useRouter()
   const [title, setTitle] = useState('')
   const [color, setColor] = useState('')
@@ -46,4 +46,4 @@ function Book({ isbn }: BookProps) {
   )
 }
 
-export default Book
+export default BookshelfItem
