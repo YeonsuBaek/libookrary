@@ -168,3 +168,32 @@ export const saveBookInfo = async (info: BookInfoRequest, { onSuccess, onError }
     onError(error)
   }
 }
+
+export const saveUserSavedBook = async (info: any, { onSuccess, onError }: FuncType) => {
+  try {
+    const { isbn, startDate, endDate, bookmarks, isRecommended, wantToReRead } = info
+    const userToken = localStorage.getItem('userToken')
+    const collectionRef = collection(db, 'user_saved_books')
+    const docRef = doc(collectionRef, userToken)
+    const response = await getDoc(docRef)
+
+    if (!response.exists()) {
+      console.error('회원 정보를 찾을 수 없습니다.')
+    } else {
+      await setDoc(docRef, {
+        [isbn]: {
+          startDate,
+          endDate,
+          bookmarks,
+          special: {
+            isRecommended,
+            wantToReRead,
+          },
+        },
+      })
+      onSuccess()
+    }
+  } catch (error) {
+    onError(error)
+  }
+}

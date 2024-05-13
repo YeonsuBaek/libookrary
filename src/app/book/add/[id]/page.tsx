@@ -1,17 +1,12 @@
 'use client'
-import { addBookToUser, fetchAladinBookInfo, saveBookInfo } from '@/apis/book'
+import { fetchAladinBookInfo } from '@/apis/book'
 import PageTitle from '@/components/atom/PageTitle'
 import BookInfo from '@/components/molecule/BookInfo'
 import ReadingEdit from '@/components/organism/ReadingEdit'
-import { Button } from '@yeonsubaek/yeonsui'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 function page({ params }: { params: { id: string } }) {
   const { id } = params
-  const { t } = useTranslation('')
-  const router = useRouter()
   const [title, setTitle] = useState('')
   const [cover, setCover] = useState('')
   const [author, setAuthor] = useState('')
@@ -20,33 +15,6 @@ function page({ params }: { params: { id: string } }) {
   const [desc, setDesc] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState(0)
-
-  const handleAddBook = () => {
-    addBookToUser(
-      {
-        isbn: id,
-      },
-      {
-        onSuccess: async () => {
-          await fetchAladinBookInfo(
-            { isbn: id },
-            {
-              onSuccess: (res) => {
-                saveBookInfo(res[0], {
-                  onSuccess: () => {},
-                  onError: console.error,
-                })
-              },
-              onError: console.error,
-            }
-          )
-          alert('성공적으로 저장하였습니다.')
-          router.push('/')
-        },
-        onError: console.error,
-      }
-    )
-  }
 
   useEffect(
     function fetchBookInfo() {
@@ -77,7 +45,7 @@ function page({ params }: { params: { id: string } }) {
   return (
     <>
       <PageTitle route={title} />
-      <ReadingEdit title={title} cover={cover} />
+      <ReadingEdit isbn={id} title={title} cover={cover} />
       <BookInfo
         author={author}
         publisher={publisher}
@@ -87,12 +55,6 @@ function page({ params }: { params: { id: string } }) {
         isbn={id}
         price={price}
       />
-      <div className='book-buttons'>
-        <Button variant='text' onClick={() => router.push('/')}>
-          {t('book.button.cancel')}
-        </Button>
-        <Button onClick={handleAddBook}>{t('book.button.add')}</Button>
-      </div>
     </>
   )
 }
