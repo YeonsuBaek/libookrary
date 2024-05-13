@@ -15,6 +15,6 @@ export interface UserBookType {
 
 export interface BookmarkType {
   id: number
-  page: number
+  page: string
   content: string
 }

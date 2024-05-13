@@ -1,19 +1,23 @@
 'use client'
 
-import { Icon } from '@yeonsubaek/yeonsui'
+import { Icon, IconButton } from '@yeonsubaek/yeonsui'
 
 interface BookmarkProps {
-  page: number
+  page: string
   text: string
+  onRemove?: (id: number) => void
 }
 
-function Bookmark({ page, text }: BookmarkProps) {
+function Bookmark({ page, text, onRemove = () => {} }: BookmarkProps) {
   return (
     <li className="bookmark">
-      <span className="bookmark-page">
-        <Icon icon="Tag" size="xsmall" />
-        {page}
-      </span>
+      <div className="bookmark-header">
+        <div className="bookmark-page">
+          <Icon icon="Tag" size="xsmall" />
+          {page}
+        </div>
+        <IconButton icon="MinusCircle" color="error" onClick={onRemove} />
+      </div>
       <p className="bookmark-text">{text}</p>
     </li>
   )
