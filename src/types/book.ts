@@ -3,11 +3,16 @@ export interface BookType {
   title: string
   author: string
   cover: string
+  depth: number
+  height: number
+  color: string
 }
 
 export interface UserBookType {
-  title: string
   isbn: string
+  title: string
+  author: string
+  cover: string
   depth: number
   height: number
   color: string

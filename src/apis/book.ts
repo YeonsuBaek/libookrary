@@ -1,5 +1,11 @@
 import { collection, doc, getDoc, getDocs, query, where, updateDoc, setDoc } from 'firebase/firestore'
-import { AladinBookInfoRequest, BookInfoRequest, BookSearchRequest, BookToUserRequest } from './types/bookTypes'
+import {
+  AladinBookInfoRequest,
+  BookInfoGettingRequest,
+  BookInfoRequest,
+  BookSearchRequest,
+  BookToUserRequest,
+} from './types/bookTypes'
 import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
 
@@ -72,7 +78,7 @@ export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest, { onS
   }
 }
 
-export const getBookInfo = async ({ isbn }: BookInfoRequest) => {
+export const getBookInfo = async ({ isbn }: BookInfoGettingRequest) => {
   try {
     const userQuery = query(collection(db, 'book'), where('isbn', '==', isbn))
     const dataSnapShot = await getDocs(userQuery)
@@ -106,7 +112,10 @@ export const getUserBookDetailInfo = async ({ isbn, userToken }: BookInfoRequest
   }
 }
 
-export const addBookToUser = async ({ isbn }: BookToUserRequest, { onSuccess, onError }: FuncType) => {
+export const addBookToUser = async (
+  { isbn, title, color, depth, height, author, cover }: BookToUserRequest,
+  { onSuccess, onError }: FuncType
+) => {
   try {
     const userToken = localStorage.getItem('userToken')
     const collectionRef = collection(db, 'user')
@@ -117,10 +126,27 @@ export const addBookToUser = async ({ isbn }: BookToUserRequest, { onSuccess, on
       console.error('회원 정보를 찾을 수 없습니다.')
     } else {
       const docData = response.data()
-      const updatedBooks = [...docData.books, isbn]
-      const nonDuplicateBooks = new Set(updatedBooks)
-      await updateDoc(docRef, { books: Array.from(nonDuplicateBooks) })
-      onSuccess()
+
+      const isBookExits = docData.books.some((book: BookToUserRequest) => book.isbn === isbn)
+      if (isBookExits) {
+        console.error('이미 동일한 책이 목록에 있습니다.')
+      } else {
+        const updatedBooks = [
+          ...docData.books,
+          {
+            isbn,
+            title,
+            color: '#f0f0f0',
+            depth,
+            height,
+            author,
+            cover,
+          },
+        ]
+
+        await updateDoc(docRef, { books: updatedBooks })
+        onSuccess()
+      }
     }
   } catch (error) {
     onError(error)

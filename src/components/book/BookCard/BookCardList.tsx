@@ -3,7 +3,7 @@ import { BookType } from '@/types/book'
 import BookCard from './BookCard'
 
 interface BookCardListProps {
-  books: any[]
+  books: BookType[]
   sort?: 'wrap' | 'nowrap'
 }
 

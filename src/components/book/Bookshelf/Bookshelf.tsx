@@ -1,10 +1,11 @@
 'use client'
 import { useTranslation } from 'react-i18next'
 import BookshelfList from './BookshelfList'
+import { BookType, UserBookType } from '@/types/book'
 
 interface BookshelfProps {
   nickname: string
-  books: string[]
+  books: UserBookType[]
 }
 
 function Bookshelf({ nickname, books }: BookshelfProps) {

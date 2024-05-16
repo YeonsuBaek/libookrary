@@ -1,37 +1,26 @@
 'use client'
-import { getBookInfo } from '@/apis/book'
 import { useRouter } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 interface BookshelfItemProps {
   isbn: string
+  title: string
+  depth: number
+  height: number
+  color: string
 }
 
 const MIN_DEPTH = 20
 const MAX_HEIGHT = 168
 
-function BookshelfItem({ isbn }: BookshelfItemProps) {
+function BookshelfItem({ isbn, title, depth, height, color }: BookshelfItemProps) {
   const router = useRouter()
-  const [title, setTitle] = useState('')
-  const [color, setColor] = useState('')
-  const [width, setWidth] = useState(0)
-  const [height, setHeight] = useState(0)
 
-  const sizingWidth = useMemo(() => (Math.floor(width / 5) < MIN_DEPTH ? MIN_DEPTH : Math.floor(width / 5)), [width])
+  const sizingWidth = useMemo(() => (Math.floor(depth / 5) < MIN_DEPTH ? MIN_DEPTH : Math.floor(depth / 5)), [depth])
   const sizingHeight = useMemo(
     () => (Math.floor(height / 1.8) > MAX_HEIGHT ? MAX_HEIGHT : Math.floor(height / 1.8)),
     [height]
   )
-
-  useEffect(function fetchBookInfo() {
-    ;(async () => {
-      const info = await getBookInfo({ isbn })
-      setTitle(info?.title || '')
-      setColor(info?.color || [])
-      setWidth(info?.depth || '')
-      setHeight(info?.height || [])
-    })()
-  }, [])
 
   return (
     <li className="bookshelf-item" style={{ width: `${sizingWidth}px` }}>

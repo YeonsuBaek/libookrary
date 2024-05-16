@@ -13,6 +13,16 @@ export interface BookInfoRequest {
 
 export interface BookToUserRequest {
   isbn: string
+  title: string
+  color: string
+  depth: string
+  height: string
+  author: string
+  cover: string
+}
+
+export interface BookInfoGettingRequest {
+  isbn: string
 }
 
 export interface BookInfoRequest {
