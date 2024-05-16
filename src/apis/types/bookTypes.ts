@@ -14,7 +14,6 @@ export interface BookInfoRequest {
 export interface BookToUserRequest {
   isbn: string
   title: string
-  color: string
   depth: string
   height: string
   author: string
