@@ -8,7 +8,7 @@ import {
 } from './types/bookTypes'
 import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
-import Vibrant from 'node-vibrant'
+import { getBookColor } from '@/utils/book'
 
 export const fetchNewSpecial = async ({ onSuccess, onError }: FuncType) => {
   try {
@@ -132,16 +132,7 @@ export const addBookToUser = async (
       if (isBookExits) {
         console.error('이미 동일한 책이 목록에 있습니다.')
       } else {
-        const getBookColor = async () => {
-          const palette = await Vibrant.from(cover).getPalette()
-          if (palette?.Vibrant) {
-            const rgb = `rgb(${palette.Vibrant.getRgb().join(', ')})`
-            return rgb
-          }
-          return '#f0f0f0'
-        }
-
-        const bookColor = await getBookColor()
+        const bookColor = await getBookColor(cover)
 
         const updatedBooks = [
           {
