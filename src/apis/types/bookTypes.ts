@@ -42,3 +42,8 @@ export interface BookInfoRequest {
     }
   }
 }
+
+export interface UserBookDetailInfoRequest {
+  isbn: string
+  userToken: string
+}

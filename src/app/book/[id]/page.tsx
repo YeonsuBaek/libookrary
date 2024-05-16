@@ -3,13 +3,10 @@ import { getBookInfo } from '@/apis/book'
 import PageTitle from '@/components/common/PageTitle'
 import BookInfo from '@/components/book/BookInfo'
 import ReadingInfo from '@/components/book/ReadingInfo'
-import { Button, RibbonBadge } from '@yeonsubaek/yeonsui'
+import { Button } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-const wantToReRead = true
-const isRecommended = true
 
 function page({ params }: { params: { id: string } }) {
   const { id } = params

@@ -5,6 +5,7 @@ import {
   BookInfoRequest,
   BookSearchRequest,
   BookToUserRequest,
+  UserBookDetailInfoRequest,
 } from './types/bookTypes'
 import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
@@ -96,7 +97,7 @@ export const getBookInfo = async ({ isbn }: BookInfoGettingRequest) => {
   }
 }
 
-export const getUserBookDetailInfo = async ({ isbn, userToken }: BookInfoRequest) => {
+export const getUserBookDetailInfo = async ({ isbn, userToken }: UserBookDetailInfoRequest) => {
   try {
     const docRef = doc(db, 'user_saved_books', userToken)
     const docSnap = await getDoc(docRef)
