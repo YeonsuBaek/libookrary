@@ -24,7 +24,7 @@ function ReadingInfo({ id, title, cover }: ReadingInfoProps) {
     function fetchUserBookDetailInfo() {
       ;(async () => {
         if (userToken) {
-          const info = await getUserBookDetailInfo({ isbn: id, userToken })
+          const info = await getUserBookDetailInfo({ isbn: id })
           setStartDate(info?.startDate || '')
           setEndDate(info?.endDate || '')
           setBookmarks(info?.bookmarks || [])

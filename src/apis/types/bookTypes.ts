@@ -1,3 +1,5 @@
+import { BookmarkType } from '@/types/book'
+
 export interface BookSearchRequest {
   search: string
 }
@@ -18,6 +20,15 @@ export interface BookToUserRequest {
   height: string
   author: string
   cover: string
+}
+
+export interface EditedBookToUserRequest {
+  isbn: string
+  startDate: string
+  endDate: string
+  bookmarks: BookmarkType[]
+  isRecommended: boolean
+  wantToReRead: boolean
 }
 
 export interface BookInfoGettingRequest {
@@ -45,7 +56,6 @@ export interface BookInfoRequest {
 
 export interface UserBookDetailInfoRequest {
   isbn: string
-  userToken: string
 }
 
 export interface DeletedBookRequest {

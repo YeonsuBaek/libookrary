@@ -67,7 +67,7 @@ function page({ params }: { params: { id: string } }) {
         price={price}
       />
       <div className="book-buttons">
-        <Button variant="link" color="success" onClick={() => router.push('/book/edit')}>
+        <Button variant="link" color="success" onClick={() => router.push(`/book/edit/${id}`)}>
           {t('book.button.edit')}
         </Button>
         <Button variant="link" color="error" onClick={handleDelete}>

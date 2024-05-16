@@ -1,10 +1,10 @@
 'use client'
 import { BookmarkType } from '@/types/book'
 import { Button, Checkbox, DatePicker } from '@yeonsubaek/yeonsui'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
-import { addBookToUser, fetchAladinBookInfo, getBookInfo, saveBookInfo, saveUserSavedBook } from '@/apis/book'
+import { editBookToUser } from '@/apis/book'
 import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
 
@@ -12,14 +12,28 @@ interface ReadingEditProps {
   isbn: string
   title: string
   cover: string
+  defStartDate?: string
+  defEndDate?: string
+  defBookmarks?: BookmarkType[]
+  defIsRecommended?: boolean
+  defWantToReRead?: boolean
 }
 
-function ReadingEdit({ isbn, title, cover }: ReadingEditProps) {
+function ReadingEdit({
+  isbn,
+  title,
+  cover,
+  defStartDate = '',
+  defEndDate = '',
+  defBookmarks = [],
+  defIsRecommended = false,
+  defWantToReRead = false,
+}: ReadingEditProps) {
   const { t } = useTranslation('')
   const router = useRouter()
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [bookmarks, setBookmarks] = useState<BookmarkType[]>([])
+  const [startDate, setStartDate] = useState(defStartDate)
+  const [endDate, setEndDate] = useState(defEndDate)
+  const [bookmarks, setBookmarks] = useState(defBookmarks)
   const [page, setPage] = useState('')
   const [content, setContent] = useState('')
   const SPECIAL_OPTIONS = [t('book.reading.reread'), t('book.reading.recommend')]
@@ -43,47 +57,36 @@ function ReadingEdit({ isbn, title, cover }: ReadingEditProps) {
     setBookmarks([...newBookmarks])
   }
 
-  const handleAddBook = async () => {
-    await fetchAladinBookInfo(
-      { isbn },
+  const handleEdit = () => {
+    editBookToUser(
       {
-        onSuccess: async (res) => {
-          await saveBookInfo(res[0], { onSuccess: () => {}, onError: console.error })
-          await addBookToUser(
-            {
-              isbn: res[0].isbn13,
-              title: res[0].title,
-              depth: res[0].subInfo.packing.sizeDepth,
-              height: res[0].subInfo.packing.sizeHeight,
-              author: res[0].author,
-              cover: res[0].cover,
-            },
-            {
-              onSuccess: () => {},
-              onError: console.error,
-            }
-          )
-          await saveUserSavedBook(
-            {
-              isbn,
-              startDate,
-              endDate,
-              bookmarks,
-              isRecommended: selectedSpecial.includes(t('book.reading.recommend')),
-              wantToReRead: selectedSpecial.includes(t('book.reading.reread')),
-            },
-            {
-              onSuccess: () => {},
-              onError: console.error,
-            }
-          )
-          alert('성공적으로 저장하였습니다.')
-          router.push('/')
+        isbn,
+        startDate,
+        endDate,
+        bookmarks,
+        isRecommended: selectedSpecial.includes(t('book.reading.recommend')),
+        wantToReRead: selectedSpecial.includes(t('book.reading.reread')),
+      },
+      {
+        onSuccess: () => {
+          alert('독서 정보를 수정하였습니다.')
+          router.push(`/book/${isbn}`)
         },
         onError: console.error,
       }
     )
   }
+
+  useEffect(() => {
+    setStartDate(defStartDate)
+    setEndDate(defEndDate)
+    setBookmarks(defBookmarks)
+
+    const selected: string[] = []
+    if (defIsRecommended) selected.push(t('book.reading.recommend'))
+    if (defWantToReRead) selected.push(t('book.reading.reread'))
+    setSelectedSpecial(selected)
+  }, [defStartDate, defEndDate, defBookmarks, defIsRecommended, defWantToReRead])
 
   return (
     <>
@@ -120,10 +123,10 @@ function ReadingEdit({ isbn, title, cover }: ReadingEditProps) {
         </div>
       </div>
       <div className="book-buttons">
-        <Button variant="text" onClick={() => router.push('/')}>
+        <Button variant="text" onClick={() => router.push(`/book/${isbn}`)}>
           {t('book.button.cancel')}
         </Button>
-        <Button onClick={handleAddBook}>{t('book.button.add')}</Button>
+        <Button onClick={handleEdit}>{t('book.button.edit')}</Button>
       </div>
     </>
   )

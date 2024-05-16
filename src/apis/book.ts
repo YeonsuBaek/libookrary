@@ -6,6 +6,7 @@ import {
   BookSearchRequest,
   BookToUserRequest,
   DeletedBookRequest,
+  EditedBookToUserRequest,
   UserBookDetailInfoRequest,
 } from './types/bookTypes'
 import { FuncType } from './types/userTypes'
@@ -98,8 +99,9 @@ export const getBookInfo = async ({ isbn }: BookInfoGettingRequest) => {
   }
 }
 
-export const getUserBookDetailInfo = async ({ isbn, userToken }: UserBookDetailInfoRequest) => {
+export const getUserBookDetailInfo = async ({ isbn }: UserBookDetailInfoRequest) => {
   try {
+    const userToken = localStorage.getItem('userToken')
     const docRef = doc(db, 'user_saved_books', userToken)
     const docSnap = await getDoc(docRef)
 
@@ -152,6 +154,31 @@ export const addBookToUser = async (
         await updateDoc(docRef, { books: updatedBooks })
         onSuccess()
       }
+    }
+  } catch (error) {
+    onError(error)
+  }
+}
+
+export const editBookToUser = async (
+  { isbn, startDate, endDate, bookmarks, isRecommended, wantToReRead }: EditedBookToUserRequest,
+  { onSuccess, onError }: FuncType
+) => {
+  try {
+    const userToken = localStorage.getItem('userToken')
+    const docRef = doc(db, 'user_saved_books', userToken)
+    const docSnap = await getDoc(docRef)
+
+    if (!docSnap.exists()) {
+      console.error('도서 정보를 찾을 수 없습니다.')
+    } else {
+      const docInfo = docSnap.data()
+      const bookInfo = docInfo[isbn]
+
+      const updatedBookInfo = { isbn, startDate, endDate, bookmarks, special: [isRecommended, wantToReRead] }
+
+      await updateDoc(docRef, { [isbn]: updatedBookInfo })
+      onSuccess()
     }
   } catch (error) {
     onError(error)
