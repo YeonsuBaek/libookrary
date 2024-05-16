@@ -83,7 +83,7 @@ function Search() {
       </div>
       {books?.length > 0 && (
         <div className="search-book">
-          <BookCardList books={books} />
+          <BookCardList books={books} isAddRoute />
         </div>
       )}
     </div>
