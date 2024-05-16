@@ -13,7 +13,7 @@ function BookshelfList({ books }: BookshelfListProps) {
     return <div className="books-blank">{t('home.blank')}</div>
   }
 
-  return <ul className="books">{books && books.map((isbn) => <BookshelfItem key={isbn} isbn={isbn} />)}</ul>
+  return <ul className="bookshelf-list">{books && books.map((isbn) => <BookshelfItem key={isbn} isbn={isbn} />)}</ul>
 }
 
 export default BookshelfList

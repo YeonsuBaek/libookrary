@@ -1,4 +1,26 @@
-.books {
+.bookshelf-item {
+  display: flex;
+  align-items: flex-end;
+  height: 176px;
+  list-style-type: none;
+
+  &-side {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 4px 0;
+    width: 100%;
+    font: var(--Font-Body-Micro);
+    background-color: pink;
+    border-radius: 2px;
+    writing-mode: vertical-lr;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 0;
+  }
+}
+
+.bookshelf-list {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;

@@ -34,10 +34,10 @@ function BookshelfItem({ isbn }: BookshelfItemProps) {
   }, [])
 
   return (
-    <li className="book" style={{ width: `${sizingWidth}px` }}>
+    <li className="bookshelf-item" style={{ width: `${sizingWidth}px` }}>
       <button
         onClick={() => router.push(`/book/${isbn}`)}
-        className="book-side"
+        className="bookshelf-item-side"
         style={{ height: `${sizingHeight}px`, backgroundColor: color }}
       >
         {title}
