@@ -51,7 +51,7 @@ function ReadingEdit({ isbn, title, cover }: ReadingEditProps) {
           await saveBookInfo(res[0], { onSuccess: () => {}, onError: console.error })
           await addBookToUser(
             {
-              isbn: res[0].isbn,
+              isbn: res[0].isbn13,
               title: res[0].title,
               depth: res[0].subInfo.packing.sizeDepth,
               height: res[0].subInfo.packing.sizeHeight,
