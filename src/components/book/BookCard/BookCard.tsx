@@ -14,7 +14,7 @@ function BookCard({ isbn, title, author, cover }: BookCardProps) {
 
   return (
     <li className="book-card" key={title}>
-      <button className="book-card-button" onClick={() => router.push(`/book/add/${isbn}`)}>
+      <button className="book-card-button" onClick={() => router.push(`/book/${isbn}`)}>
         <Card title={title} info={author} image={cover} />
       </button>
     </li>
