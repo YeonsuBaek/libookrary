@@ -44,28 +44,22 @@ function ReadingEdit({ isbn, title, cover }: ReadingEditProps) {
   }
 
   const handleAddBook = async () => {
-    const info = await getBookInfo({ isbn })
-    await addBookToUser(
+    await fetchAladinBookInfo(
+      { isbn },
       {
-        isbn,
-        title: title,
-        color: info?.color,
-        depth: info?.depth,
-        height: info?.height,
-        author: info?.author,
-        cover: cover,
-      },
-      {
-        onSuccess: async () => {
-          await fetchAladinBookInfo(
-            { isbn },
+        onSuccess: async (res) => {
+          await saveBookInfo(res[0], { onSuccess: () => {}, onError: console.error })
+          await addBookToUser(
             {
-              onSuccess: (res) => {
-                saveBookInfo(res[0], {
-                  onSuccess: () => {},
-                  onError: console.error,
-                })
-              },
+              isbn: res[0].isbn,
+              title: res[0].title,
+              depth: res[0].subInfo.packing.sizeDepth,
+              height: res[0].subInfo.packing.sizeHeight,
+              author: res[0].author,
+              cover: res[0].cover,
+            },
+            {
+              onSuccess: () => {},
               onError: console.error,
             }
           )
