@@ -1,10 +1,11 @@
-import { collection, doc, getDoc, getDocs, query, where, updateDoc, setDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, query, where, updateDoc, setDoc, deleteField } from 'firebase/firestore'
 import {
   AladinBookInfoRequest,
   BookInfoGettingRequest,
   BookInfoRequest,
   BookSearchRequest,
   BookToUserRequest,
+  DeletedBookRequest,
   UserBookDetailInfoRequest,
 } from './types/bookTypes'
 import { FuncType } from './types/userTypes'
@@ -221,6 +222,34 @@ export const saveUserSavedBook = async (info: any, { onSuccess, onError }: FuncT
           },
         },
       })
+      onSuccess()
+    }
+  } catch (error) {
+    onError(error)
+  }
+}
+
+export const deleteBook = async ({ isbn }: DeletedBookRequest, { onSuccess, onError }: FuncType) => {
+  try {
+    const userToken = localStorage.getItem('userToken')
+    const collectionRef = collection(db, 'user')
+    const docRef = doc(collectionRef, userToken)
+    const response = await getDoc(docRef)
+
+    const userSavedBooksRef = collection(db, 'user_saved_books')
+    const userSavedBooksDoc = doc(userSavedBooksRef, userToken)
+
+    if (!response.exists()) {
+      console.error('정보를 찾을 수 없습니다.')
+    } else {
+      const docData = response.data()
+      const updatedBooks = docData.books.filter(({ isbn: cur }: { isbn: string }) => cur !== isbn)
+      await updateDoc(docRef, { books: updatedBooks })
+
+      await updateDoc(userSavedBooksDoc, {
+        [isbn]: deleteField(),
+      })
+
       onSuccess()
     }
   } catch (error) {

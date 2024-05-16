@@ -47,3 +47,7 @@ export interface UserBookDetailInfoRequest {
   isbn: string
   userToken: string
 }
+
+export interface DeletedBookRequest {
+  isbn: string
+}

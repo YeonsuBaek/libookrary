@@ -1,5 +1,5 @@
 'use client'
-import { getBookInfo } from '@/apis/book'
+import { deleteBook, getBookInfo } from '@/apis/book'
 import PageTitle from '@/components/common/PageTitle'
 import BookInfo from '@/components/book/BookInfo'
 import ReadingInfo from '@/components/book/ReadingInfo'
@@ -20,6 +20,19 @@ function page({ params }: { params: { id: string } }) {
   const [desc, setDesc] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState(0)
+
+  const handleDelete = () => {
+    deleteBook(
+      { isbn: id },
+      {
+        onSuccess: () => {
+          alert('성공적으로 삭제하였습니다.')
+          router.push('/')
+        },
+        onError: console.error,
+      }
+    )
+  }
 
   useEffect(
     function fetchBookInfo() {
@@ -57,7 +70,7 @@ function page({ params }: { params: { id: string } }) {
         <Button variant="link" color="success" onClick={() => router.push('/book/edit')}>
           {t('book.button.edit')}
         </Button>
-        <Button variant="link" color="error">
+        <Button variant="link" color="error" onClick={handleDelete}>
           {t('book.button.delete')}
         </Button>
       </div>
