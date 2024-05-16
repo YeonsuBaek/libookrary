@@ -1,6 +1,6 @@
 'use client'
 import { useTranslation } from 'react-i18next'
-import BookshelfItem from '../atom/BookshelfItem'
+import BookshelfItem from './BookshelfItem'
 
 interface BookshelfListProps {
   books: string[]

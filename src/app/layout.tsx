@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import '../styles/index.scss'
 import Providers from './providers'
-import Header from '@/components/organism/Header'
+import Header from '@/components/common/Header'
 
 export const metadata: Metadata = {
   title: '라이북러리 | Libookrary',

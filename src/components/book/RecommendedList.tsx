@@ -1,4 +1,4 @@
-import BookCardList from './BookCardList'
+import BookCardList from './BookCard/BookCardList'
 
 interface RecommendedListProps {
   title: string

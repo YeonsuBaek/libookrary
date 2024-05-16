@@ -5,8 +5,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { addBookToUser, fetchAladinBookInfo, saveBookInfo, saveUserSavedBook } from '@/apis/book'
-import BookmarkEdit from '../atom/BookmarkEdit'
-import BookmarkList from '../molecule/BookmarkList'
+import BookmarkEdit from './Bookmark/BookmarkEdit'
+import BookmarkList from './Bookmark/BookmarkList'
 
 interface ReadingEditProps {
   isbn: string

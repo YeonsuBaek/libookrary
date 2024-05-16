@@ -1,7 +1,7 @@
 'use client'
 import { DatePicker, RibbonBadge } from '@yeonsubaek/yeonsui'
 import { useTranslation } from 'react-i18next'
-import BookmarkList from '../molecule/BookmarkList'
+import BookmarkList from './Bookmark/BookmarkList'
 import { useEffect, useState } from 'react'
 import { getUserBookDetailInfo } from '@/apis/book'
 

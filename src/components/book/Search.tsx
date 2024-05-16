@@ -1,12 +1,12 @@
 'use client'
 import { IconButton, TextField } from '@yeonsubaek/yeonsui'
 import { useTranslation } from 'react-i18next'
-import RecommendedList from '../molecule/RecommendedList'
+import RecommendedList from './RecommendedList'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { debounce } from 'lodash'
 import { fetchBestseller, fetchNewSpecial, fetchSearchBook } from '@/apis/book'
 import { useSearchStore } from '@/stores/search'
-import BookCardList from '../molecule/BookCardList'
+import BookCardList from './BookCard/BookCardList'
 
 function Search() {
   const { t } = useTranslation('')

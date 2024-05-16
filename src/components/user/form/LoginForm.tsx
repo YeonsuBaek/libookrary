@@ -1,6 +1,6 @@
 'use client'
 import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
-import UserForm from '../molecule/UserForm'
+import UserForm from '../layout/UserForm'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'

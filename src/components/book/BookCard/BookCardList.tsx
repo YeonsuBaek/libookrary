@@ -1,6 +1,6 @@
 'use client'
 import { BookType } from '@/types/book'
-import BookCard from '../atom/BookCard'
+import BookCard from './BookCard'
 
 interface BookCardListProps {
   books: any[]

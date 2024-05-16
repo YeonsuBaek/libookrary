@@ -1,6 +1,6 @@
 'use client'
-import PageTitle from '@/components/atom/PageTitle'
-import ReadingEdit from '@/components/organism/ReadingEdit'
+import PageTitle from '@/components/common/PageTitle'
+import ReadingEdit from '@/components/book/ReadingEdit'
 import { Button } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'

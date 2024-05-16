@@ -1,5 +1,5 @@
-import Library from '@/components/organism/Library'
-import Search from '@/components/organism/Search'
+import Library from '@/components/book/Library'
+import Search from '@/components/book/Search'
 
 export default function Home() {
   return (

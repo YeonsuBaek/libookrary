@@ -1,18 +1,16 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
+import UserForm from '../layout/UserForm'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import UserForm from '../molecule/UserForm'
-import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
-import { useUserStore } from '@/stores/user'
-import { editUserInfoApi } from '@/apis/user'
+import { useRouter } from 'next/navigation'
+import { signUpApi } from '@/apis/user'
 
-function AccountEditForm() {
+function JoinForm() {
   const { t } = useTranslation('')
   const router = useRouter()
-  const { email: emailStore, nickname: nicknameStore } = useUserStore()
-  const [email, setEmail] = useState(emailStore)
-  const [nickname, setNickname] = useState(nicknameStore)
+  const [email, setEmail] = useState('')
+  const [nickname, setNickname] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -26,11 +24,11 @@ function AccountEditForm() {
     const isCheckedPassword = checkPassword()
 
     if (isCheckedPassword) {
-      await editUserInfoApi(
-        { email, nickname },
+      await signUpApi(
+        { email, password, nickname },
         {
           onSuccess: () => {
-            alert('회원 정보 수정에 성공하였습니다.')
+            alert('회원가입에 성공하였습니다.')
             router.push('/')
           },
           onError: (error: any) => {
@@ -44,7 +42,7 @@ function AccountEditForm() {
   }
 
   return (
-    <UserForm buttonName={t('user.button.edit')} onClick={handleClickSubmit}>
+    <UserForm buttonName={t('user.button.join')} onClick={handleClickSubmit}>
       <TextField
         label={t('user.form.email')}
         size="large"
@@ -79,4 +77,4 @@ function AccountEditForm() {
   )
 }
 
-export default AccountEditForm
+export default JoinForm

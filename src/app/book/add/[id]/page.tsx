@@ -1,8 +1,8 @@
 'use client'
 import { fetchAladinBookInfo } from '@/apis/book'
-import PageTitle from '@/components/atom/PageTitle'
-import BookInfo from '@/components/molecule/BookInfo'
-import ReadingEdit from '@/components/organism/ReadingEdit'
+import PageTitle from '@/components/common/PageTitle'
+import BookInfo from '@/components/book/BookInfo'
+import ReadingEdit from '@/components/book/ReadingEdit'
 import { useEffect, useState } from 'react'
 
 function page({ params }: { params: { id: string } }) {

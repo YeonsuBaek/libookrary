@@ -1,5 +1,5 @@
 import { BookmarkType } from '@/types/book'
-import BookmarkEdit from '../atom/BookmarkEdit'
+import BookmarkEdit from './BookmarkEdit'
 
 interface BookmarkEditListProps {
   list: BookmarkType[]

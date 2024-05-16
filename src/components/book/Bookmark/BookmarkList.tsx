@@ -1,5 +1,5 @@
 import { BookmarkType } from '@/types/book'
-import Bookmark from '../atom/Bookmark'
+import Bookmark from './Bookmark'
 
 interface BookmarkListProps {
   bookmarks: BookmarkType[]

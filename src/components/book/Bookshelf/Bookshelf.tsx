@@ -1,6 +1,6 @@
 'use client'
 import { useTranslation } from 'react-i18next'
-import BookshelfList from '../molecule/BookshelfList'
+import BookshelfList from './BookshelfList'
 
 interface BookshelfProps {
   nickname: string
