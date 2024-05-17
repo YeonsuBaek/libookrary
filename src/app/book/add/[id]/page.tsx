@@ -2,8 +2,8 @@
 import { fetchAladinBookInfo } from '@/apis/book'
 import PageTitle from '@/components/common/PageTitle'
 import BookInfo from '@/components/book/BookInfo'
-import ReadingEdit from '@/components/book/ReadingEdit'
 import { useEffect, useState } from 'react'
+import ReadingAdd from '@/components/book/ReadingAdd'
 
 function page({ params }: { params: { id: string } }) {
   const { id } = params
@@ -45,7 +45,7 @@ function page({ params }: { params: { id: string } }) {
   return (
     <>
       <PageTitle route={title} />
-      <ReadingEdit isbn={id} title={title} cover={cover} />
+      <ReadingAdd isbn={id} title={title} cover={cover} />
       <BookInfo
         author={author}
         publisher={publisher}
