@@ -1,7 +1,7 @@
 'use client'
 import { Segmented } from '@yeonsubaek/yeonsui'
 import Bookshelf from './Bookshelf/Bookshelf'
-import BookList from './BookCard/BookCardList'
+import BookCardList from './BookCard/BookCardList'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { getUserInfoApi } from '@/apis/user'
@@ -25,7 +25,7 @@ function Library() {
     <>
       <Segmented options={SEGMENTED_LIST} selectedOption={selectedOption} onSelect={setSelectedOption} />
       {selectedOption === SEGMENTED_LIST[0] && <Bookshelf nickname={nickname} books={books} />}
-      {selectedOption === SEGMENTED_LIST[1] && <BookList books={books} />}
+      {selectedOption === SEGMENTED_LIST[1] && <BookCardList books={books} className="book-card-list-library" />}
     </>
   )
 }
