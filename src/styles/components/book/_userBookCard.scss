@@ -1,0 +1,10 @@
+.user-book-card {
+  margin-top: 20px;
+
+  &-blank {
+    display: flex;
+    justify-content: center;
+    font: var(--Font-Body-Regular);
+    color: var(--Font-Color-Primary);
+  }
+}

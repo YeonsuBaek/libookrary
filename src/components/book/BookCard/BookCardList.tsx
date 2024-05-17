@@ -6,16 +6,15 @@ interface BookCardListProps {
   books: UserBookType[]
   sort?: 'wrap' | 'nowrap'
   isAddRoute?: boolean
-  className?: string
 }
 
 interface GettingBookType extends UserBookType {
   isbn13?: string
 }
 
-function BookCardList({ books, sort = 'wrap', isAddRoute = false, className = '' }: BookCardListProps) {
+function BookCardList({ books, sort = 'wrap', isAddRoute = false }: BookCardListProps) {
   return (
-    <ul className={`book-card-list ${sort} ${className}`}>
+    <ul className={`book-card-list ${sort}`}>
       {books &&
         books.map(({ isbn13, isbn, title, author, cover }: GettingBookType) => (
           <BookCard
