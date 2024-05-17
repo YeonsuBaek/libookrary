@@ -20,22 +20,16 @@ function page({ params }: { params: { id: string } }) {
     function fetchBookInfo() {
       ;(async () => {
         if (id) {
-          await fetchAladinBookInfo(
-            { isbn: id },
-            {
-              onSuccess: (info) => {
-                setTitle(info[0]?.title || '')
-                setCover(info[0]?.cover || '')
-                setAuthor(info[0]?.author || '')
-                setPublisher(info[0]?.publisher || '')
-                setPubDate(info[0]?.pubDate || '')
-                setDesc(info[0]?.description || '')
-                setCategory(info[0]?.categoryName || '')
-                setPrice(info[0]?.priceStandard || 0)
-              },
-              onError: console.error,
-            }
-          )
+          const bookInfo = await fetchAladinBookInfo({ isbn: id })
+
+          setTitle(bookInfo?.title || '')
+          setCover(bookInfo?.cover || '')
+          setAuthor(bookInfo?.author || '')
+          setPublisher(bookInfo?.publisher || '')
+          setPubDate(bookInfo?.pubDate || '')
+          setDesc(bookInfo?.description || '')
+          setCategory(bookInfo?.categoryName || '')
+          setPrice(bookInfo?.priceStandard || 0)
         }
       })()
     },

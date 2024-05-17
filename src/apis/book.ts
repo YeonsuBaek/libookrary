@@ -63,7 +63,7 @@ export const fetchSearchBook = async ({ search }: BookSearchRequest, { onSuccess
   }
 }
 
-export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest, { onSuccess, onError }: FuncType) => {
+export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest) => {
   try {
     const response = await fetch(`/api/book/info?isbn=${isbn}`)
     if (!response.ok) {
@@ -72,13 +72,13 @@ export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest, { onS
     const data = await response.json()
 
     if (data.errorCode && data.errorCode === 3) {
-      onSuccess([])
+      return []
     } else {
       const list = data.item
-      onSuccess(list)
+      return list[0]
     }
   } catch (error) {
-    onError(error)
+    console.error(error)
   }
 }
 
@@ -128,6 +128,7 @@ export const addBookToUser = async (
     const response = await getDoc(docRef)
 
     if (!response.exists()) {
+      alert('회원 정보 찾을 수 없다!')
       console.error('회원 정보를 찾을 수 없습니다.')
     } else {
       const docData = response.data()
