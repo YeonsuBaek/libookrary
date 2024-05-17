@@ -11,7 +11,7 @@ import {
 } from './types/bookTypes'
 import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
-import { getBookColor } from '@/utils/book'
+import { getBookColor } from '@/utils/color'
 
 export const fetchNewSpecial = async ({ onSuccess, onError }: FuncType) => {
   try {
