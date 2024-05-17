@@ -8,7 +8,7 @@ import { useSearchStore } from '@/stores/search'
 function Header() {
   const router = useRouter()
   const { isLoggedIn: loginState } = useUserStore()
-  const { setIsOpenSearch } = useSearchStore()
+  const { isOpenSearch, setIsOpenSearch } = useSearchStore()
   const token = localStorage.getItem('userToken')
   const isLoggedIn = Boolean(token) || loginState
 
@@ -17,7 +17,7 @@ function Header() {
       <header className="header">
         <div className="header-logo">
           <Link href="/">
-            <IconButton icon="Read" size="large" />
+            <IconButton icon="Read" size="large" onClick={() => isOpenSearch && setIsOpenSearch(false)} />
           </Link>
         </div>
         <div className="header-buttons">

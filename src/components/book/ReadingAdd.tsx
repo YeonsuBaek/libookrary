@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { addBookToUser, fetchAladinBookInfo, saveBookInfo, saveUserSavedBook } from '@/apis/book'
 import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
+import { useSearchStore } from '@/stores/search'
 
 interface ReadingAddProps {
   isbn: string
@@ -15,6 +16,7 @@ interface ReadingAddProps {
 
 function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   const { t } = useTranslation('')
+  const { isOpenSearch, setIsOpenSearch } = useSearchStore()
   const router = useRouter()
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -88,6 +90,7 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
 
       alert('성공적으로 저장하였습니다.')
       router.push('/')
+      if (isOpenSearch) setIsOpenSearch(false)
     } catch (error) {
       alert('로그인 후 진행해주세요.')
       router.push('/login')
