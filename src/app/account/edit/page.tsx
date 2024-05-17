@@ -1,4 +1,4 @@
-import AccountEditForm from '@/components/organism/AccountEditForm'
+import AccountEditForm from '@/components/user/form/AccountEditForm'
 
 function page() {
   return <AccountEditForm />

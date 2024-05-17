@@ -1,0 +1,44 @@
+.bookmark {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font: var(--Font-Body-Medium);
+    color: var(--Primary-Color-7);
+  }
+
+  &-page {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    svg path {
+      fill: var(--Primary-Color-7);
+    }
+
+    .ui-textfield {
+      width: 72px;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+  }
+
+  &-text {
+    margin: 0;
+    font: var(--Font-Body-Micro);
+    color: var(--Font-Color-Primary);
+  }
+}
+
+.bookmark-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+}

@@ -1,6 +1,6 @@
-import PageTitle from '@/components/atom/PageTitle'
-import LoginForm from '@/components/organism/LoginForm'
-import LoginButtons from '@/components/organism/LoginButtons'
+import PageTitle from '@/components/common/PageTitle'
+import LoginForm from '@/components/user/form/LoginForm'
+import LoginButtons from '@/components/user/buttons/LoginButtons'
 
 function page() {
   return (

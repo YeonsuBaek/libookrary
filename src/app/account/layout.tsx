@@ -1,4 +1,4 @@
-import PageTitle from '@/components/atom/PageTitle'
+import PageTitle from '@/components/common/PageTitle'
 
 interface AccountLayoutProps {
   children: React.ReactNode | React.ReactNode[]

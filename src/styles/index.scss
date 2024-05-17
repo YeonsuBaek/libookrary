@@ -1,18 +1,15 @@
-@import './components/atom/book';
-@import './components/atom/bookcard';
-@import './components/atom/pageTitle';
-@import './components/atom/bookmark';
+@import './components/common/header';
+@import './components/common/pageTitle';
 
-@import './components/molecule/books';
-@import './components/molecule/booklist';
-@import './components/molecule/recommendedlist';
-@import './components/molecule/userform';
-@import './components/molecule/bookmarkList';
-@import './components/molecule/bookInfo';
+@import './components/user/userForm';
 
-@import './components/organism/header';
-@import './components/organism/search';
-@import './components/organism/reading';
+@import './components/book/bookCard';
+@import './components/book/bookInfo';
+@import './components/book/bookmark';
+@import './components/book/bookshelf';
+@import './components/book/reading';
+@import './components/book/recommendedList';
+@import './components/book/search';
 
 @import './app/layout';
 @import './app/home';

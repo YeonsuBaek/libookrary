@@ -1,5 +1,5 @@
-import PageTitle from '@/components/atom/PageTitle'
-import JoinForm from '@/components/organism/JoinForm'
+import PageTitle from '@/components/common/PageTitle'
+import JoinForm from '@/components/user/form/JoinForm'
 
 function page() {
   return (
