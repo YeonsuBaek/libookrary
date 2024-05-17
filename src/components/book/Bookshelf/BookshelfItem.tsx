@@ -1,4 +1,5 @@
 'use client'
+import { getFontColor } from '@/utils/color'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 
@@ -21,13 +22,14 @@ function BookshelfItem({ isbn, title, depth, height, color }: BookshelfItemProps
     () => (Math.floor(height / 1.8) > MAX_HEIGHT ? MAX_HEIGHT : Math.floor(height / 1.8)),
     [height]
   )
+  const fontColor = useMemo(() => getFontColor(color), [color])
 
   return (
     <li className="bookshelf-item" style={{ width: `${sizingWidth}px` }}>
       <button
         onClick={() => router.push(`/book/${isbn}`)}
         className="bookshelf-item-side"
-        style={{ height: `${sizingHeight}px`, backgroundColor: color }}
+        style={{ height: `${sizingHeight}px`, backgroundColor: color, color: fontColor }}
       >
         {title}
       </button>
