@@ -52,7 +52,6 @@ function ReadingEdit({
   }
 
   const handleRemoveBookmark = (idToRemove: number) => {
-    console.log(idToRemove)
     const newBookmarks = bookmarks.filter(({ id }: { id: number }) => id !== idToRemove)
     setBookmarks([...newBookmarks])
   }

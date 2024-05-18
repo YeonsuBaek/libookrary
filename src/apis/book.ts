@@ -55,7 +55,6 @@ export const fetchSearchBook = async ({ search }: BookSearchRequest, { onSuccess
       onSuccess([])
     } else {
       const list = data.item
-      console.log(list)
       onSuccess(list)
     }
   } catch (error) {

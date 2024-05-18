@@ -39,7 +39,6 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   }
 
   const handleRemoveBookmark = (idToRemove: number) => {
-    console.log(idToRemove)
     const newBookmarks = bookmarks.filter(({ id }: { id: number }) => id !== idToRemove)
     setBookmarks([...newBookmarks])
   }
