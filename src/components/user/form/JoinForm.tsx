@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { signUpApi } from '@/apis/user'
+import onToast from '@/components/common/Toast'
 
 function JoinForm() {
   const { t } = useTranslation('')
@@ -28,16 +29,14 @@ function JoinForm() {
         { email, password, nickname },
         {
           onSuccess: () => {
-            alert('회원가입에 성공하였습니다.')
+            onToast({ message: t('toast.user.join.success') })
             router.push('/')
           },
-          onError: (error: any) => {
-            console.error(error)
-          },
+          onError: () => onToast({ message: t('toast.user.join.error'), color: 'error' }),
         }
       )
     } else {
-      alert('비밀번호가 일치하지 않습니다.')
+      onToast({ message: t('toast.user.join.password'), color: 'warning' })
     }
   }
 

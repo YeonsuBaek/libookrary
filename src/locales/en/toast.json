@@ -1,0 +1,44 @@
+{
+  "book": {
+    "get": {
+      "error": "Failed to retrieve book information."
+    },
+    "save": {
+      "success": "Reading history saved successfully.",
+      "error": "Failed to save reading history."
+    },
+    "delete": {
+      "success": "Reading history deleted successfully.",
+      "error": "Failed to delete reading history."
+    },
+    "edit": {
+      "success": "Reading history updated successfully.",
+      "error": "Failed to update reading history."
+    },
+    "login": "Please log in to continue."
+  },
+  "user": {
+    "join": {
+      "success": "Successfully signed up.",
+      "error": "Sign up failed.",
+      "password": "Passwords do not match."
+    },
+    "login": {
+      "success": "Login successful.",
+      "error": "Login failed."
+    },
+    "account": {
+      "success": "Account information updated successfully.",
+      "error": "Failed to update account information.",
+      "password": "Passwords do not match."
+    },
+    "logout": {
+      "success": "Logout successful.",
+      "error": "Logout failed."
+    },
+    "unsubscribe": {
+      "success": "Successfully unsubscribed.",
+      "error": "Failed to unsubscribe."
+    }
+  }
+}

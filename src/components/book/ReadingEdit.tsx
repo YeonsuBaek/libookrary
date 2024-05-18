@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { editBookToUser } from '@/apis/book'
 import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
+import onToast from '../common/Toast'
 
 interface ReadingEditProps {
   isbn: string
@@ -68,10 +69,10 @@ function ReadingEdit({
       },
       {
         onSuccess: () => {
-          alert('독서 정보를 수정하였습니다.')
+          onToast({ message: t('toast.book.edit.success') })
           router.push(`/book/${isbn}`)
         },
-        onError: console.error,
+        onError: () => onToast({ message: t('toast.book.edit.error'), color: 'error' }),
       }
     )
   }

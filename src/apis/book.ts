@@ -87,7 +87,6 @@ export const getBookInfo = async ({ isbn }: BookInfoGettingRequest) => {
     const dataSnapShot = await getDocs(userQuery)
 
     if (dataSnapShot.empty) {
-      console.error('도서 정보를 찾을 수 없습니다.')
       return null
     }
 
@@ -127,7 +126,6 @@ export const addBookToUser = async (
     const response = await getDoc(docRef)
 
     if (!response.exists()) {
-      alert('회원 정보 찾을 수 없다!')
       console.error('회원 정보를 찾을 수 없습니다.')
     } else {
       const docData = response.data()

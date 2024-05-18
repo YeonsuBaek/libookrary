@@ -6,6 +6,7 @@ import UserForm from '../layout/UserForm'
 import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
 import { useUserStore } from '@/stores/user'
 import { editUserInfoApi } from '@/apis/user'
+import onToast from '@/components/common/Toast'
 
 function AccountEditForm() {
   const { t } = useTranslation('')
@@ -30,16 +31,14 @@ function AccountEditForm() {
         { email, nickname },
         {
           onSuccess: () => {
-            alert('회원 정보 수정에 성공하였습니다.')
+            onToast({ message: t('toast.user.account.success') })
             router.push('/')
           },
-          onError: (error: any) => {
-            console.error(error)
-          },
+          onError: () => onToast({ message: t('toast.user.account.error'), color: 'error' }),
         }
       )
     } else {
-      alert('비밀번호가 일치하지 않습니다.')
+      onToast({ message: t('toast.user.account.password'), color: 'warning' })
     }
   }
 

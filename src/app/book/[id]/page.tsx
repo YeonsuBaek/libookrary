@@ -7,6 +7,7 @@ import { Button } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import onToast from '@/components/common/Toast'
 
 function page({ params }: { params: { id: string } }) {
   const { id } = params
@@ -26,10 +27,12 @@ function page({ params }: { params: { id: string } }) {
       { isbn: id },
       {
         onSuccess: () => {
-          alert('성공적으로 삭제하였습니다.')
+          onToast({
+            message: t('toast.book.delete.success'),
+          })
           router.push('/')
         },
-        onError: console.error,
+        onError: () => onToast({ message: t('toast.book.delete.error'), color: 'error' }),
       }
     )
   }

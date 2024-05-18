@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/user'
 import { signInApi } from '@/apis/user'
+import onToast from '@/components/common/Toast'
 
 function LoginForm() {
   const router = useRouter()
@@ -24,13 +25,13 @@ function LoginForm() {
       },
       {
         onSuccess: (res) => {
-          alert('로그인에 성공하였습니다.')
+          onToast({ message: t('toast.user.login.success') })
           localStorage.setItem('userToken', res.user.email || '')
           setIsLoggedIn(true)
           router.replace('/')
         },
-        onError: (error) => {
-          console.error(error)
+        onError: () => {
+          onToast({ message: t('toast.user.login.error'), color: 'error' })
         },
       }
     )

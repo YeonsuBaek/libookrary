@@ -7,6 +7,7 @@ import { addBookToUser, fetchAladinBookInfo, saveBookInfo, saveUserSavedBook } f
 import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
 import { useSearchStore } from '@/stores/search'
+import onToast from '../common/Toast'
 
 interface ReadingAddProps {
   isbn: string
@@ -87,11 +88,11 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
         }),
       ])
 
-      alert('성공적으로 저장하였습니다.')
+      onToast({ message: t('toast.book.save.success') })
       router.push('/')
       if (isOpenSearch) setIsOpenSearch(false)
     } catch (error) {
-      alert('로그인 후 진행해주세요.')
+      onToast({ message: t('toast.book.login') })
       router.push('/login')
     }
   }
