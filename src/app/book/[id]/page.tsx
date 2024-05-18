@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import onToast from '@/components/common/Toast'
+import onModal from '@/components/common/Modal'
 
 function page({ params }: { params: { id: string } }) {
   const { id } = params
@@ -22,7 +23,14 @@ function page({ params }: { params: { id: string } }) {
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState(0)
 
-  const handleDelete = () => {
+  const handleOpenDeleteModal = () => {
+    onModal({
+      message: t('modal.book.delete'),
+      onSave: onDelete,
+    })
+  }
+
+  const onDelete = () => {
     deleteBook(
       { isbn: id },
       {
@@ -73,7 +81,7 @@ function page({ params }: { params: { id: string } }) {
         <Button variant="link" color="success" onClick={() => router.push(`/book/edit/${id}`)}>
           {t('book.button.edit')}
         </Button>
-        <Button variant="link" color="error" onClick={handleDelete}>
+        <Button variant="link" color="error" onClick={handleOpenDeleteModal}>
           {t('book.button.delete')}
         </Button>
       </div>

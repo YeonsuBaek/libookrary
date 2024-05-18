@@ -1,5 +1,6 @@
 'use client'
 import { signOutApi, unsubscribeApi } from '@/apis/user'
+import onModal from '@/components/common/Modal'
 import onToast from '@/components/common/Toast'
 import { useUserStore } from '@/stores/user'
 import { Button } from '@yeonsubaek/yeonsui'
@@ -11,6 +12,13 @@ function AccountButtons() {
   const { t } = useTranslation()
   const { unsubscribe } = useUserStore()
 
+  const handleOpenSignOut = () => {
+    onModal({
+      message: t('modal.user.logout'),
+      onSave: onSignOut,
+    })
+  }
+
   const onSignOut = () => {
     signOutApi({
       onSuccess: () => {
@@ -19,6 +27,13 @@ function AccountButtons() {
         router.push('/')
       },
       onError: () => onToast({ message: t('toast.user.logout.error'), color: 'error' }),
+    })
+  }
+
+  const handleOpenUnsubscribeModal = () => {
+    onModal({
+      message: t('modal.user.unsubscribe'),
+      onSave: onUnsubscribe,
     })
   }
 
@@ -36,10 +51,10 @@ function AccountButtons() {
 
   return (
     <div className="account-etc-buttons">
-      <Button variant="link" color="text" onClick={onSignOut}>
+      <Button variant="link" color="text" onClick={handleOpenSignOut}>
         {t('user.button.logout')}
       </Button>
-      <Button variant="link" color="error" onClick={onUnsubscribe}>
+      <Button variant="link" color="error" onClick={handleOpenUnsubscribeModal}>
         {t('user.button.unsubscribe')}
       </Button>
     </div>
