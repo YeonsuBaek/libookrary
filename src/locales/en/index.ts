@@ -5,6 +5,7 @@ import book from './book.json'
 import toast from './toast.json'
 import common from './common.json'
 import modal from './modal.json'
+import helperText from './helperText.json'
 
 export default {
   home,
@@ -14,4 +15,5 @@ export default {
   toast,
   common,
   modal,
+  helperText,
 }
