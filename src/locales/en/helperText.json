@@ -2,5 +2,10 @@
   "login": {
     "email": "Please enter your email.",
     "password": "Please enter your password."
+  },
+  "join": {
+    "email": "Please enter your email.",
+    "nickname": "Please enter your nickname.",
+    "password": "Please enter your password."
   }
 }
