@@ -1,13 +1,12 @@
 'use client'
 import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../layout/UserForm'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { signUpApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
-
-type InvalidsType = 'email' | 'nickname' | 'password'
+import { InvalidsType } from '@/types/user'
 
 function JoinForm() {
   const { t } = useTranslation('')
