@@ -11,12 +11,19 @@
     padding: 4px 0;
     width: 100%;
     font: var(--Font-Body-Micro);
-    background-color: pink;
+    background-color: pink; // default
     border-radius: 2px;
     writing-mode: vertical-lr;
     white-space: nowrap;
     overflow: hidden;
     border: 0;
+    cursor: pointer;
+    filter: brightness(100%);
+    transition: filter 200ms ease-in;
+
+    &:is(:hover, :active) {
+      filter: brightness(90%);
+    }
   }
 }
 

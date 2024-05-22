@@ -21,7 +21,6 @@ function page({ params }: { params: { id: string } }) {
         if (id) {
           const bookInfo = await getBookInfo({ isbn: id })
           const info = await getUserBookDetailInfo({ isbn: id })
-          console.log(info)
           setTitle(bookInfo?.title || '')
           setCover(bookInfo?.cover || '')
           setStartDate(info?.startDate || '')

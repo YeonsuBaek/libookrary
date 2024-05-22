@@ -6,21 +6,17 @@
     background-color: transparent;
     border: 0;
   }
-
-  .ui-card {
-    margin: 0;
-  }
 }
 
 .book-card-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 16px 8px;
   margin: 0;
   padding: 0;
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 420px) {
     gap: 16px 0;
     justify-content: space-between;
   }
@@ -29,7 +25,7 @@
     flex-wrap: nowrap;
     gap: 8px;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 420px) {
       gap: 8px;
     }
   }

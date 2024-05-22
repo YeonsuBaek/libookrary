@@ -16,7 +16,7 @@ const resources = {
 }
 
 i18n.use(initReactI18next).init({
-  lng: 'ko',
+  lng: 'en',
   resources,
   fallbackLng: getLang(),
   initImmediate: true,

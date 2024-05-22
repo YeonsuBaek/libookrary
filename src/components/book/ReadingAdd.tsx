@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import { addBookToUser, fetchAladinBookInfo, saveBookInfo, saveUserSavedBook } from '@/apis/book'
 import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
+import { useSearchStore } from '@/stores/search'
+import onToast from '../common/Toast'
 
 interface ReadingAddProps {
   isbn: string
@@ -15,6 +17,7 @@ interface ReadingAddProps {
 
 function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   const { t } = useTranslation('')
+  const { isOpenSearch, setIsOpenSearch } = useSearchStore()
   const router = useRouter()
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -37,51 +40,61 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   }
 
   const handleRemoveBookmark = (idToRemove: number) => {
-    console.log(idToRemove)
     const newBookmarks = bookmarks.filter(({ id }: { id: number }) => id !== idToRemove)
     setBookmarks([...newBookmarks])
   }
 
   const handleAddBook = async () => {
-    await fetchAladinBookInfo(
-      { isbn },
-      {
-        onSuccess: async (res) => {
-          await saveBookInfo(res[0], { onSuccess: () => {}, onError: console.error })
-          await addBookToUser(
-            {
-              isbn: res[0].isbn13,
-              title: res[0].title,
-              depth: res[0].subInfo.packing.sizeDepth,
-              height: res[0].subInfo.packing.sizeHeight,
-              author: res[0].author,
-              cover: res[0].cover,
+    const bookInfo = await fetchAladinBookInfo({ isbn })
+    try {
+      await Promise.all([
+        addBookToUser(
+          {
+            isbn: bookInfo.isbn13,
+            title: bookInfo.title,
+            depth: bookInfo.subInfo.packing.sizeDepth,
+            height: bookInfo.subInfo.packing.sizeHeight,
+            author: bookInfo.author,
+            cover: bookInfo.cover,
+          },
+          {
+            onSuccess: () => {},
+            onError: (error) => {
+              throw new Error(error)
             },
-            {
-              onSuccess: () => {},
-              onError: console.error,
-            }
-          )
-          await saveUserSavedBook(
-            {
-              isbn,
-              startDate,
-              endDate,
-              bookmarks,
-              isRecommended: selectedSpecial.includes(t('book.reading.recommend')),
-              wantToReRead: selectedSpecial.includes(t('book.reading.reread')),
+          }
+        ),
+        saveUserSavedBook(
+          {
+            isbn,
+            startDate,
+            endDate,
+            bookmarks,
+            isRecommended: selectedSpecial.includes(t('book.reading.recommend')),
+            wantToReRead: selectedSpecial.includes(t('book.reading.reread')),
+          },
+          {
+            onSuccess: () => {},
+            onError: (error) => {
+              throw new Error(error)
             },
-            {
-              onSuccess: () => {},
-              onError: console.error,
-            }
-          )
-          alert('성공적으로 저장하였습니다.')
-          router.push('/')
-        },
-        onError: console.error,
-      }
-    )
+          }
+        ),
+        saveBookInfo(bookInfo, {
+          onSuccess: () => {},
+          onError: (error) => {
+            throw new Error(error)
+          },
+        }),
+      ])
+
+      onToast({ message: t('toast.book.save.success') })
+      router.push('/')
+      if (isOpenSearch) setIsOpenSearch(false)
+    } catch (error) {
+      onToast({ message: t('toast.book.login') })
+      router.push('/login')
+    }
   }
 
   return (

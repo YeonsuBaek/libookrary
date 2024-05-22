@@ -21,5 +21,9 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "add": "Add"
+  },
+  "message": {
+    "blank": "No books saved.",
+    "login": "Please log in to continue."
   }
 }

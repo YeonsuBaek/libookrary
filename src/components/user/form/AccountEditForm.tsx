@@ -1,11 +1,13 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserForm from '../layout/UserForm'
 import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
 import { useUserStore } from '@/stores/user'
 import { editUserInfoApi } from '@/apis/user'
+import onToast from '@/components/common/Toast'
+import { InvalidsType } from '@/types/user'
 
 function AccountEditForm() {
   const { t } = useTranslation('')
@@ -15,14 +17,13 @@ function AccountEditForm() {
   const [nickname, setNickname] = useState(nicknameStore)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [invalids, setInvalids] = useState<InvalidsType[]>([])
 
   const checkPassword = () => {
     return password.trim() === confirmPassword.trim()
   }
 
-  const handleClickSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
+  const onSubmit = async () => {
     const isCheckedPassword = checkPassword()
 
     if (isCheckedPassword) {
@@ -30,26 +31,44 @@ function AccountEditForm() {
         { email, nickname },
         {
           onSuccess: () => {
-            alert('회원 정보 수정에 성공하였습니다.')
+            onToast({ message: t('toast.user.account.success') })
             router.push('/')
           },
-          onError: (error: any) => {
-            console.error(error)
-          },
+          onError: () => onToast({ message: t('toast.user.account.error'), color: 'error' }),
         }
       )
     } else {
-      alert('비밀번호가 일치하지 않습니다.')
+      onToast({ message: t('toast.user.account.password'), color: 'warning' })
+    }
+  }
+
+  const handleCheckValid = () => {
+    const formInvalids: InvalidsType[] = []
+    if (email.trim() === '') {
+      formInvalids.push('email')
+    }
+    if (nickname.trim() === '') {
+      formInvalids.push('nickname')
+    }
+    if (password.trim() === '') {
+      formInvalids.push('password')
+    }
+    setInvalids(formInvalids)
+
+    if (formInvalids.length === 0) {
+      onSubmit()
     }
   }
 
   return (
-    <UserForm buttonName={t('user.button.edit')} onClick={handleClickSubmit}>
+    <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid}>
       <TextField
         label={t('user.form.email')}
         size="large"
         value={email}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+        isError={invalids.includes('email')}
+        helperText={invalids.includes('email') ? t('helperText.join.email') : ''}
         required
       />
       <TextField
@@ -57,6 +76,8 @@ function AccountEditForm() {
         size="large"
         value={nickname}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setNickname(e.target.value)}
+        isError={invalids.includes('nickname')}
+        helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         required
       />
       <PasswordTextField
@@ -65,6 +86,8 @@ function AccountEditForm() {
         value={password}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
         placeholder={t('user.form.password')}
+        isError={invalids.includes('password')}
+        helperText={invalids.includes('password') ? t('helperText.join.password') : ''}
         required
       />
       <PasswordTextField

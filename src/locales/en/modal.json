@@ -1,0 +1,9 @@
+{
+  "book": {
+    "delete": "Are you sure you want to delete the reading history?"
+  },
+  "user": {
+    "logout": "Are you sure you want to log out?",
+    "unsubscribe": "Are you sure you want to unsubscribe?"
+  }
+}

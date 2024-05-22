@@ -55,7 +55,6 @@ export const fetchSearchBook = async ({ search }: BookSearchRequest, { onSuccess
       onSuccess([])
     } else {
       const list = data.item
-      console.log(list)
       onSuccess(list)
     }
   } catch (error) {
@@ -63,7 +62,7 @@ export const fetchSearchBook = async ({ search }: BookSearchRequest, { onSuccess
   }
 }
 
-export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest, { onSuccess, onError }: FuncType) => {
+export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest) => {
   try {
     const response = await fetch(`/api/book/info?isbn=${isbn}`)
     if (!response.ok) {
@@ -72,13 +71,13 @@ export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest, { onS
     const data = await response.json()
 
     if (data.errorCode && data.errorCode === 3) {
-      onSuccess([])
+      return []
     } else {
       const list = data.item
-      onSuccess(list)
+      return list[0]
     }
   } catch (error) {
-    onError(error)
+    console.error(error)
   }
 }
 
@@ -88,7 +87,6 @@ export const getBookInfo = async ({ isbn }: BookInfoGettingRequest) => {
     const dataSnapShot = await getDocs(userQuery)
 
     if (dataSnapShot.empty) {
-      console.error('도서 정보를 찾을 수 없습니다.')
       return null
     }
 
