@@ -32,8 +32,7 @@ function Search() {
 
   const fetchNewData = useCallback(
     (isSearchAgain: boolean) => {
-      // 🔴 Problem: !isSearchAgain에서 fetchState가 바뀌면 스크롤 최상단으로 올라가는 이유?
-      isSearchAgain && setFetchState('loading')
+      setFetchState('loading')
       fetchSearchBook(
         {
           search: word,
@@ -43,7 +42,7 @@ function Search() {
           onSuccess: (res) => {
             setBooks((prev) => (isSearchAgain ? res : [...prev, ...res]))
             if (res.length > 0) setStartIndex((prev) => prev + 1)
-            isSearchAgain && setFetchState('fetched')
+            setFetchState('fetched')
             setSearchWord(word)
           },
           onError: (error) => {
@@ -108,11 +107,11 @@ function Search() {
         <RecommendedList title={t('header.search.recommended.new')} books={newSpecial} />
         <RecommendedList title={t('header.search.recommended.best')} books={bestseller} />
       </div>
-      {fetchState === 'fetched' && (
-        <div className='search-book'>
-          <BookCardList books={books} isAddRoute />
-        </div>
-      )}
+
+      <div className='search-book'>
+        <BookCardList books={books} isAddRoute />
+      </div>
+
       {/* 🔴 Problem: 영역이 0일때 안됨! 원래 됐는데! */}
       {/* 🔴 Problem: 한 페이지 안에서 데이터 패칭이 끝나면? */}
       {fetchState === 'fetched' && books.length > 0 && <div style={{ height: '20px' }} ref={moreRef} />}
