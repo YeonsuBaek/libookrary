@@ -43,9 +43,9 @@ export const fetchBestseller = async ({ onSuccess, onError }: FuncType) => {
   }
 }
 
-export const fetchSearchBook = async ({ search }: BookSearchRequest, { onSuccess, onError }: FuncType) => {
+export const fetchSearchBook = async ({ search, startIndex }: BookSearchRequest, { onSuccess, onError }: FuncType) => {
   try {
-    const response = await fetch(`/api/book/search?search=${search}`)
+    const response = await fetch(`/api/book/search?search=${search}&startIndex=${startIndex}`)
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }

@@ -2,6 +2,7 @@ import { BookmarkType } from '@/types/book'
 
 export interface BookSearchRequest {
   search: string
+  startIndex: number
 }
 
 export interface AladinBookInfoRequest {

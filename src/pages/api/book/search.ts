@@ -1,8 +1,8 @@
 export default async function async(req: any, res: any) {
-  const { search } = req.query
+  const { search, startIndex } = req.query
   try {
     const KEY = process.env.ALADIN_KEY
-    const aladinAPIUrl = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${KEY}&Query=${search}&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&Output=js&Version=20131101`
+    const aladinAPIUrl = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${KEY}&Query=${search}&QueryType=Title&MaxResults=20&start=${startIndex}&SearchTarget=Book&Output=js&Version=20131101`
     const response = await fetch(aladinAPIUrl)
 
     if (!response.ok) {
