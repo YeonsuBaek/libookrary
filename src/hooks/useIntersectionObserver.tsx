@@ -1,12 +1,10 @@
 import { RefObject, useEffect, useState } from 'react'
 
 function useIntersectionObserver(ref: RefObject<Element | null>, options: IntersectionObserverInit = { threshold: 0 }) {
-  const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null)
+  const [entries, setEntries] = useState<IntersectionObserverEntry[]>([])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setEntry(entry)
-    }, options)
+    const observer = new IntersectionObserver(setEntries, options)
 
     const currentRef = ref.current
     if (currentRef) {
@@ -20,7 +18,7 @@ function useIntersectionObserver(ref: RefObject<Element | null>, options: Inters
     }
   }, [ref, options])
 
-  return { isIntersecting: entry?.isIntersecting }
+  return { isIntersecting: entries[0]?.isIntersecting }
 }
 
 export default useIntersectionObserver

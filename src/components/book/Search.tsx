@@ -21,8 +21,8 @@ function Search() {
   const [books, setBooks] = useState<any[]>([])
   const [startIndex, setStartIndex] = useState(1)
   const [fetchState, setFetchState] = useState<fetchStateType>('idle')
-  const moreRef = useRef<HTMLDivElement>(null)
-  const { isIntersecting } = useIntersectionObserver(moreRef, { threshold: 0.5 })
+  const moreRef = useRef(null)
+  const { isIntersecting } = useIntersectionObserver(moreRef)
 
   const handleCloseSearch = () => {
     setIsOpenSearch(false)
@@ -112,9 +112,8 @@ function Search() {
         <BookCardList books={books} isAddRoute />
       </div>
 
-      {/* 🔴 Problem: 영역이 0일때 안됨! 원래 됐는데! */}
       {/* 🔴 Problem: 한 페이지 안에서 데이터 패칭이 끝나면? */}
-      {fetchState === 'fetched' && books.length > 0 && <div style={{ height: '20px' }} ref={moreRef} />}
+      {books.length > 0 && <div style={{ height: '1px' }} ref={moreRef} />}
       {fetchState === 'loading' && <div>Loading</div>}
     </div>
   ) : null
