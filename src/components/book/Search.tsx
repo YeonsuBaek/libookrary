@@ -19,7 +19,7 @@ function Search() {
   const [newSpecial, setNewSpecial] = useState([])
   const [bestseller, setBestseller] = useState([])
   const [books, setBooks] = useState<any[]>([])
-  const [startIndex, setStartIndex] = useState(1)
+  const [searchIndex, setSearchIndex] = useState(1)
   const [fetchState, setFetchState] = useState<fetchStateType>('idle')
   const moreRef = useRef(null)
   const { isIntersecting } = useIntersectionObserver(moreRef)
@@ -31,7 +31,7 @@ function Search() {
   }
 
   const fetchNewData = useCallback(
-    (isSearchAgain: boolean) => {
+    (isSearchAgain: boolean, { startIndex }: { startIndex: number }) => {
       setFetchState('loading')
       fetchSearchBook(
         {
@@ -41,7 +41,7 @@ function Search() {
         {
           onSuccess: (res) => {
             setBooks((prev) => (isSearchAgain ? res : [...prev, ...res]))
-            if (res.length > 0) setStartIndex((prev) => prev + 1)
+            if (res.length > 0) setSearchIndex(startIndex + 1)
             setFetchState('fetched')
             setSearchWord(word)
           },
@@ -52,7 +52,7 @@ function Search() {
         }
       )
     },
-    [word, startIndex, searchWord]
+    [word]
   )
 
   useEffect(
@@ -60,14 +60,14 @@ function Search() {
       if (isOpenSearch) {
         const needToSearchAgain = word.trim() !== searchWord.trim()
         if (needToSearchAgain) {
-          const debounceFetch = debounce(() => fetchNewData(needToSearchAgain), 500)
+          const debounceFetch = debounce(() => fetchNewData(needToSearchAgain, { startIndex: 1 }), 500)
           debounceFetch()
 
           return () => {
             debounceFetch.cancel()
           }
         } else if (isIntersecting) {
-          fetchNewData(needToSearchAgain)
+          fetchNewData(needToSearchAgain, { startIndex: searchIndex })
         }
       }
     },
@@ -112,7 +112,6 @@ function Search() {
         <BookCardList books={books} isAddRoute />
       </div>
 
-      {/* 🔴 Problem: 한 페이지 안에서 데이터 패칭이 끝나면? */}
       {books.length > 0 && <div style={{ height: '1px' }} ref={moreRef} />}
       {fetchState === 'loading' && <div>Loading</div>}
     </div>
