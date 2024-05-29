@@ -1,9 +1,22 @@
 .book {
+  &-layout {
+    @include responsive('T') {
+      display: flex;
+      gap: 40px;
+      flex-shrink: 0;
+    }
+
+    &-right {
+      width: 100%;
+    }
+  }
+
   &-image {
     position: relative;
     width: 172px;
     height: 229px;
     margin: 0 auto 40px;
+    flex-shrink: 0;
 
     img {
       width: 100%;
@@ -19,6 +32,10 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+    }
+
+    @include responsive('T') {
+      margin: 0;
     }
   }
 

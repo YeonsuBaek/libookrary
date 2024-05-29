@@ -89,46 +89,48 @@ function ReadingEdit({
   }, [defStartDate, defEndDate, defBookmarks, defIsRecommended, defWantToReRead])
 
   return (
-    <>
+    <div className="book-layout">
       <div className="book-image">
         <img src={cover} alt={title} />
       </div>
-      <div className="reading">
-        <div className="reading-date">
-          <div>
-            <h3 className="reading-title">{t('book.reading.startDate')}</h3>
-            <DatePicker value={startDate} setValue={(date: string) => setStartDate(date)} />
+      <div className="book-layout-right">
+        <div className="reading">
+          <div className="reading-date">
+            <div>
+              <h3 className="reading-title">{t('book.reading.startDate')}</h3>
+              <DatePicker value={startDate} setValue={(date: string) => setStartDate(date)} />
+            </div>
+            <div>
+              <h3 className="reading-title">{t('book.reading.endDate')}</h3>
+              <DatePicker value={endDate} setValue={(date: string) => setEndDate(date)} />
+            </div>
           </div>
-          <div>
-            <h3 className="reading-title">{t('book.reading.endDate')}</h3>
-            <DatePicker value={endDate} setValue={(date: string) => setEndDate(date)} />
+          <div className="reading-bookmark">
+            <div className="reading-bookmark-edit">
+              <h3 className="reading-title">{t('book.reading.bookmark')}</h3>
+            </div>
+            <BookmarkList bookmarks={bookmarks} onRemove={handleRemoveBookmark} />
+            <BookmarkEdit
+              onAdd={handleAddBookmark}
+              page={page}
+              setPage={setPage}
+              content={content}
+              setContent={setContent}
+            />
+          </div>
+          <div className="reading-special">
+            <h3 className="reading-title">{t('book.reading.special')}</h3>
+            <Checkbox wrap options={SPECIAL_OPTIONS} selectedOptions={selectedSpecial} onSelect={handleSelect} />
           </div>
         </div>
-        <div className="reading-bookmark">
-          <div className="reading-bookmark-edit">
-            <h3 className="reading-title">{t('book.reading.bookmark')}</h3>
-          </div>
-          <BookmarkList bookmarks={bookmarks} onRemove={handleRemoveBookmark} />
-          <BookmarkEdit
-            onAdd={handleAddBookmark}
-            page={page}
-            setPage={setPage}
-            content={content}
-            setContent={setContent}
-          />
-        </div>
-        <div className="reading-special">
-          <h3 className="reading-title">{t('book.reading.special')}</h3>
-          <Checkbox wrap options={SPECIAL_OPTIONS} selectedOptions={selectedSpecial} onSelect={handleSelect} />
+        <div className="book-buttons">
+          <Button variant="text" onClick={() => router.push(`/book/${isbn}`)}>
+            {t('book.button.cancel')}
+          </Button>
+          <Button onClick={handleEdit}>{t('book.button.edit')}</Button>
         </div>
       </div>
-      <div className="book-buttons">
-        <Button variant="text" onClick={() => router.push(`/book/${isbn}`)}>
-          {t('book.button.cancel')}
-        </Button>
-        <Button onClick={handleEdit}>{t('book.button.edit')}</Button>
-      </div>
-    </>
+    </div>
   )
 }
 
