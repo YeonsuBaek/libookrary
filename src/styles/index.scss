@@ -1,4 +1,6 @@
-@import './visibility';
+@import './base/break-point';
+@import './base/responsive';
+@import './base/visibility';
 
 @import './components/common/header';
 @import './components/common/pageTitle';
