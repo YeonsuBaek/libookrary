@@ -3,6 +3,18 @@
   justify-content: space-between;
   margin: 0 -20px 20px;
 
+  &-logo {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &-title {
+    margin: 0;
+    font: var(--Font-Header-5);
+    color: var(--Primary-Color-6);
+    text-decoration: none;
+  }
+
   &-buttons {
     display: flex;
   }
