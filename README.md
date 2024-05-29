@@ -24,12 +24,13 @@ npm run dev
 
 ### 주요 기능
 
-- 다국어 제공
-- 로그인
-- 책 검색/저장/수정/삭제
-- 책꽂이 목록
-- 책 상세 정보
+- 이메일을 통한 회원가입 및 로그인
+- 알라딘 API를 통해 도서 검색
+- Firebase를 통해 독서 내역 저장, 수정, 삭제
+- 저장된 독서 내역 목록 (책꽂이 및 카드 형식)
+- 다국어 제공 (한국어, 영어)
+
 
 ### 기술
 
-Next.js, TypeScript, YEONSUI, Sass, React-Query, Firebase, Git
+Next.js, TypeScript, YEONSUI, Sass, Firebase, Git
