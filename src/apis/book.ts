@@ -100,7 +100,8 @@ export const getBookInfo = async ({ isbn }: BookInfoGettingRequest) => {
 export const getUserBookDetailInfo = async ({ isbn }: UserBookDetailInfoRequest) => {
   try {
     const userToken = localStorage.getItem('userToken') || ''
-    const docRef = doc(db, 'user_saved_books', userToken)
+    const collectionRef = collection(db, 'user_saved_books')
+    const docRef = doc(collectionRef, userToken)
     const docSnap = await getDoc(docRef)
 
     if (!docSnap.exists()) {
@@ -164,7 +165,8 @@ export const editBookToUser = async (
 ) => {
   try {
     const userToken = localStorage.getItem('userToken') || ''
-    const docRef = doc(db, 'user_saved_books', userToken)
+    const collectionRef = collection(db, 'user_saved_books')
+    const docRef = doc(collectionRef, userToken)
     const docSnap = await getDoc(docRef)
 
     if (!docSnap.exists()) {
