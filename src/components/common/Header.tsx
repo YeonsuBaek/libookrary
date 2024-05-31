@@ -9,8 +9,7 @@ function Header() {
   const router = useRouter()
   const { isLoggedIn: loginState } = useUserStore()
   const { isOpenSearch, setIsOpenSearch } = useSearchStore()
-  const token = localStorage.getItem('userToken')
-  const isLoggedIn = Boolean(token) || loginState
+  const isLoggedIn = typeof window !== 'undefined' ? localStorage.getItem('userToken') || loginState : loginState
 
   return (
     <>
