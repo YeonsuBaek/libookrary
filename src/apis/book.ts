@@ -99,7 +99,7 @@ export const getBookInfo = async ({ isbn }: BookInfoGettingRequest) => {
 
 export const getUserBookDetailInfo = async ({ isbn }: UserBookDetailInfoRequest) => {
   try {
-    const userToken = localStorage.getItem('userToken')
+    const userToken = localStorage.getItem('userToken') || ''
     const docRef = doc(db, 'user_saved_books', userToken)
     const docSnap = await getDoc(docRef)
 
@@ -120,7 +120,7 @@ export const addBookToUser = async (
   { onSuccess, onError }: FuncType
 ) => {
   try {
-    const userToken = localStorage.getItem('userToken')
+    const userToken = localStorage.getItem('userToken') || ''
     const collectionRef = collection(db, 'user')
     const docRef = doc(collectionRef, userToken)
     const response = await getDoc(docRef)
@@ -163,7 +163,7 @@ export const editBookToUser = async (
   { onSuccess, onError }: FuncType
 ) => {
   try {
-    const userToken = localStorage.getItem('userToken')
+    const userToken = localStorage.getItem('userToken') || ''
     const docRef = doc(db, 'user_saved_books', userToken)
     const docSnap = await getDoc(docRef)
 
@@ -228,7 +228,7 @@ export const saveBookInfo = async (info: BookInfoRequest, { onSuccess, onError }
 export const saveUserSavedBook = async (info: any, { onSuccess, onError }: FuncType) => {
   try {
     const { isbn, startDate, endDate, bookmarks, isRecommended, wantToReRead } = info
-    const userToken = localStorage.getItem('userToken')
+    const userToken = localStorage.getItem('userToken') || ''
     const collectionRef = collection(db, 'user_saved_books')
     const docRef = doc(collectionRef, userToken)
     const response = await getDoc(docRef)
@@ -256,7 +256,7 @@ export const saveUserSavedBook = async (info: any, { onSuccess, onError }: FuncT
 
 export const deleteBook = async ({ isbn }: DeletedBookRequest, { onSuccess, onError }: FuncType) => {
   try {
-    const userToken = localStorage.getItem('userToken')
+    const userToken = localStorage.getItem('userToken') || ''
     const collectionRef = collection(db, 'user')
     const docRef = doc(collectionRef, userToken)
     const response = await getDoc(docRef)
