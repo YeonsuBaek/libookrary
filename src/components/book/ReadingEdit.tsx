@@ -34,7 +34,7 @@ function ReadingEdit({
   const router = useRouter()
   const [startDate, setStartDate] = useState(defStartDate)
   const [endDate, setEndDate] = useState(defEndDate)
-  const [bookmarks, setBookmarks] = useState(defBookmarks)
+  const [bookmarks, setBookmarks] = useState<BookmarkType[]>(defBookmarks)
   const [page, setPage] = useState('')
   const [content, setContent] = useState('')
   const SPECIAL_OPTIONS = [t('book.reading.reread'), t('book.reading.recommend')]
