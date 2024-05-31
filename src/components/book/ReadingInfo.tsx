@@ -13,7 +13,7 @@ interface ReadingInfoProps {
 
 function ReadingInfo({ id, title, cover }: ReadingInfoProps) {
   const { t } = useTranslation('')
-  const userToken = localStorage.getItem('userToken')
+  const userToken = typeof window !== 'undefined' ? localStorage.getItem('userToken') : ''
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [bookmarks, setBookmarks] = useState([])
