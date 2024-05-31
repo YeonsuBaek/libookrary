@@ -8,6 +8,7 @@ import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
 import { useSearchStore } from '@/stores/search'
 import onToast from '../common/Toast'
+import { BookmarkType } from '@/types/book'
 
 interface ReadingAddProps {
   isbn: string
@@ -21,7 +22,7 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   const router = useRouter()
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
-  const [bookmarks, setBookmarks] = useState('')
+  const [bookmarks, setBookmarks] = useState<BookmarkType[]>([])
   const [page, setPage] = useState('')
   const [content, setContent] = useState('')
   const SPECIAL_OPTIONS = [t('book.reading.reread'), t('book.reading.recommend')]

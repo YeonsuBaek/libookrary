@@ -12,7 +12,7 @@ function Library() {
   const [nickname, setNickname] = useState<any>(null)
   const [books, setBooks] = useState([])
   const [selectedOption, setSelectedOption] = useState(SEGMENTED_LIST[0])
-  const userToken = localStorage.getItem('userToken')
+  const userToken = typeof window !== 'undefined' ? localStorage.getItem('userToken') : ''
 
   useEffect(function fetchUserInfo() {
     ;(async () => {

@@ -3,14 +3,20 @@ import { Icon, IconButton, TextArea, TextField } from '@yeonsubaek/yeonsui'
 import { ChangeEvent, useState } from 'react'
 
 interface BookmarkEditProps {
-  onAdd: () => void
   page: string
-  setPage: (val: string) => void
   content: string
-  setContent: (val: string) => void
+  onAdd?: () => void
+  setPage?: (val: string) => void
+  setContent?: (val: string) => void
 }
 
-function BookmarkEdit({ onAdd, page, setPage, content, setContent }: BookmarkEditProps) {
+function BookmarkEdit({
+  onAdd = () => {},
+  page,
+  setPage = () => {},
+  content,
+  setContent = () => {},
+}: BookmarkEditProps) {
   return (
     <div className="bookmark">
       <div className="bookmark-header">

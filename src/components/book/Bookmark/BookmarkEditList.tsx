@@ -10,7 +10,7 @@ function BookmarkEditList({ list }: BookmarkEditListProps) {
     <ul className="bookmark-list">
       {list.length > 0 &&
         list.map(({ id, page, content }: BookmarkType) => {
-          return <BookmarkEdit key={id} page={page} text={content} />
+          return <BookmarkEdit key={id} page={page} content={content} />
         })}
     </ul>
   )
