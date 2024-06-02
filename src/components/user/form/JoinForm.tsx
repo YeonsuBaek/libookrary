@@ -63,6 +63,7 @@ function JoinForm() {
   return (
     <UserForm buttonName={t('user.button.join')} onClick={handleCheckValid}>
       <TextField
+        id="user-join-form-email"
         label={t('user.form.email')}
         size="large"
         value={email}
@@ -72,6 +73,7 @@ function JoinForm() {
         required
       />
       <TextField
+        id="user-join-form-nickname"
         label={t('user.form.nickname')}
         size="large"
         value={nickname}
@@ -91,6 +93,7 @@ function JoinForm() {
         </label>
       </form>
       <PasswordTextField
+        id="user-join-form-password"
         label={t('user.form.password')}
         size="large"
         value={password}
@@ -101,6 +104,7 @@ function JoinForm() {
         required
       />
       <PasswordTextField
+        id="user-join-form-confirm-password"
         label={t('user.form.confirmPassword')}
         size="large"
         value={confirmPassword}

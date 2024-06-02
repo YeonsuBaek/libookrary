@@ -66,6 +66,7 @@ function AccountEditForm() {
   return (
     <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid}>
       <TextField
+        id="user-account-edit-email"
         label={t('user.form.email')}
         size="large"
         value={email}
@@ -75,6 +76,7 @@ function AccountEditForm() {
         required
       />
       <TextField
+        id="user-account-edit-nickname"
         label={t('user.form.nickname')}
         size="large"
         value={nickname}
@@ -94,6 +96,7 @@ function AccountEditForm() {
         </label>
       </form>
       <PasswordTextField
+        id="user-account-edit-password"
         label={t('user.form.password')}
         size="large"
         value={password}
@@ -104,6 +107,7 @@ function AccountEditForm() {
         required
       />
       <PasswordTextField
+        id="user-account-edit-confirm-password"
         label={t('user.form.confirmPassword')}
         size="large"
         value={confirmPassword}

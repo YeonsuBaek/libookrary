@@ -23,6 +23,7 @@ function BookmarkEdit({
         <div className="bookmark-page">
           <Icon icon="Tag" size="xsmall" />
           <TextField
+            id="bookmark-page"
             value={page}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setPage(e.target.value)}
             size="small"
@@ -32,7 +33,11 @@ function BookmarkEdit({
           <IconButton icon="PlusCircle" color="success" onClick={onAdd} />
         </div>
       </div>
-      <TextArea value={content} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)} />
+      <TextArea
+        id="bookmark-content"
+        value={content}
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
+      />
     </div>
   )
 }

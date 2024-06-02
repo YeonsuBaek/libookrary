@@ -56,6 +56,7 @@ function LoginForm() {
   return (
     <UserForm buttonName={t('user.button.login')} onClick={handleCheckValid}>
       <TextField
+        id="user-login-form-email"
         placeholder={t('user.form.email')}
         value={email}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
@@ -63,6 +64,7 @@ function LoginForm() {
         helperText={invalids.includes('email') ? t('helperText.login.email') : ''}
       />
       <PasswordTextField
+        id="user-login-form-password"
         placeholder={t('user.form.password')}
         value={password}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
