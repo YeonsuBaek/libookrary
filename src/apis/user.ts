@@ -88,3 +88,20 @@ export const unsubscribeApi = async ({ onSuccess, onError }: FuncType) => {
     onError(error)
   }
 }
+
+export const getUserLanguage = async () => {
+  try {
+    const userToken = localStorage.getItem('userToken')
+    const userQuery = query(collection(db, 'user'), where('email', '==', userToken))
+    const dataSnapShot = await getDocs(userQuery)
+
+    if (dataSnapShot.empty) {
+      return 'ko'
+    }
+
+    const userData = dataSnapShot.docs[0].data()
+    return userData.language
+  } catch (error) {
+    return 'ko'
+  }
+}

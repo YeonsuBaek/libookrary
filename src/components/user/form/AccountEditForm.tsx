@@ -8,6 +8,7 @@ import { useUserStore } from '@/stores/user'
 import { editUserInfoApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
 import { InvalidsType } from '@/types/user'
+import i18n from '@/locales/i18n'
 
 function AccountEditForm() {
   const { t } = useTranslation('')
@@ -15,6 +16,7 @@ function AccountEditForm() {
   const { email: emailStore, nickname: nicknameStore } = useUserStore()
   const [email, setEmail] = useState(emailStore)
   const [nickname, setNickname] = useState(nicknameStore)
+  const [language, setLanguage] = useState(i18n.language)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
@@ -31,6 +33,7 @@ function AccountEditForm() {
         { email, nickname },
         {
           onSuccess: () => {
+            i18n.changeLanguage(language)
             onToast({ message: t('toast.user.account.success') })
             router.push('/')
           },
@@ -60,6 +63,11 @@ function AccountEditForm() {
     }
   }
 
+  const handleLanguageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newLanguage = e.target.value
+    setLanguage(newLanguage)
+  }
+
   return (
     <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid}>
       <TextField
@@ -80,6 +88,16 @@ function AccountEditForm() {
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         required
       />
+      <form>
+        <label>
+          <input type="radio" value="en" checked={language === 'en'} onChange={handleLanguageChange} />
+          English
+        </label>
+        <label>
+          <input type="radio" value="ko" checked={language === 'ko'} onChange={handleLanguageChange} />
+          한국어
+        </label>
+      </form>
       <PasswordTextField
         label={t('user.form.password')}
         size="large"
