@@ -3,7 +3,10 @@ import { app, db } from '../../firebase.config'
 import { SignInRequest, SignUpRequest, FuncType, EditUserInfoRequest } from './types/userTypes'
 import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
 
-export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { onSuccess, onError }: FuncType) => {
+export const signUpApi = async (
+  { email, password, nickname, language }: SignUpRequest,
+  { onSuccess, onError }: FuncType
+) => {
   try {
     const auth = getAuth(app)
     await createUserWithEmailAndPassword(auth, email, password)
@@ -13,9 +16,9 @@ export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { 
     const response = await getDoc(docRef)
 
     if (!response.exists()) {
-      await setDoc(docRef, { email, nickname, books: [] })
+      await setDoc(docRef, { email, nickname, language, books: [] })
     } else {
-      await updateDoc(docRef, { email, nickname })
+      await updateDoc(docRef, { email, nickname, language })
     }
 
     onSuccess()

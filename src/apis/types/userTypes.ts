@@ -1,3 +1,5 @@
+import { LanguageType } from '@/types/user'
+
 export interface FuncType {
   onSuccess: (res?: any) => void
   onError: (error: any) => void
@@ -7,6 +9,7 @@ export interface SignUpRequest {
   email: string
   password: string
   nickname: string
+  language: LanguageType
 }
 
 export interface SignInRequest {

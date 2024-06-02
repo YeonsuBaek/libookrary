@@ -6,13 +6,15 @@ import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { signUpApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
-import { InvalidsType } from '@/types/user'
+import { InvalidsType, LanguageType } from '@/types/user'
+import i18n from '@/locales/i18n'
 
 function JoinForm() {
   const { t } = useTranslation('')
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
+  const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
@@ -26,7 +28,7 @@ function JoinForm() {
 
     if (isCheckedPassword) {
       signUpApi(
-        { email, password, nickname },
+        { email, password, nickname, language },
         {
           onSuccess: () => {
             onToast({ message: t('toast.user.join.success') })
@@ -78,6 +80,16 @@ function JoinForm() {
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         required
       />
+      <form>
+        <label>
+          <input type="radio" value="en" checked={language === 'en'} onChange={() => setLanguage('en')} />
+          English
+        </label>
+        <label>
+          <input type="radio" value="ko" checked={language === 'ko'} onChange={() => setLanguage('ko')} />
+          한국어
+        </label>
+      </form>
       <PasswordTextField
         label={t('user.form.password')}
         size="large"

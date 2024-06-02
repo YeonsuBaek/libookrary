@@ -63,11 +63,6 @@ function AccountEditForm() {
     }
   }
 
-  const handleLanguageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newLanguage = e.target.value
-    setLanguage(newLanguage)
-  }
-
   return (
     <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid}>
       <TextField
@@ -90,11 +85,11 @@ function AccountEditForm() {
       />
       <form>
         <label>
-          <input type="radio" value="en" checked={language === 'en'} onChange={handleLanguageChange} />
+          <input type="radio" value="en" checked={language === 'en'} onChange={() => setLanguage('en')} />
           English
         </label>
         <label>
-          <input type="radio" value="ko" checked={language === 'ko'} onChange={handleLanguageChange} />
+          <input type="radio" value="ko" checked={language === 'ko'} onChange={() => setLanguage('ko')} />
           한국어
         </label>
       </form>
