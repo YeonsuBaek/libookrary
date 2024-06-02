@@ -4,6 +4,7 @@
   "info": "User Information",
   "form": {
     "email": "Email",
+    "nickname": "Nickname",
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "hintPassword": "Password Hint",
