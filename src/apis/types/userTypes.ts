@@ -28,4 +28,5 @@ export interface UserInfoRequest {
 export interface EditUserInfoRequest {
   email: string
   nickname: string
+  language: LanguageType
 }

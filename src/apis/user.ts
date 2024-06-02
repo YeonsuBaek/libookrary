@@ -66,11 +66,14 @@ export const getUserInfoApi = async () => {
   }
 }
 
-export const editUserInfoApi = async ({ email, nickname }: EditUserInfoRequest, { onSuccess, onError }: FuncType) => {
+export const editUserInfoApi = async (
+  { email, nickname, language }: EditUserInfoRequest,
+  { onSuccess, onError }: FuncType
+) => {
   try {
     const collectionRef = collection(db, 'user')
     const docRef = doc(collectionRef, email)
-    await updateDoc(docRef, { email, nickname })
+    await updateDoc(docRef, { email, nickname, language })
     onSuccess()
   } catch (error) {
     onError(error)

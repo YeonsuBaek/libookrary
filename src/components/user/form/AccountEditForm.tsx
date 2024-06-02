@@ -7,7 +7,7 @@ import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
 import { useUserStore } from '@/stores/user'
 import { editUserInfoApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
-import { InvalidsType } from '@/types/user'
+import { InvalidsType, LanguageType } from '@/types/user'
 import i18n from '@/locales/i18n'
 
 function AccountEditForm() {
@@ -16,7 +16,7 @@ function AccountEditForm() {
   const { email: emailStore, nickname: nicknameStore } = useUserStore()
   const [email, setEmail] = useState(emailStore)
   const [nickname, setNickname] = useState(nicknameStore)
-  const [language, setLanguage] = useState(i18n.language)
+  const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
@@ -30,7 +30,7 @@ function AccountEditForm() {
 
     if (isCheckedPassword) {
       await editUserInfoApi(
-        { email, nickname },
+        { email, nickname, language },
         {
           onSuccess: () => {
             i18n.changeLanguage(language)
