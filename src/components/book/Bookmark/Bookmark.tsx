@@ -5,7 +5,7 @@ import { Icon, IconButton } from '@yeonsubaek/yeonsui'
 interface BookmarkProps {
   page: string
   text: string
-  onRemove?: (id: number) => void
+  onRemove?: () => void
 }
 
 function Bookmark({ page, text, onRemove = () => {} }: BookmarkProps) {
