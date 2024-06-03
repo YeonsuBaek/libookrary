@@ -30,7 +30,8 @@
     "account": {
       "success": "Account information updated successfully.",
       "error": "Failed to update account information.",
-      "password": "Passwords do not match."
+      "password": "Passwords do not match.",
+      "email": "Failed to retrieve account information."
     },
     "logout": {
       "success": "Logout successful.",

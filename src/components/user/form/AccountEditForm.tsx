@@ -9,6 +9,9 @@ import { editUserInfoApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
 import { InvalidsType, LANGUAGE_VALUES, LanguageType } from '@/types/user'
 import i18n from '@/locales/i18n'
+import { auth } from '../../../../firebase.config'
+import { reauthenticateWithCredential } from 'firebase/auth'
+import { EmailAuthProvider } from 'firebase/auth/cordova'
 
 function AccountEditForm() {
   const { t } = useTranslation('')
@@ -21,31 +24,32 @@ function AccountEditForm() {
   const [email, setEmail] = useState(emailStore)
   const [nickname, setNickname] = useState(nicknameStore)
   const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType)
-  const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
 
-  const checkPassword = () => {
-    return password.trim() === confirmPassword.trim()
-  }
-
   const onSubmit = async () => {
-    const isCheckedPassword = checkPassword()
+    const user = auth.currentUser
 
-    if (isCheckedPassword) {
-      await editUserInfoApi(
-        { email, nickname, language },
-        {
-          onSuccess: () => {
-            i18n.changeLanguage(language)
-            onToast({ id: 'submit-success-toast', message: t('toast.user.account.success') })
-            router.push('/')
-          },
-          onError: () => onToast({ id: 'submit-error-toast', message: t('toast.user.account.error'), color: 'error' }),
-        }
-      )
+    if (user && user.email) {
+      const credential = EmailAuthProvider.credential(user.email, confirmPassword)
+      try {
+        await reauthenticateWithCredential(user, credential)
+        await editUserInfoApi(
+          { email, nickname, language },
+          {
+            onSuccess: () => {
+              i18n.changeLanguage(language)
+              onToast({ id: 'edit-success-toast', message: t('toast.user.account.success') })
+              router.push('/')
+            },
+            onError: () => onToast({ id: 'edit-error-toast', message: t('toast.user.account.error'), color: 'error' }),
+          }
+        )
+      } catch (error) {
+        onToast({ id: 'password-error-toast', message: t('toast.user.account.password'), color: 'warning' })
+      }
     } else {
-      onToast({ id: 'submit-error-toast', message: t('toast.user.account.password'), color: 'warning' })
+      onToast({ id: 'email-error-toast', message: t('toast.user.account.email'), color: 'error' })
     }
   }
 
@@ -56,9 +60,6 @@ function AccountEditForm() {
     }
     if (nickname.trim() === '') {
       formInvalids.push('nickname')
-    }
-    if (password.trim() === '') {
-      formInvalids.push('password')
     }
     setInvalids(formInvalids)
 
@@ -94,17 +95,6 @@ function AccountEditForm() {
         options={LANGUAGE_LIST}
         selectedOption={language}
         onSelect={(lan) => setLanguage(lan as LanguageType)}
-      />
-      <PasswordTextField
-        id="user-account-edit-password"
-        label={t('user.form.password')}
-        size="large"
-        value={password}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-        placeholder={t('user.form.password')}
-        isError={invalids.includes('password')}
-        helperText={invalids.includes('password') ? t('helperText.join.password') : ''}
-        required
       />
       <PasswordTextField
         id="user-account-edit-confirm-password"
