@@ -3,18 +3,24 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserForm from '../layout/UserForm'
-import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
+import { PasswordTextField, RadioGroup, TextField } from '@yeonsubaek/yeonsui'
 import { useUserStore } from '@/stores/user'
 import { editUserInfoApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
-import { InvalidsType } from '@/types/user'
+import { InvalidsType, LANGUAGE_VALUES, LanguageType } from '@/types/user'
+import i18n from '@/locales/i18n'
 
 function AccountEditForm() {
   const { t } = useTranslation('')
+  const LANGUAGE_LIST = [
+    { value: LANGUAGE_VALUES.ko, text: t('common.language.ko-ko'), id: 'language1' },
+    { value: LANGUAGE_VALUES.en, text: t('common.language.en-en'), id: 'language2' },
+  ]
   const router = useRouter()
   const { email: emailStore, nickname: nicknameStore } = useUserStore()
   const [email, setEmail] = useState(emailStore)
   const [nickname, setNickname] = useState(nicknameStore)
+  const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
@@ -28,17 +34,18 @@ function AccountEditForm() {
 
     if (isCheckedPassword) {
       await editUserInfoApi(
-        { email, nickname },
+        { email, nickname, language },
         {
           onSuccess: () => {
-            onToast({ message: t('toast.user.account.success') })
+            i18n.changeLanguage(language)
+            onToast({ id: 'submit-success-toast', message: t('toast.user.account.success') })
             router.push('/')
           },
-          onError: () => onToast({ message: t('toast.user.account.error'), color: 'error' }),
+          onError: () => onToast({ id: 'submit-error-toast', message: t('toast.user.account.error'), color: 'error' }),
         }
       )
     } else {
-      onToast({ message: t('toast.user.account.password'), color: 'warning' })
+      onToast({ id: 'submit-error-toast', message: t('toast.user.account.password'), color: 'warning' })
     }
   }
 
@@ -63,6 +70,7 @@ function AccountEditForm() {
   return (
     <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid}>
       <TextField
+        id="user-account-edit-email"
         label={t('user.form.email')}
         size="large"
         value={email}
@@ -72,6 +80,7 @@ function AccountEditForm() {
         required
       />
       <TextField
+        id="user-account-edit-nickname"
         label={t('user.form.nickname')}
         size="large"
         value={nickname}
@@ -80,7 +89,14 @@ function AccountEditForm() {
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         required
       />
+      <RadioGroup
+        id="user-account-edit-language"
+        options={LANGUAGE_LIST}
+        selectedOption={language}
+        onSelect={(lan) => setLanguage(lan as LanguageType)}
+      />
       <PasswordTextField
+        id="user-account-edit-password"
         label={t('user.form.password')}
         size="large"
         value={password}
@@ -91,6 +107,7 @@ function AccountEditForm() {
         required
       />
       <PasswordTextField
+        id="user-account-edit-confirm-password"
         label={t('user.form.confirmPassword')}
         size="large"
         value={confirmPassword}

@@ -5,13 +5,17 @@ import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { getUserInfoApi } from '@/apis/user'
 import UserBookCard from './UserBookCard'
+import { LIBRARY_VALUES } from '@/types/library'
 
 function Library() {
   const { t } = useTranslation('')
-  const SEGMENTED_LIST = [t('home.segmented.bookshelf'), t('home.segmented.list')]
+  const SEGMENTED_LIST = [
+    { value: LIBRARY_VALUES.bookshelf, text: t('home.segmented.bookshelf'), id: 'segmented1' },
+    { value: LIBRARY_VALUES.list, text: t('home.segmented.list'), id: 'segmented2' },
+  ]
   const [nickname, setNickname] = useState<any>(null)
   const [books, setBooks] = useState([])
-  const [selectedOption, setSelectedOption] = useState(SEGMENTED_LIST[0])
+  const [selectedOption, setSelectedOption] = useState(LIBRARY_VALUES.bookshelf)
   const userToken = typeof window !== 'undefined' ? localStorage.getItem('userToken') : ''
 
   useEffect(function fetchUserInfo() {
@@ -25,9 +29,14 @@ function Library() {
   if (userToken) {
     return (
       <>
-        <Segmented options={SEGMENTED_LIST} selectedOption={selectedOption} onSelect={setSelectedOption} />
-        {selectedOption === SEGMENTED_LIST[0] && <Bookshelf nickname={nickname} books={books} />}
-        {selectedOption === SEGMENTED_LIST[1] && <UserBookCard books={books} />}
+        <Segmented
+          id="library-segmented"
+          options={SEGMENTED_LIST}
+          selectedOption={selectedOption}
+          onSelect={(val) => setSelectedOption(val as LIBRARY_VALUES)}
+        />
+        {selectedOption === LIBRARY_VALUES.bookshelf && <Bookshelf nickname={nickname} books={books} />}
+        {selectedOption === LIBRARY_VALUES.list && <UserBookCard books={books} />}
       </>
     )
   }

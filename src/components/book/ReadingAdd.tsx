@@ -89,11 +89,11 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
         }),
       ])
 
-      onToast({ message: t('toast.book.save.success') })
+      onToast({ id: 'add-book-success-toast', message: t('toast.book.save.success') })
       router.push('/')
       if (isOpenSearch) setIsOpenSearch(false)
     } catch (error) {
-      onToast({ message: t('toast.book.login') })
+      onToast({ id: 'add-book-error-toast', message: t('toast.book.login') })
       router.push('/login')
     }
   }
@@ -107,11 +107,19 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
         <div className="reading-date">
           <div>
             <h3 className="reading-title">{t('book.reading.startDate')}</h3>
-            <DatePicker value={startDate} setValue={(date: string) => setStartDate(date)} />
+            <DatePicker
+              id="reading-start-date-date-picker"
+              value={startDate}
+              setValue={(date: string) => setStartDate(date)}
+            />
           </div>
           <div>
             <h3 className="reading-title">{t('book.reading.endDate')}</h3>
-            <DatePicker value={endDate} setValue={(date: string) => setEndDate(date)} />
+            <DatePicker
+              id="reading-end-date-date-picker"
+              value={endDate}
+              setValue={(date: string) => setEndDate(date)}
+            />
           </div>
         </div>
         <div className="reading-bookmark">
@@ -129,7 +137,13 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
         </div>
         <div className="reading-special">
           <h3 className="reading-title">{t('book.reading.special')}</h3>
-          <Checkbox wrap options={SPECIAL_OPTIONS} selectedOptions={selectedSpecial} onSelect={handleSelect} />
+          <Checkbox
+            id="reading-special-options-checkbox"
+            wrap
+            options={SPECIAL_OPTIONS}
+            selectedOptions={selectedSpecial}
+            onSelect={handleSelect}
+          />
         </div>
       </div>
       <div className="book-buttons">

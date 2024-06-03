@@ -93,12 +93,13 @@ function Search() {
   )
 
   return isOpenSearch ? (
-    <div className='search'>
-      <header className='search-header'>
-        <IconButton icon='Close' onClick={handleCloseSearch} />
+    <div className="search">
+      <header className="search-header">
+        <IconButton icon="Close" onClick={handleCloseSearch} />
       </header>
       <TextField
-        icon='Search'
+        id="header-search"
+        icon="Search"
         placeholder={t('header.search.placeholder')}
         value={word}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
@@ -108,7 +109,7 @@ function Search() {
         <RecommendedList title={t('header.search.recommended.best')} books={bestseller} />
       </div>
 
-      <div className='search-book'>
+      <div className="search-book">
         <BookCardList books={books} isAddRoute />
       </div>
 

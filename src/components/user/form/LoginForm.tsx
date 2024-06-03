@@ -26,13 +26,13 @@ function LoginForm() {
       },
       {
         onSuccess: (res) => {
-          onToast({ message: t('toast.user.login.success') })
+          onToast({ id: 'submit-success-toast', message: t('toast.user.login.success') })
           typeof window !== 'undefined' && localStorage.setItem('userToken', res.user.email || '')
           setIsLoggedIn(true)
           router.replace('/')
         },
         onError: () => {
-          onToast({ message: t('toast.user.login.error'), color: 'error' })
+          onToast({ id: 'submit-error-toast', message: t('toast.user.login.error'), color: 'error' })
         },
       }
     )
@@ -56,6 +56,7 @@ function LoginForm() {
   return (
     <UserForm buttonName={t('user.button.login')} onClick={handleCheckValid}>
       <TextField
+        id="user-login-form-email"
         placeholder={t('user.form.email')}
         value={email}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
@@ -63,6 +64,7 @@ function LoginForm() {
         helperText={invalids.includes('email') ? t('helperText.login.email') : ''}
       />
       <PasswordTextField
+        id="user-login-form-password"
         placeholder={t('user.form.password')}
         value={password}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
