@@ -49,11 +49,11 @@ function ReadingInfo({ id, title, cover }: ReadingInfoProps) {
         <div className="reading-date">
           <div>
             <h3 className="reading-title">{t('book.reading.startDate')}</h3>
-            <DatePicker value={startDate} disabled />
+            <DatePicker id="reading-start-date-date-picker" value={startDate} setValue={() => {}} disabled />
           </div>
           <div>
             <h3 className="reading-title">{t('book.reading.endDate')}</h3>
-            <DatePicker value={endDate} disabled />
+            <DatePicker id="reading-end-date-date-picker" value={endDate} setValue={() => {}} disabled />
           </div>
         </div>
         {bookmarks.length > 0 && (
