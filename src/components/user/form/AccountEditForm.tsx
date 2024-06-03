@@ -3,15 +3,19 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserForm from '../layout/UserForm'
-import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
+import { PasswordTextField, RadioGroup, TextField } from '@yeonsubaek/yeonsui'
 import { useUserStore } from '@/stores/user'
 import { editUserInfoApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
-import { InvalidsType, LanguageType } from '@/types/user'
+import { InvalidsType, LANGUAGE_VALUES, LanguageType } from '@/types/user'
 import i18n from '@/locales/i18n'
 
 function AccountEditForm() {
   const { t } = useTranslation('')
+  const LANGUAGE_LIST = [
+    { value: LANGUAGE_VALUES.ko, text: t('common.language.ko-ko'), id: 'language1' },
+    { value: LANGUAGE_VALUES.en, text: t('common.language.en-en'), id: 'language2' },
+  ]
   const router = useRouter()
   const { email: emailStore, nickname: nicknameStore } = useUserStore()
   const [email, setEmail] = useState(emailStore)
@@ -85,16 +89,12 @@ function AccountEditForm() {
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         required
       />
-      <form>
-        <label>
-          <input type="radio" value="en" checked={language === 'en'} onChange={() => setLanguage('en')} />
-          English
-        </label>
-        <label>
-          <input type="radio" value="ko" checked={language === 'ko'} onChange={() => setLanguage('ko')} />
-          한국어
-        </label>
-      </form>
+      <RadioGroup
+        id="user-account-edit-language"
+        options={LANGUAGE_LIST}
+        selectedOption={language}
+        onSelect={(lan) => setLanguage(lan as LanguageType)}
+      />
       <PasswordTextField
         id="user-account-edit-password"
         label={t('user.form.password')}
