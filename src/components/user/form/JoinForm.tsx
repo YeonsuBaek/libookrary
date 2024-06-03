@@ -35,14 +35,14 @@ function JoinForm() {
         { email, password, nickname, language },
         {
           onSuccess: () => {
-            onToast({ message: t('toast.user.join.success') })
+            onToast({ id: 'sign-up-success-toast', message: t('toast.user.join.success') })
             router.push('/')
           },
-          onError: () => onToast({ message: t('toast.user.join.error'), color: 'error' }),
+          onError: () => onToast({ id: 'sign-up-error-toast', message: t('toast.user.join.error'), color: 'error' }),
         }
       )
     } else {
-      onToast({ message: t('toast.user.join.password'), color: 'warning' })
+      onToast({ id: 'submit-error-toast', message: t('toast.user.join.password'), color: 'warning' })
     }
   }
 

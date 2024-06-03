@@ -38,14 +38,14 @@ function AccountEditForm() {
         {
           onSuccess: () => {
             i18n.changeLanguage(language)
-            onToast({ message: t('toast.user.account.success') })
+            onToast({ id: 'submit-success-toast', message: t('toast.user.account.success') })
             router.push('/')
           },
-          onError: () => onToast({ message: t('toast.user.account.error'), color: 'error' }),
+          onError: () => onToast({ id: 'submit-error-toast', message: t('toast.user.account.error'), color: 'error' }),
         }
       )
     } else {
-      onToast({ message: t('toast.user.account.password'), color: 'warning' })
+      onToast({ id: 'submit-error-toast', message: t('toast.user.account.password'), color: 'warning' })
     }
   }
 

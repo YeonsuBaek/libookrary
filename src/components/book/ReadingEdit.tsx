@@ -69,10 +69,10 @@ function ReadingEdit({
       },
       {
         onSuccess: () => {
-          onToast({ message: t('toast.book.edit.success') })
+          onToast({ id: 'edit-success-toast', message: t('toast.book.edit.success') })
           router.push(`/book/${isbn}`)
         },
-        onError: () => onToast({ message: t('toast.book.edit.error'), color: 'error' }),
+        onError: () => onToast({ id: 'edit-error-toast', message: t('toast.book.edit.error'), color: 'error' }),
       }
     )
   }

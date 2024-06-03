@@ -23,10 +23,10 @@ function AccountButtons() {
     signOutApi({
       onSuccess: () => {
         typeof window !== 'undefined' && localStorage.removeItem('userToken')
-        onToast({ message: t('toast.user.logout.success') })
+        onToast({ id: 'sign-out-success-toast', message: t('toast.user.logout.success') })
         router.push('/')
       },
-      onError: () => onToast({ message: t('toast.user.logout.error'), color: 'error' }),
+      onError: () => onToast({ id: 'sign-out-error-toast', message: t('toast.user.logout.error'), color: 'error' }),
     })
   }
 
@@ -42,16 +42,16 @@ function AccountButtons() {
       onSuccess: () => {
         typeof window !== 'undefined' && localStorage.removeItem('userToken')
         unsubscribe()
-        onToast({ message: t('toast.user.unsubscribe.success') })
+        onToast({ id: 'unsubscribe-success-toast', message: t('toast.user.unsubscribe.success') })
         router.push('/')
       },
-      onError: () => onToast({ message: t('toast.user.unsubscribe'), color: 'error' }),
+      onError: () => onToast({ id: 'unsubscribe-error-toast', message: t('toast.user.unsubscribe'), color: 'error' }),
     })
   }
 
   return (
     <div className="account-etc-buttons">
-      <Button variant="link" color="text" onClick={handleOpenSignOut}>
+      <Button variant="text" onClick={handleOpenSignOut}>
         {t('user.button.logout')}
       </Button>
       <Button variant="link" color="error" onClick={handleOpenUnsubscribeModal}>
