@@ -22,7 +22,6 @@ function AccountButtons() {
   const onSignOut = () => {
     signOutApi({
       onSuccess: () => {
-        typeof window !== 'undefined' && localStorage.removeItem('userToken')
         onToast({ id: 'sign-out-success-toast', message: t('toast.user.logout.success') })
         router.push('/')
       },
@@ -40,7 +39,6 @@ function AccountButtons() {
   const onUnsubscribe = () => {
     unsubscribeApi({
       onSuccess: () => {
-        typeof window !== 'undefined' && localStorage.removeItem('userToken')
         unsubscribe()
         onToast({ id: 'unsubscribe-success-toast', message: t('toast.user.unsubscribe.success') })
         router.push('/')

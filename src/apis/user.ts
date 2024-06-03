@@ -32,6 +32,7 @@ export const signInApi = async ({ email, password }: SignInRequest, { onSuccess,
     const auth = getAuth(app)
     const res = await signInWithEmailAndPassword(auth, email, password)
 
+    typeof window !== 'undefined' && localStorage.setItem('userToken', res.user.email || '')
     onSuccess(res)
   } catch (error) {
     onError(error)
@@ -42,6 +43,7 @@ export const signOutApi = async ({ onSuccess, onError }: FuncType) => {
   try {
     const auth = getAuth(app)
     await signOut(auth)
+    typeof window !== 'undefined' && localStorage.removeItem('userToken')
     onSuccess()
   } catch (error) {
     onError(error)
@@ -89,6 +91,7 @@ export const unsubscribeApi = async ({ onSuccess, onError }: FuncType) => {
       await deleteUser(user)
     }
 
+    typeof window !== 'undefined' && localStorage.removeItem('userToken')
     onSuccess()
   } catch (error) {
     onError(error)

@@ -16,7 +16,7 @@ function Library() {
   const [nickname, setNickname] = useState<any>(null)
   const [books, setBooks] = useState([])
   const [selectedOption, setSelectedOption] = useState(LIBRARY_VALUES.bookshelf)
-  const userToken = typeof window !== 'undefined' ? localStorage.getItem('userToken') : ''
+  const [userToken, setUserToken] = useState('')
 
   useEffect(function fetchUserInfo() {
     ;(async () => {
@@ -24,6 +24,12 @@ function Library() {
       setNickname(info?.nickname || '')
       setBooks(info?.books || [])
     })()
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUserToken(localStorage.getItem('userToken') || '')
+    }
   }, [])
 
   if (userToken) {
