@@ -235,22 +235,26 @@ export const saveUserSavedBook = async (info: any, { onSuccess, onError }: FuncT
     const docRef = doc(collectionRef, userToken)
     const response = await getDoc(docRef)
 
-    if (!response.exists()) {
-      console.error('회원 정보를 찾을 수 없습니다.')
-    } else {
-      await setDoc(docRef, {
-        [isbn]: {
-          startDate,
-          endDate,
-          bookmarks,
-          special: {
-            isRecommended,
-            wantToReRead,
-          },
-        },
-      })
-      onSuccess()
+    const bookData = {
+      startDate,
+      endDate,
+      bookmarks,
+      special: {
+        isRecommended,
+        wantToReRead,
+      },
     }
+
+    if (!response.exists()) {
+      await setDoc(docRef, {
+        [isbn]: bookData,
+      })
+    } else {
+      await updateDoc(docRef, {
+        [isbn]: bookData,
+      })
+    }
+    onSuccess()
   } catch (error) {
     onError(error)
   }

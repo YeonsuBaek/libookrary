@@ -4,12 +4,19 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/user'
 import { useSearchStore } from '@/stores/search'
+import { useEffect, useState } from 'react'
 
 function Header() {
   const router = useRouter()
   const { isLoggedIn: loginState } = useUserStore()
   const { isOpenSearch, setIsOpenSearch } = useSearchStore()
-  const isLoggedIn = typeof window !== 'undefined' ? localStorage.getItem('userToken') || loginState : loginState
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsLoggedIn(Boolean(localStorage.getItem('userToken')) || loginState)
+    }
+  }, [])
 
   return (
     <>

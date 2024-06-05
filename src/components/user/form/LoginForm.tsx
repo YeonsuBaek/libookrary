@@ -27,7 +27,6 @@ function LoginForm() {
       {
         onSuccess: (res) => {
           onToast({ id: 'submit-success-toast', message: t('toast.user.login.success') })
-          typeof window !== 'undefined' && localStorage.setItem('userToken', res.user.email || '')
           setIsLoggedIn(true)
           router.replace('/')
         },

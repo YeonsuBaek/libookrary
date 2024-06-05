@@ -8,7 +8,7 @@ interface BookmarkProps {
   onRemove?: () => void
 }
 
-function Bookmark({ page, text, onRemove = () => {} }: BookmarkProps) {
+function Bookmark({ page, text, onRemove }: BookmarkProps) {
   return (
     <li className="bookmark">
       <div className="bookmark-header">
@@ -16,7 +16,7 @@ function Bookmark({ page, text, onRemove = () => {} }: BookmarkProps) {
           <Icon icon="Tag" size="xsmall" />
           {page}
         </div>
-        <IconButton icon="MinusCircle" color="error" onClick={onRemove} />
+        {onRemove && <IconButton icon="MinusCircle" color="error" onClick={onRemove} />}
       </div>
       <p className="bookmark-text">{text}</p>
     </li>
