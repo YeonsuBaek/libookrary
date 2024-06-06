@@ -27,7 +27,7 @@ function Header() {
           </Link>
         </div>
         <div className="header-buttons">
-          <IconButton icon="Search" size="large" onClick={() => setIsOpenSearch(true)} />
+          <IconButton icon="Search" size="large" onClick={() => router.push('/search')} />
           <IconButton icon="User" size="large" onClick={() => router.push(isLoggedIn ? '/account' : '/login')} />
         </div>
       </header>
