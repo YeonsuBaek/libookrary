@@ -1,24 +1,29 @@
 'use client'
 import { TextField } from '@yeonsubaek/yeonsui'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 interface SearchBarProps {
-  word: string
-  setWord: (newWord: string) => void
+  onSearch: (word: string) => void
 }
 
-const SearchBar = ({ word, setWord }: SearchBarProps) => {
+const SearchBar = ({ onSearch }: SearchBarProps) => {
   const { t } = useTranslation('')
+  const [word, setWord] = useState('')
 
   return (
-    <TextField
-      id="header-search"
-      icon="Search"
-      placeholder={t('header.search.placeholder')}
-      value={word}
-      onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
-    />
+    <>
+      <TextField
+        id="header-search"
+        icon="Search"
+        placeholder={t('header.search.placeholder')}
+        value={word}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
+      />
+      <button type="button" onClick={() => onSearch(word)}>
+        Search
+      </button>
+    </>
   )
 }
 
