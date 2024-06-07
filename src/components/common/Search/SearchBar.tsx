@@ -1,15 +1,22 @@
 'use client'
+import { useSearchStore } from '@/stores/search'
 import { TextField } from '@yeonsubaek/yeonsui'
+import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-interface SearchBarProps {
-  onSearch: (word: string) => void
-}
-
-const SearchBar = ({ onSearch }: SearchBarProps) => {
+const SearchBar = () => {
   const { t } = useTranslation('')
-  const [word, setWord] = useState('')
+  const router = useRouter()
+  const { searchWord } = useSearchStore()
+  const [word, setWord] = useState(decodeURI(decodeURIComponent(searchWord)))
+
+  const handleSearch = () => {
+    const needToSearchAgain = word.trim() !== searchWord.trim()
+    if (needToSearchAgain) {
+      router.push(`/search/${word}`)
+    }
+  }
 
   return (
     <>
@@ -20,7 +27,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
         value={word}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
       />
-      <button type="button" onClick={() => onSearch(word)}>
+      <button type="button" onClick={handleSearch}>
         Search
       </button>
     </>

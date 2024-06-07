@@ -1,22 +1,29 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
-import Recommendation from './Recommendation'
-import SearchBar from './SearchBar'
-import { debounce } from 'lodash'
 import { fetchSearchBook } from '@/apis/book'
-import useIntersectionObserver from '@/hooks/useIntersectionObserver'
 import BookCardList from '@/components/book/BookCard/BookCardList'
+import useIntersectionObserver from '@/hooks/useIntersectionObserver'
+import { useSearchStore } from '@/stores/search'
+import { useCallback, useEffect, useRef } from 'react'
 
-export type fetchStateType = 'idle' | 'loading' | 'fetched' | 'error'
+interface SearchResultProps {
+  searchParam: string
+}
 
-const SearchContent = () => {
-  const [searchWord, setSearchWord] = useState('')
-  const [books, setBooks] = useState<any[]>([])
-  const [searchIndex, setSearchIndex] = useState(1)
-  const [fetchState, setFetchState] = useState<fetchStateType>('idle')
+const SearchResult = ({ searchParam }: SearchResultProps) => {
   const moreRef = useRef(null)
   const { isIntersecting } = useIntersectionObserver(moreRef)
+  const {
+    searchWord,
+    setSearchWord,
+    setFetchState,
+    books,
+    setAddBooks,
+    setNewBooks,
+    searchIndex,
+    setSearchIndex,
+    fetchState,
+  } = useSearchStore()
 
   const fetchNewData = useCallback(
     ({ searchParam, startIndex }: { searchParam: string; startIndex: number }, isSearchAgain: boolean = false) => {
@@ -28,7 +35,7 @@ const SearchContent = () => {
         },
         {
           onSuccess: (res) => {
-            setBooks((prev) => (isSearchAgain ? res : [...prev, ...res]))
+            isSearchAgain ? setNewBooks(res) : setAddBooks(res)
             if (res.length > 0) setSearchIndex(startIndex + 1)
             setFetchState('fetched')
             setSearchWord(searchParam)
@@ -43,23 +50,17 @@ const SearchContent = () => {
     []
   )
 
-  const handleSearch = (word: string) => {
-    const needToSearchAgain = word.trim() !== searchWord.trim()
-    if (needToSearchAgain) {
-      fetchNewData({ searchParam: word, startIndex: 1 }, needToSearchAgain)
-    }
-  }
-
   useEffect(() => {
-    if (isIntersecting) {
+    const needToSearchAgain = searchParam.trim() !== searchWord.trim()
+    if (needToSearchAgain) {
+      fetchNewData({ searchParam: searchParam, startIndex: 1 }, needToSearchAgain)
+    } else if (isIntersecting) {
       fetchNewData({ searchParam: searchWord, startIndex: searchIndex })
     }
   }, [isIntersecting])
 
   return (
     <>
-      <SearchBar onSearch={handleSearch} />
-      {(books?.length === 0 || fetchState === 'idle') && <Recommendation />}
       <div className="search-book">
         <BookCardList books={books} isAddRoute />
       </div>
@@ -69,4 +70,4 @@ const SearchContent = () => {
   )
 }
 
-export default SearchContent
+export default SearchResult

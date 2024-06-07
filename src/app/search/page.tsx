@@ -1,12 +1,10 @@
-import SearchContent from '@/components/common/Search/SearchContent'
-import SearchHeader from '@/components/common/Search/SearchHeader'
+import Recommendation from '@/components/common/Search/Recommendation'
 
 function page() {
   return (
-    <div className="search">
-      <SearchHeader />
-      <SearchContent />
-    </div>
+    <>
+      <Recommendation />
+    </>
   )
 }
 
