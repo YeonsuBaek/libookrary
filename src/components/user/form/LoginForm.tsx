@@ -1,5 +1,5 @@
 'use client'
-import { PasswordTextField, TextField } from '@yeonsubaek/yeonsui'
+import { TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../layout/UserForm'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -62,7 +62,7 @@ function LoginForm() {
         isError={invalids.includes('email')}
         helperText={invalids.includes('email') ? t('helperText.login.email') : ''}
       />
-      <PasswordTextField
+      <TextField.Password
         id="user-login-form-password"
         placeholder={t('user.form.password')}
         value={password}

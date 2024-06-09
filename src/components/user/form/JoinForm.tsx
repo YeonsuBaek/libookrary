@@ -1,5 +1,5 @@
 'use client'
-import { PasswordTextField, RadioGroup, TextField } from '@yeonsubaek/yeonsui'
+import { RadioGroup, TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../layout/UserForm'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -92,7 +92,7 @@ function JoinForm() {
         selectedOption={language}
         onSelect={(lan) => setLanguage(lan as LanguageType)}
       />
-      <PasswordTextField
+      <TextField.Password
         id="user-join-form-password"
         label={t('user.form.password')}
         size="large"
@@ -103,7 +103,7 @@ function JoinForm() {
         placeholder={t('user.form.password')}
         required
       />
-      <PasswordTextField
+      <TextField.Password
         id="user-join-form-confirm-password"
         label={t('user.form.confirmPassword')}
         size="large"

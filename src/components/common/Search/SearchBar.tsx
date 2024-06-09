@@ -19,18 +19,13 @@ const SearchBar = () => {
   }
 
   return (
-    <>
-      <TextField
-        id="header-search"
-        icon="Search"
-        placeholder={t('header.search.placeholder')}
-        value={word}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
-      />
-      <button type="button" onClick={handleSearch}>
-        Search
-      </button>
-    </>
+    <TextField.Search
+      id="header-search"
+      placeholder={t('header.search.placeholder')}
+      value={word}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
+      onSearch={handleSearch}
+    />
   )
 }
 
