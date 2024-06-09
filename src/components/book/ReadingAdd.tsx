@@ -1,14 +1,13 @@
 'use client'
 import { Button, Checkbox, DatePicker } from '@yeonsubaek/yeonsui'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { addBookToUser, fetchAladinBookInfo, saveBookInfo, saveUserSavedBook } from '@/apis/book'
 import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
-import { useSearchStore } from '@/stores/search'
 import onToast from '../common/Toast'
-import { BookmarkType } from '@/types/book'
+import { BookmarkType, SPECIAL_VALUES } from '@/types/book'
 
 interface ReadingAddProps {
   isbn: string
@@ -24,15 +23,24 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   const [bookmarks, setBookmarks] = useState<BookmarkType[]>([])
   const [page, setPage] = useState('')
   const [content, setContent] = useState('')
-  const SPECIAL_OPTIONS = [t('book.reading.reread'), t('book.reading.recommend')]
-  const [selectedSpecial, setSelectedSpecial] = useState<string[]>([])
+  const SPECIAL_OPTIONS = [
+    { value: SPECIAL_VALUES.reread, text: t('book.reading.reread'), id: 'special1' },
+    { value: SPECIAL_VALUES.recommend, text: t('book.reading.recommend'), id: 'special2' },
+  ]
+  const [selectedSpecial, setSelectedSpecial] = useState(
+    SPECIAL_OPTIONS.reduce((acc, option) => {
+      acc[option.value] = false
+      return acc
+    }, {} as { [key: string]: boolean })
+  )
 
-  const handleSelect = (option: string) => {
-    if (selectedSpecial.includes(option)) {
-      setSelectedSpecial((prev) => prev.filter((item) => item !== option))
-    } else {
-      setSelectedSpecial((prev) => [...prev, option])
+  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    const newSelectedOptions = {
+      ...selectedSpecial,
+      [value]: !selectedSpecial[value],
     }
+    setSelectedSpecial(newSelectedOptions)
   }
 
   const handleAddBookmark = () => {
@@ -70,8 +78,8 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
             startDate,
             endDate,
             bookmarks,
-            isRecommended: selectedSpecial.includes(t('book.reading.recommend')),
-            wantToReRead: selectedSpecial.includes(t('book.reading.reread')),
+            isRecommended: selectedSpecial[SPECIAL_VALUES.recommend],
+            wantToReRead: selectedSpecial[SPECIAL_VALUES.reread],
           },
           {
             onSuccess: () => {},
@@ -135,11 +143,11 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
         </div>
         <div className="reading-special">
           <h3 className="reading-title">{t('book.reading.special')}</h3>
-          <Checkbox
-            id="reading-special-options-checkbox"
+          <Checkbox.Group
             options={SPECIAL_OPTIONS}
-            selectedOptions={selectedSpecial}
-            onSelect={handleSelect}
+            checkedOptions={selectedSpecial}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleSelect(e)}
+            wrap
           />
         </div>
       </div>

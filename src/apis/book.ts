@@ -175,7 +175,7 @@ export const editBookToUser = async (
       const docInfo = docSnap.data()
       const bookInfo = docInfo[isbn]
 
-      const updatedBookInfo = { isbn, startDate, endDate, bookmarks, special: [isRecommended, wantToReRead] }
+      const updatedBookInfo = { isbn, startDate, endDate, bookmarks, special: { isRecommended, wantToReRead } }
 
       await updateDoc(docRef, { [isbn]: updatedBookInfo })
       onSuccess()
