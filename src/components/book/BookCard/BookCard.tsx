@@ -15,7 +15,7 @@ function BookCard({ isbn, title, author, cover, route = '' }: BookCardProps) {
   const router = useRouter()
 
   return (
-    <li className="book-card" key={title}>
+    <li className="book-card" key={title} id={isbn}>
       <button
         className="book-card-button"
         onClick={() => {
