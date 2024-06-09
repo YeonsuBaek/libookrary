@@ -18,7 +18,6 @@ interface ReadingAddProps {
 
 function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   const { t } = useTranslation('')
-  const { isOpenSearch, setIsOpenSearch } = useSearchStore()
   const router = useRouter()
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -91,7 +90,6 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
 
       onToast({ id: 'add-book-success-toast', message: t('toast.book.save.success') })
       router.push('/')
-      if (isOpenSearch) setIsOpenSearch(false)
     } catch (error) {
       onToast({ id: 'add-book-error-toast', message: t('toast.book.login') })
       router.push('/login')
@@ -139,7 +137,6 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
           <h3 className="reading-title">{t('book.reading.special')}</h3>
           <Checkbox
             id="reading-special-options-checkbox"
-            wrap
             options={SPECIAL_OPTIONS}
             selectedOptions={selectedSpecial}
             onSelect={handleSelect}

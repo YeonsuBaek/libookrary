@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react'
 function Header() {
   const router = useRouter()
   const { isLoggedIn: loginState } = useUserStore()
-  const { isOpenSearch, setIsOpenSearch } = useSearchStore()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
@@ -23,7 +22,7 @@ function Header() {
       <header className="header">
         <div className="header-logo">
           <Link href="/">
-            <IconButton icon="Read" size="large" onClick={() => isOpenSearch && setIsOpenSearch(false)} />
+            <IconButton icon="Read" size="large" />
           </Link>
         </div>
         <div className="header-buttons">

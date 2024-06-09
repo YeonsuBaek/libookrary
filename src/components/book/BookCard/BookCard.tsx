@@ -13,7 +13,6 @@ interface BookCardProps {
 
 function BookCard({ isbn, title, author, cover, route = '' }: BookCardProps) {
   const router = useRouter()
-  const { isOpenSearch, setIsOpenSearch } = useSearchStore()
 
   return (
     <li className="book-card" key={title}>
@@ -21,7 +20,6 @@ function BookCard({ isbn, title, author, cover, route = '' }: BookCardProps) {
         className="book-card-button"
         onClick={() => {
           router.push(`/book${route}/${isbn}`)
-          if (isOpenSearch) setIsOpenSearch(false)
         }}
       >
         <Card id={`book-card-${title}`} title={title} info={author} image={cover} />
