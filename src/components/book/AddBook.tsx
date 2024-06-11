@@ -4,12 +4,14 @@ import PageTitle from '../common/PageTitle'
 import ReadingAdd from './ReadingAdd'
 import BookInfo from './BookInfo'
 import { fetchAladinBookInfo } from '@/apis/book'
+import { useRouter } from 'next/navigation'
 
 interface AddBookProps {
   id: string
 }
 
 function AddBook({ id }: AddBookProps) {
+  const router = useRouter()
   const [title, setTitle] = useState('')
   const [cover, setCover] = useState('')
   const [author, setAuthor] = useState('')
@@ -18,6 +20,22 @@ function AddBook({ id }: AddBookProps) {
   const [desc, setDesc] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState(0)
+
+  const handlePopState = () => {
+    const backUrl = new URL(window.location.href)
+    if (!backUrl.hash.includes(id)) {
+      backUrl.hash = id
+      router.replace(backUrl.toString(), { shallow: true })
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('popstate', handlePopState)
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [])
 
   useEffect(
     function fetchBookInfo() {

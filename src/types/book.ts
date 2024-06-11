@@ -23,3 +23,10 @@ export interface BookmarkType {
   page: string
   content: string
 }
+
+export type SpecialType = 'reread' | 'recommend'
+
+export enum SPECIAL_VALUES {
+  reread = 'reread',
+  recommend = 'recommend',
+}

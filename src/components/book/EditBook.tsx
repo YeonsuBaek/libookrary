@@ -29,8 +29,8 @@ function EditBook({ id }: EditBookProps) {
           setStartDate(info?.startDate || '')
           setEndDate(info?.endDate || '')
           setBookmarks(info?.bookmarks || [])
-          setIsRecommended(info?.special?.isRecommended || [])
-          setWantToReRead(info?.special?.wantToReRead || [])
+          setIsRecommended(info?.special?.isRecommended || false)
+          setWantToReRead(info?.special?.wantToReRead || false)
         }
       })()
     },

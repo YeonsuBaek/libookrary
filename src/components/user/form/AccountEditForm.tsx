@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserForm from '../layout/UserForm'
-import { PasswordTextField, RadioGroup, TextField } from '@yeonsubaek/yeonsui'
+import { RadioGroup, TextField } from '@yeonsubaek/yeonsui'
 import { useUserStore } from '@/stores/user'
 import { editUserInfoApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
@@ -96,7 +96,7 @@ function AccountEditForm() {
         selectedOption={language}
         onSelect={(lan) => setLanguage(lan as LanguageType)}
       />
-      <PasswordTextField
+      <TextField.Password
         id="user-account-edit-confirm-password"
         label={t('user.form.confirmPassword')}
         size="large"
