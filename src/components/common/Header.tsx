@@ -11,22 +11,26 @@ function Header() {
   const { isLoggedIn: loginState } = useUserStore()
   const { searchWord, setSearchWord } = useSearchStore()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [themeIcon, setThemeIcon] = useState<'Sun' | 'Moon'>('Sun')
 
   const handleChangeTheme = () => {
     if (localStorage.getItem('theme') === 'theme-light') {
       localStorage.setItem('theme', 'theme-dark')
       document.body.classList.add('theme-dark')
       document.body.classList.remove('theme-light')
+      setThemeIcon('Moon')
     } else {
       localStorage.setItem('theme', 'theme-light')
       document.body.classList.add('theme-light')
       document.body.classList.remove('theme-dark')
+      setThemeIcon('Sun')
     }
   }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsLoggedIn(Boolean(localStorage.getItem('userToken')) || loginState)
+      setThemeIcon(localStorage.getItem('theme') === 'theme-dark' ? 'Moon' : 'Sun')
     }
   }, [])
 
@@ -38,7 +42,7 @@ function Header() {
         </Link>
       </div>
       <div className="header-buttons">
-        <IconButton icon="Fire" onClick={handleChangeTheme} />
+        <IconButton icon={themeIcon} size="large" onClick={handleChangeTheme} />
         <IconButton
           icon="Search"
           size="large"
