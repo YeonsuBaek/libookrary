@@ -25,5 +25,9 @@
   "message": {
     "blank": "저장된 도서가 없습니다.",
     "login": "로그인 후 이용해주세요."
+  },
+  "skeleton": {
+    "title": "도서명",
+    "author": "저자"
   }
 }

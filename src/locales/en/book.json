@@ -25,5 +25,9 @@
   "message": {
     "blank": "No books saved.",
     "login": "Please log in to continue."
+  },
+  "skeleton": {
+    "title": "Title",
+    "author": "Author"
   }
 }
