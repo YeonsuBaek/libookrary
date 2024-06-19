@@ -33,7 +33,7 @@ function Library() {
     }
   }, [])
 
-  if (loadingStatus === 'signedIn') {
+  if (loadingStatus === 'signedIn' && nickname) {
     return (
       <>
         <Segmented
