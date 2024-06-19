@@ -66,6 +66,7 @@ const SearchResult = ({ searchParam }: SearchResultProps) => {
       </div>
       {books.length > 0 && <div style={{ height: '1px' }} ref={moreRef} />}
       {fetchState === 'loading' && <div>Loading</div>}
+      {fetchState === 'fetched' && books.length === 0 && <div>도서 결과가 존재하지 않습니다.</div>}
     </>
   )
 }
