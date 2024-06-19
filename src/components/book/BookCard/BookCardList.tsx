@@ -15,28 +15,19 @@ interface GettingBookType extends UserBookType {
 }
 
 function BookCardList({ books, sort = 'wrap', isAddRoute = false }: BookCardListProps) {
-  const { t } = useTranslation('')
-
-  const skeletonList = [
-    { id: 'book-card-skeleton-1', title: t('book.skeleton.title'), info: t('book.skeleton.author') },
-    { id: 'book-card-skeleton-2', title: t('book.skeleton.title'), info: t('book.skeleton.author') },
-    { id: 'book-card-skeleton-3', title: t('book.skeleton.title'), info: t('book.skeleton.author') },
-    { id: 'book-card-skeleton-4', title: t('book.skeleton.title'), info: t('book.skeleton.author') },
-  ]
   return (
     <ul className={`book-card-list ${sort}`}>
-      {books.length > 0
-        ? books.map(({ isbn13, isbn, title, author, cover }: GettingBookType) => (
-            <BookCard
-              key={isbn}
-              isbn={isbn13 || isbn}
-              title={title}
-              author={author}
-              cover={cover}
-              route={isAddRoute ? '/add' : ''}
-            />
-          ))
-        : skeletonList.map((skeleton) => <BookCardSkeleton {...skeleton} />)}
+      {books.length > 0 &&
+        books.map(({ isbn13, isbn, title, author, cover }: GettingBookType) => (
+          <BookCard
+            key={isbn}
+            isbn={isbn13 || isbn}
+            title={title}
+            author={author}
+            cover={cover}
+            route={isAddRoute ? '/add' : ''}
+          />
+        ))}
     </ul>
   )
 }
