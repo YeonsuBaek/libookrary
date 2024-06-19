@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { getUserInfoApi } from '@/apis/user'
 import UserBookCard from './UserBookCard'
 import { LIBRARY_VALUES } from '@/types/library'
+import { LoginStatusType } from '@/types/user'
 
 function Library() {
   const { t } = useTranslation('')
@@ -13,10 +14,10 @@ function Library() {
     { value: LIBRARY_VALUES.bookshelf, text: t('home.segmented.bookshelf'), id: 'segmented1' },
     { value: LIBRARY_VALUES.list, text: t('home.segmented.list'), id: 'segmented2' },
   ]
+  const [loadingStatus, setLoadingStatus] = useState<LoginStatusType>('loading')
   const [nickname, setNickname] = useState<any>(null)
   const [books, setBooks] = useState([])
   const [selectedOption, setSelectedOption] = useState(LIBRARY_VALUES.bookshelf)
-  const [userToken, setUserToken] = useState('')
 
   useEffect(function fetchUserInfo() {
     ;(async () => {
@@ -28,11 +29,11 @@ function Library() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setUserToken(localStorage.getItem('userToken') || '')
+      setLoadingStatus(localStorage.getItem('userToken') ? 'signedIn' : 'signedOut')
     }
   }, [])
 
-  if (userToken) {
+  if (loadingStatus === 'signedIn') {
     return (
       <>
         <Segmented
@@ -47,7 +48,11 @@ function Library() {
     )
   }
 
-  return <div className="library-message">{t('book.message.login')}</div>
+  if (loadingStatus === 'signedOut') {
+    return <div className="library-message">{t('book.message.login')}</div>
+  }
+
+  return <div>Loading</div>
 }
 
 export default Library

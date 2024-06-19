@@ -6,3 +6,5 @@ export enum LANGUAGE_VALUES {
   ko = 'ko',
   en = 'en',
 }
+
+export type LoginStatusType = 'loading' | 'signedIn' | 'signedOut'
