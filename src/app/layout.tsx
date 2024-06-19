@@ -8,6 +8,15 @@ export const metadata: Metadata = {
   description: '가상의 책꽂이',
 }
 
+const ScriptTheme = () => {
+  const codeToRunOnClient = `(function() {
+    const colorMode = localStorage.getItem('theme') || 'theme-light'
+    document.body.classList.add(colorMode)
+  })()`
+
+  return <script dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,7 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="theme-light polar">
+      <body className="polar">
+        <ScriptTheme />
         <Providers>
           <Header />
           {children}
