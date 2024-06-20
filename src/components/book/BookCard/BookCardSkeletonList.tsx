@@ -20,7 +20,7 @@ function BookCardSkeletonList({ sort = 'wrap', count = 4 }: BookCardListProps) {
   return (
     <ul className={`book-card-list ${sort}`}>
       {skeletonList.map((skeleton) => (
-        <BookCardSkeleton {...skeleton} />
+        <BookCardSkeleton {...skeleton} key={skeleton.id} />
       ))}
     </ul>
   )
