@@ -25,4 +25,22 @@
     justify-content: center;
     padding: 16px 0;
   }
+
+  &-no-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &-icon {
+      path {
+        fill: var(--Red5);
+      }
+    }
+
+    &-message {
+      color: var(--Font-Color-Primary);
+      font: var(--Font-Header-5);
+    }
+  }
 }
