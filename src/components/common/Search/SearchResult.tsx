@@ -4,6 +4,7 @@ import { fetchSearchBook } from '@/apis/book'
 import BookCardList from '@/components/book/BookCard/BookCardList'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver'
 import { useSearchStore } from '@/stores/search'
+import { Icon, Loading } from '@yeonsubaek/yeonsui'
 import { useCallback, useEffect, useRef } from 'react'
 
 interface SearchResultProps {
@@ -65,7 +66,17 @@ const SearchResult = ({ searchParam }: SearchResultProps) => {
         <BookCardList books={books} isAddRoute />
       </div>
       {books.length > 0 && <div style={{ height: '1px' }} ref={moreRef} />}
-      {fetchState === 'loading' && <div>Loading</div>}
+      {fetchState === 'loading' && (
+        <div className="search-loading">
+          <Loading />
+        </div>
+      )}
+      {fetchState === 'fetched' && books.length === 0 && (
+        <div className="search-no-result">
+          <Icon icon="FrownOutlined" size="xlarge" className="search-no-result-icon" />
+          <p className="search-no-result-message">도서 결과가 존재하지 않습니다.</p>
+        </div>
+      )}
     </>
   )
 }

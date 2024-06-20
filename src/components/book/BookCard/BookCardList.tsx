@@ -1,6 +1,8 @@
 'use client'
-import { BookType, UserBookType } from '@/types/book'
+import { UserBookType } from '@/types/book'
 import BookCard from './BookCard'
+import BookCardSkeleton from './BookCardSkeleton'
+import { useTranslation } from 'react-i18next'
 
 interface BookCardListProps {
   books: UserBookType[]
@@ -15,7 +17,7 @@ interface GettingBookType extends UserBookType {
 function BookCardList({ books, sort = 'wrap', isAddRoute = false }: BookCardListProps) {
   return (
     <ul className={`book-card-list ${sort}`}>
-      {books &&
+      {books.length > 0 &&
         books.map(({ isbn13, isbn, title, author, cover }: GettingBookType) => (
           <BookCard
             key={isbn}

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@types/lodash": "^4.17.1",
-    "@yeonsubaek/yeonsui": "^0.1.8",
+    "@yeonsubaek/yeonsui": "^0.1.9",
     "firebase": "^10.11.1",
     "i18next": "^23.11.3",
     "lodash": "^4.17.21",

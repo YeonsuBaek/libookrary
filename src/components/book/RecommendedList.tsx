@@ -1,4 +1,5 @@
 import BookCardList from './BookCard/BookCardList'
+import BookCardSkeletonList from './BookCard/BookCardSkeletonList'
 
 interface RecommendedListProps {
   title: string
@@ -10,7 +11,11 @@ function RecommendedList({ title, books }: RecommendedListProps) {
     <div className="recommended-list">
       <h2 className="recommended-list-title">{title}</h2>
       <div className="recommended-list-books">
-        <BookCardList sort="nowrap" books={books} isAddRoute />
+        {books.length > 0 ? (
+          <BookCardList sort="nowrap" books={books} isAddRoute />
+        ) : (
+          <BookCardSkeletonList sort="nowrap" />
+        )}
       </div>
     </div>
   )
