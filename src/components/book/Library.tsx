@@ -1,5 +1,5 @@
 'use client'
-import { Segmented } from '@yeonsubaek/yeonsui'
+import { Loading, Segmented } from '@yeonsubaek/yeonsui'
 import Bookshelf from './Bookshelf/Bookshelf'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
@@ -52,7 +52,11 @@ function Library() {
     return <div className="library-message">{t('book.message.login')}</div>
   }
 
-  return <div>Loading</div>
+  return (
+    <div className="library-loading">
+      <Loading message={t('book.message.enter')} />
+    </div>
+  )
 }
 
 export default Library

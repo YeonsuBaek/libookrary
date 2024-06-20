@@ -3,4 +3,10 @@
     font: var(--Font-Header-5);
     color: var(--Font-Color-Title);
   }
+
+  &-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
