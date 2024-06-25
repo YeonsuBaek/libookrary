@@ -63,7 +63,7 @@ const SearchResult = ({ searchParam }: SearchResultProps) => {
   return (
     <>
       <div className="search-book">
-        <BookCardList books={books} isAddRoute />
+        <BookCardList books={books} isAddRoute width={150} />
       </div>
       {books.length > 0 && <div style={{ height: '1px' }} ref={moreRef} />}
       {fetchState === 'loading' && (
