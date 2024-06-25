@@ -30,5 +30,11 @@
   "skeleton": {
     "title": "Title",
     "author": "Author"
+  },
+  "placeholder": {
+    "bookmark": {
+      "page": "15",
+      "content": "Leave your thoughts or a memorable quote from this page."
+    }
   }
 }

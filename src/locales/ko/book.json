@@ -30,5 +30,11 @@
   "skeleton": {
     "title": "도서명",
     "author": "저자"
+  },
+  "placeholder": {
+    "bookmark": {
+      "page": "15",
+      "content": "해당 페이지에 대한 감상평이나 인상 깊은 구절을 남겨주세요."
+    }
   }
 }
