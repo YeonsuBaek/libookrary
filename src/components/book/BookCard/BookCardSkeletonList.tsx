@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next'
 interface BookCardListProps {
   sort?: 'wrap' | 'nowrap'
   count?: number
+  width?: number
 }
 
-function BookCardSkeletonList({ sort = 'wrap', count = 4 }: BookCardListProps) {
+function BookCardSkeletonList({ sort = 'wrap', count = 4, width }: BookCardListProps) {
   const { t } = useTranslation('')
   const skeletonList = useMemo(() => {
     let list = []
@@ -20,7 +21,7 @@ function BookCardSkeletonList({ sort = 'wrap', count = 4 }: BookCardListProps) {
   return (
     <ul className={`book-card-list ${sort}`}>
       {skeletonList.map((skeleton) => (
-        <BookCardSkeleton {...skeleton} key={skeleton.id} />
+        <BookCardSkeleton {...skeleton} key={skeleton.id} width={width} />
       ))}
     </ul>
   )
