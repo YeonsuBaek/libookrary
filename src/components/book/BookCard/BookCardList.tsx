@@ -8,13 +8,14 @@ interface BookCardListProps {
   books: UserBookType[]
   sort?: 'wrap' | 'nowrap'
   isAddRoute?: boolean
+  width?: number
 }
 
 interface GettingBookType extends UserBookType {
   isbn13?: string
 }
 
-function BookCardList({ books, sort = 'wrap', isAddRoute = false }: BookCardListProps) {
+function BookCardList({ books, sort = 'wrap', isAddRoute = false, width }: BookCardListProps) {
   return (
     <ul className={`book-card-list ${sort}`}>
       {books.length > 0 &&
@@ -26,6 +27,7 @@ function BookCardList({ books, sort = 'wrap', isAddRoute = false }: BookCardList
             author={author}
             cover={cover}
             route={isAddRoute ? '/add' : ''}
+            width={width}
           />
         ))}
     </ul>

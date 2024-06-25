@@ -5,12 +5,13 @@ interface BookCardSkeletonProps {
   id: string
   title: string
   info: string
+  width?: number
 }
 
-const BookCardSkeleton = ({ id, title, info }: BookCardSkeletonProps) => {
+const BookCardSkeleton = ({ id, title, info, width }: BookCardSkeletonProps) => {
   return (
-    <li className="book-card" key={title}>
-      <Card id={id} title={title} info={info} />
+    <li className="book-card" key={title} style={{ width: width || 'auto' }}>
+      <Card id={id} title={title} info={info} width={width} />
     </li>
   )
 }

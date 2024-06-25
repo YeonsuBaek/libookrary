@@ -12,9 +12,9 @@ function RecommendedList({ title, books }: RecommendedListProps) {
       <h2 className="recommended-list-title">{title}</h2>
       <div className="recommended-list-books">
         {books.length > 0 ? (
-          <BookCardList sort="nowrap" books={books} isAddRoute />
+          <BookCardList sort="nowrap" books={books} isAddRoute width={150} />
         ) : (
-          <BookCardSkeletonList sort="nowrap" />
+          <BookCardSkeletonList sort="nowrap" count={10} width={150} />
         )}
       </div>
     </div>

@@ -1,5 +1,4 @@
 'use client'
-import { useSearchStore } from '@/stores/search'
 import { Card } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
 
@@ -9,20 +8,21 @@ interface BookCardProps {
   author: string
   cover: string
   route?: string
+  width?: number
 }
 
-function BookCard({ isbn, title, author, cover, route = '' }: BookCardProps) {
+function BookCard({ isbn, title, author, cover, route = '', width }: BookCardProps) {
   const router = useRouter()
 
   return (
-    <li className="book-card" key={title} id={isbn}>
+    <li className="book-card" key={title} id={isbn} style={{ width: width || 'auto' }}>
       <button
         className="book-card-button"
         onClick={() => {
           router.push(`/book${route}/${isbn}`)
         }}
       >
-        <Card id={`book-card-${title}`} title={title} info={author} image={cover} />
+        <Card id={`book-card-${title}`} title={title} info={author} image={cover} width={width} />
       </button>
     </li>
   )
