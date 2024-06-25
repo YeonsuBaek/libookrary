@@ -1,6 +1,7 @@
 'use client'
 import { Icon, IconButton, TextArea, TextField } from '@yeonsubaek/yeonsui'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface BookmarkEditProps {
   page: string
@@ -17,6 +18,8 @@ function BookmarkEdit({
   content,
   setContent = () => {},
 }: BookmarkEditProps) {
+  const { t } = useTranslation('')
+
   return (
     <div className="bookmark">
       <div className="bookmark-header">
@@ -27,6 +30,7 @@ function BookmarkEdit({
             value={page}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setPage(e.target.value)}
             size="small"
+            placeholder={t('book.placeholder.bookmark.page')}
           />
         </div>
         <div className="bookmark-buttons">
@@ -37,6 +41,7 @@ function BookmarkEdit({
         id="bookmark-content"
         value={content}
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
+        placeholder={t('book.placeholder.bookmark.content')}
       />
     </div>
   )
