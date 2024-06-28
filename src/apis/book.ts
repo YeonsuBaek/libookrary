@@ -99,8 +99,9 @@ export const getBookInfo = async ({ isbn }: BookInfoGettingRequest) => {
 
 export const getUserBookDetailInfo = async ({ isbn }: UserBookDetailInfoRequest) => {
   try {
-    const userToken = localStorage.getItem('userToken')
-    const docRef = doc(db, 'user_saved_books', userToken)
+    const userToken = localStorage.getItem('userToken') || ''
+    const collectionRef = collection(db, 'user_saved_books')
+    const docRef = doc(collectionRef, userToken)
     const docSnap = await getDoc(docRef)
 
     if (!docSnap.exists()) {
@@ -120,7 +121,7 @@ export const addBookToUser = async (
   { onSuccess, onError }: FuncType
 ) => {
   try {
-    const userToken = localStorage.getItem('userToken')
+    const userToken = localStorage.getItem('userToken') || ''
     const collectionRef = collection(db, 'user')
     const docRef = doc(collectionRef, userToken)
     const response = await getDoc(docRef)
@@ -163,8 +164,9 @@ export const editBookToUser = async (
   { onSuccess, onError }: FuncType
 ) => {
   try {
-    const userToken = localStorage.getItem('userToken')
-    const docRef = doc(db, 'user_saved_books', userToken)
+    const userToken = localStorage.getItem('userToken') || ''
+    const collectionRef = collection(db, 'user_saved_books')
+    const docRef = doc(collectionRef, userToken)
     const docSnap = await getDoc(docRef)
 
     if (!docSnap.exists()) {
@@ -173,7 +175,7 @@ export const editBookToUser = async (
       const docInfo = docSnap.data()
       const bookInfo = docInfo[isbn]
 
-      const updatedBookInfo = { isbn, startDate, endDate, bookmarks, special: [isRecommended, wantToReRead] }
+      const updatedBookInfo = { isbn, startDate, endDate, bookmarks, special: { isRecommended, wantToReRead } }
 
       await updateDoc(docRef, { [isbn]: updatedBookInfo })
       onSuccess()
@@ -228,27 +230,31 @@ export const saveBookInfo = async (info: BookInfoRequest, { onSuccess, onError }
 export const saveUserSavedBook = async (info: any, { onSuccess, onError }: FuncType) => {
   try {
     const { isbn, startDate, endDate, bookmarks, isRecommended, wantToReRead } = info
-    const userToken = localStorage.getItem('userToken')
+    const userToken = localStorage.getItem('userToken') || ''
     const collectionRef = collection(db, 'user_saved_books')
     const docRef = doc(collectionRef, userToken)
     const response = await getDoc(docRef)
 
-    if (!response.exists()) {
-      console.error('회원 정보를 찾을 수 없습니다.')
-    } else {
-      await setDoc(docRef, {
-        [isbn]: {
-          startDate,
-          endDate,
-          bookmarks,
-          special: {
-            isRecommended,
-            wantToReRead,
-          },
-        },
-      })
-      onSuccess()
+    const bookData = {
+      startDate,
+      endDate,
+      bookmarks,
+      special: {
+        isRecommended,
+        wantToReRead,
+      },
     }
+
+    if (!response.exists()) {
+      await setDoc(docRef, {
+        [isbn]: bookData,
+      })
+    } else {
+      await updateDoc(docRef, {
+        [isbn]: bookData,
+      })
+    }
+    onSuccess()
   } catch (error) {
     onError(error)
   }
@@ -256,7 +262,7 @@ export const saveUserSavedBook = async (info: any, { onSuccess, onError }: FuncT
 
 export const deleteBook = async ({ isbn }: DeletedBookRequest, { onSuccess, onError }: FuncType) => {
   try {
-    const userToken = localStorage.getItem('userToken')
+    const userToken = localStorage.getItem('userToken') || ''
     const collectionRef = collection(db, 'user')
     const docRef = doc(collectionRef, userToken)
     const response = await getDoc(docRef)

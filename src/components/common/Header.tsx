@@ -4,31 +4,56 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/user'
 import { useSearchStore } from '@/stores/search'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
 
 function Header() {
   const router = useRouter()
-  const { t } = useTranslation('')
   const { isLoggedIn: loginState } = useUserStore()
-  const { isOpenSearch, setIsOpenSearch } = useSearchStore()
-  const token = localStorage.getItem('userToken')
-  const isLoggedIn = Boolean(token) || loginState
+  const { searchWord, setSearchWord } = useSearchStore()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [themeIcon, setThemeIcon] = useState<'Sun' | 'Moon'>('Sun')
+
+  const handleChangeTheme = () => {
+    if (localStorage.getItem('theme') === 'theme-light') {
+      localStorage.setItem('theme', 'theme-dark')
+      document.body.classList.add('theme-dark')
+      document.body.classList.remove('theme-light')
+      setThemeIcon('Moon')
+    } else {
+      localStorage.setItem('theme', 'theme-light')
+      document.body.classList.add('theme-light')
+      document.body.classList.remove('theme-dark')
+      setThemeIcon('Sun')
+    }
+  }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsLoggedIn(Boolean(localStorage.getItem('userToken')) || loginState)
+      setThemeIcon(localStorage.getItem('theme') === 'theme-dark' ? 'Moon' : 'Sun')
+    }
+  }, [])
 
   return (
-    <>
-      <header className="header">
+    <header className="header">
+      <div className="header-logo">
         <Link href="/">
-          <div className="header-logo">
-            <IconButton icon="Read" size="large" onClick={() => isOpenSearch && setIsOpenSearch(false)} />
-            <h1 className="header-title sm-hidden">{t('header.title')}</h1>
-          </div>
+          <IconButton icon="Read" size="large" />
         </Link>
-        <div className="header-buttons">
-          <IconButton icon="Search" size="large" onClick={() => setIsOpenSearch(true)} />
-          <IconButton icon="User" size="large" onClick={() => router.push(isLoggedIn ? '/account' : '/login')} />
-        </div>
-      </header>
-    </>
+      </div>
+      <div className="header-buttons">
+        <IconButton icon={themeIcon} size="large" onClick={handleChangeTheme} />
+        <IconButton
+          icon="Search"
+          size="large"
+          onClick={() => {
+            router.push('/search')
+            if (searchWord) setSearchWord('')
+          }}
+        />
+        <IconButton icon="User" size="large" onClick={() => router.push(isLoggedIn ? '/account' : '/login')} />
+      </div>
+    </header>
   )
 }
 

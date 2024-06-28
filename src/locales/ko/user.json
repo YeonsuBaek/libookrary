@@ -7,7 +7,8 @@
     "nickname": "닉네임",
     "password": "비밀번호",
     "confirmPassword": "비밀번호 확인",
-    "hintPassword": "비밀번호 힌트"
+    "hintPassword": "비밀번호 힌트",
+    "language": "언어"
   },
   "button": {
     "login": "로그인",

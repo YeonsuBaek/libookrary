@@ -4,7 +4,7 @@ import { FormEvent } from 'react'
 interface UserFormProps {
   children: React.ReactNode | React.ReactNode[]
   buttonName: string
-  onClick: (e: FormEvent<HTMLFormElement>) => void
+  onClick: () => void
 }
 
 function UserForm({ children, buttonName, onClick }: UserFormProps) {

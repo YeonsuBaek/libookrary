@@ -1,5 +1,6 @@
 'use client'
 import { getUserInfoApi } from '@/apis/user'
+import i18n from '@/locales/i18n'
 import { useUserStore } from '@/stores/user'
 import { Button } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
@@ -33,6 +34,12 @@ function AccountInfo() {
         <div className="account-item">
           <dt className="account-title">{t('user.form.nickname')}</dt>
           <dd className="account-detail">{nickname}</dd>
+        </div>
+        <div className="account-item">
+          <dt className="account-title">{t('user.form.language')}</dt>
+          <dd className="account-detail">
+            {i18n.language === 'en' ? t('common.language.en-en') : t('common.language.ko-ko')}
+          </dd>
         </div>
       </dl>
       <div className="account-button">

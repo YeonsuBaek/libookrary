@@ -8,15 +8,21 @@ interface BookCardProps {
   author: string
   cover: string
   route?: string
+  width?: number
 }
 
-function BookCard({ isbn, title, author, cover, route = '' }: BookCardProps) {
+function BookCard({ isbn, title, author, cover, route = '', width }: BookCardProps) {
   const router = useRouter()
 
   return (
-    <li className="book-card" key={title}>
-      <button className="book-card-button" onClick={() => router.push(`/book${route}/${isbn}`)}>
-        <Card title={title} info={author} image={cover} />
+    <li className="book-card" key={title} id={isbn} style={{ width: width || 'auto' }}>
+      <button
+        className="book-card-button"
+        onClick={() => {
+          router.push(`/book${route}/${isbn}`)
+        }}
+      >
+        <Card id={`book-card-${title}`} title={title} info={author} image={cover} width={width} />
       </button>
     </li>
   )

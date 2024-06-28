@@ -3,7 +3,10 @@ import { app, db } from '../../firebase.config'
 import { SignInRequest, SignUpRequest, FuncType, EditUserInfoRequest } from './types/userTypes'
 import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
 
-export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { onSuccess, onError }: FuncType) => {
+export const signUpApi = async (
+  { email, password, nickname, language }: SignUpRequest,
+  { onSuccess, onError }: FuncType
+) => {
   try {
     const auth = getAuth(app)
     await createUserWithEmailAndPassword(auth, email, password)
@@ -13,9 +16,9 @@ export const signUpApi = async ({ email, password, nickname }: SignUpRequest, { 
     const response = await getDoc(docRef)
 
     if (!response.exists()) {
-      await setDoc(docRef, { email, nickname, books: [] })
+      await setDoc(docRef, { email, nickname, language, books: [] })
     } else {
-      await updateDoc(docRef, { email, nickname })
+      await updateDoc(docRef, { email, nickname, language })
     }
 
     onSuccess()
@@ -29,6 +32,7 @@ export const signInApi = async ({ email, password }: SignInRequest, { onSuccess,
     const auth = getAuth(app)
     const res = await signInWithEmailAndPassword(auth, email, password)
 
+    typeof window !== 'undefined' && localStorage.setItem('userToken', res.user.email || '')
     onSuccess(res)
   } catch (error) {
     onError(error)
@@ -39,6 +43,7 @@ export const signOutApi = async ({ onSuccess, onError }: FuncType) => {
   try {
     const auth = getAuth(app)
     await signOut(auth)
+    typeof window !== 'undefined' && localStorage.removeItem('userToken')
     onSuccess()
   } catch (error) {
     onError(error)
@@ -63,11 +68,14 @@ export const getUserInfoApi = async () => {
   }
 }
 
-export const editUserInfoApi = async ({ email, nickname }: EditUserInfoRequest, { onSuccess, onError }: FuncType) => {
+export const editUserInfoApi = async (
+  { email, nickname, language }: EditUserInfoRequest,
+  { onSuccess, onError }: FuncType
+) => {
   try {
     const collectionRef = collection(db, 'user')
     const docRef = doc(collectionRef, email)
-    await updateDoc(docRef, { email, nickname })
+    await updateDoc(docRef, { email, nickname, language })
     onSuccess()
   } catch (error) {
     onError(error)
@@ -83,8 +91,26 @@ export const unsubscribeApi = async ({ onSuccess, onError }: FuncType) => {
       await deleteUser(user)
     }
 
+    typeof window !== 'undefined' && localStorage.removeItem('userToken')
     onSuccess()
   } catch (error) {
     onError(error)
+  }
+}
+
+export const getUserLanguage = async () => {
+  try {
+    const userToken = localStorage.getItem('userToken')
+    const userQuery = query(collection(db, 'user'), where('email', '==', userToken))
+    const dataSnapShot = await getDocs(userQuery)
+
+    if (dataSnapShot.empty) {
+      return 'ko'
+    }
+
+    const userData = dataSnapShot.docs[0].data()
+    return userData.language
+  } catch (error) {
+    return 'ko'
   }
 }

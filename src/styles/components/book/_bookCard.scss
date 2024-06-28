@@ -5,21 +5,17 @@
   &-button {
     background-color: transparent;
     border: 0;
+    padding: 0;
   }
 }
 
 .book-card-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 16px 8px;
   margin: 0;
   padding: 0;
-
-  @media screen and (max-width: 420px) {
-    gap: 16px 0;
-    justify-content: space-between;
-  }
 
   &.nowrap {
     flex-wrap: nowrap;

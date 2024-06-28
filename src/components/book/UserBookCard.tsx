@@ -13,7 +13,7 @@ function UserBookCard({ books }: UserBookCardProps) {
   return (
     <div className="user-book-card">
       {books.length > 0 ? (
-        <BookCardList books={books} />
+        <BookCardList books={books} width={150} />
       ) : (
         <p className="user-book-card-blank">{t('book.message.blank')}</p>
       )}

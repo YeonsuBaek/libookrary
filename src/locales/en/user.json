@@ -4,9 +4,11 @@
   "info": "User Information",
   "form": {
     "email": "Email",
+    "nickname": "Nickname",
     "password": "Password",
     "confirmPassword": "Confirm Password",
-    "hintPassword": "Password Hint"
+    "hintPassword": "Password Hint",
+    "language": "Language"
   },
   "button": {
     "login": "Login",

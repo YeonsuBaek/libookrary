@@ -1,32 +1,48 @@
 'use client'
 import { Icon, IconButton, TextArea, TextField } from '@yeonsubaek/yeonsui'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface BookmarkEditProps {
-  onAdd: () => void
   page: string
-  setPage: (val: string) => void
   content: string
-  setContent: (val: string) => void
+  onAdd?: () => void
+  setPage?: (val: string) => void
+  setContent?: (val: string) => void
 }
 
-function BookmarkEdit({ onAdd, page, setPage, content, setContent }: BookmarkEditProps) {
+function BookmarkEdit({
+  onAdd = () => {},
+  page,
+  setPage = () => {},
+  content,
+  setContent = () => {},
+}: BookmarkEditProps) {
+  const { t } = useTranslation('')
+
   return (
     <div className="bookmark">
       <div className="bookmark-header">
         <div className="bookmark-page">
           <Icon icon="Tag" size="xsmall" />
           <TextField
+            id="bookmark-page"
             value={page}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setPage(e.target.value)}
             size="small"
+            placeholder={t('book.placeholder.bookmark.page')}
           />
         </div>
         <div className="bookmark-buttons">
           <IconButton icon="PlusCircle" color="success" onClick={onAdd} />
         </div>
       </div>
-      <TextArea value={content} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)} />
+      <TextArea
+        id="bookmark-content"
+        value={content}
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
+        placeholder={t('book.placeholder.bookmark.content')}
+      />
     </div>
   )
 }
