@@ -1,5 +1,5 @@
 'use client'
-import { BookmarkType, SPECIAL_VALUES } from '@/types/book'
+import { BookmarkType, MAX_BOOKMARK_CONTENT, SPECIAL_VALUES } from '@/types/book'
 import { Button, Checkbox, DatePicker } from '@yeonsubaek/yeonsui'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -37,6 +37,8 @@ function ReadingEdit({
   const [bookmarks, setBookmarks] = useState<BookmarkType[]>(defBookmarks)
   const [page, setPage] = useState('')
   const [content, setContent] = useState('')
+  const [isNotPage, setIsNotPage] = useState(false)
+  const [isOverMaxContent, setIsOverMaxContent] = useState(false)
   const SPECIAL_OPTIONS = [
     { value: SPECIAL_VALUES.reread, text: t('book.reading.reread'), id: 'special1' },
     { value: SPECIAL_VALUES.recommend, text: t('book.reading.recommend'), id: 'special2' },
@@ -58,7 +60,27 @@ function ReadingEdit({
   }
 
   const handleAddBookmark = () => {
-    setBookmarks((prev) => [...prev, { id: prev.length > 0 ? prev[prev.length - 1].id + 1 : 0, page, content }])
+    const invalidPage = isNaN(Number(page)) || page.trim() === ''
+    const invalidContent = content.length > MAX_BOOKMARK_CONTENT
+    if (invalidPage || invalidContent) {
+      if (invalidPage) {
+        setIsNotPage(true)
+      }
+      if (invalidContent) {
+        setIsOverMaxContent(true)
+      }
+    } else {
+      setBookmarks((prev) => [...prev, { id: prev.length > 0 ? prev[prev.length - 1].id + 1 : 0, page, content }])
+      setContent('')
+      setPage('')
+
+      if (isNotPage) {
+        setIsNotPage(false)
+      }
+      if (isOverMaxContent) {
+        setIsOverMaxContent(false)
+      }
+    }
   }
 
   const handleRemoveBookmark = (idToRemove: number) => {
@@ -133,6 +155,8 @@ function ReadingEdit({
               setPage={setPage}
               content={content}
               setContent={setContent}
+              isNotPage={isNotPage}
+              isOverMaxContent={isOverMaxContent}
             />
           </div>
           <div className="reading-special">

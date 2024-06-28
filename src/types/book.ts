@@ -30,3 +30,5 @@ export enum SPECIAL_VALUES {
   reread = 'reread',
   recommend = 'recommend',
 }
+
+export const MAX_BOOKMARK_CONTENT = 1000

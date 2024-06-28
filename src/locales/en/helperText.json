@@ -7,5 +7,9 @@
     "email": "Please enter your email.",
     "nickname": "Please enter your nickname.",
     "password": "Please enter your password."
+  },
+  "bookmark": {
+    "page": "Please enter the page number.",
+    "content": "Please keep it under {{number}} characters."
   }
 }
