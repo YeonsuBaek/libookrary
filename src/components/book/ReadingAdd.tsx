@@ -105,59 +105,61 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   }
 
   return (
-    <>
+    <div className="book-layout">
       <div className="book-image">
         <img src={cover} alt={title} />
       </div>
-      <div className="reading">
-        <div className="reading-date">
-          <div>
-            <h3 className="reading-title">{t('book.reading.startDate')}</h3>
-            <DatePicker
-              id="reading-start-date-date-picker"
-              value={startDate}
-              setValue={(date: string) => setStartDate(date)}
+      <div className="book-layout-right">
+        <div className="reading">
+          <div className="reading-date">
+            <div>
+              <h3 className="reading-title">{t('book.reading.startDate')}</h3>
+              <DatePicker
+                id="reading-start-date-date-picker"
+                value={startDate}
+                setValue={(date: string) => setStartDate(date)}
+              />
+            </div>
+            <div>
+              <h3 className="reading-title">{t('book.reading.endDate')}</h3>
+              <DatePicker
+                id="reading-end-date-date-picker"
+                value={endDate}
+                setValue={(date: string) => setEndDate(date)}
+              />
+            </div>
+          </div>
+          <div className="reading-bookmark">
+            <div className="reading-bookmark-edit">
+              <h3 className="reading-title">{t('book.reading.bookmark')}</h3>
+            </div>
+            <BookmarkList bookmarks={bookmarks} onRemove={handleRemoveBookmark} />
+            <BookmarkEdit
+              onAdd={handleAddBookmark}
+              page={page}
+              setPage={setPage}
+              content={content}
+              setContent={setContent}
             />
           </div>
-          <div>
-            <h3 className="reading-title">{t('book.reading.endDate')}</h3>
-            <DatePicker
-              id="reading-end-date-date-picker"
-              value={endDate}
-              setValue={(date: string) => setEndDate(date)}
+          <div className="reading-special">
+            <h3 className="reading-title">{t('book.reading.special')}</h3>
+            <Checkbox.Group
+              options={SPECIAL_OPTIONS}
+              checkedOptions={selectedSpecial}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleSelect(e)}
+              wrap
             />
           </div>
         </div>
-        <div className="reading-bookmark">
-          <div className="reading-bookmark-edit">
-            <h3 className="reading-title">{t('book.reading.bookmark')}</h3>
-          </div>
-          <BookmarkList bookmarks={bookmarks} onRemove={handleRemoveBookmark} />
-          <BookmarkEdit
-            onAdd={handleAddBookmark}
-            page={page}
-            setPage={setPage}
-            content={content}
-            setContent={setContent}
-          />
-        </div>
-        <div className="reading-special">
-          <h3 className="reading-title">{t('book.reading.special')}</h3>
-          <Checkbox.Group
-            options={SPECIAL_OPTIONS}
-            checkedOptions={selectedSpecial}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleSelect(e)}
-            wrap
-          />
+        <div className="book-buttons">
+          <Button variant="text" onClick={() => router.push('/')}>
+            {t('book.button.cancel')}
+          </Button>
+          <Button onClick={handleAddBook}>{t('book.button.add')}</Button>
         </div>
       </div>
-      <div className="book-buttons">
-        <Button variant="text" onClick={() => router.push('/')}>
-          {t('book.button.cancel')}
-        </Button>
-        <Button onClick={handleAddBook}>{t('book.button.add')}</Button>
-      </div>
-    </>
+    </div>
   )
 }
 

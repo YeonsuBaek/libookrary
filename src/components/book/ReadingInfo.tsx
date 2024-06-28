@@ -37,7 +37,7 @@ function ReadingInfo({ id, title, cover }: ReadingInfoProps) {
   )
 
   return (
-    <>
+    <div className="book-layout">
       <div className="book-image">
         <img src={cover} alt={title} />
         <div className="book-image-badge">
@@ -45,25 +45,27 @@ function ReadingInfo({ id, title, cover }: ReadingInfoProps) {
           {isRecommended && <RibbonBadge value={t('book.reading.recommend')} />}
         </div>
       </div>
-      <div className="reading">
-        <div className="reading-date">
-          <div>
-            <h3 className="reading-title">{t('book.reading.startDate')}</h3>
-            <DatePicker id="reading-start-date-date-picker" value={startDate} setValue={() => {}} disabled />
+      <div className="book-layout-right">
+        <div className="reading">
+          <div className="reading-date">
+            <div>
+              <h3 className="reading-title">{t('book.reading.startDate')}</h3>
+              <DatePicker id="reading-start-date-date-picker" value={startDate} setValue={() => {}} disabled />
+            </div>
+            <div>
+              <h3 className="reading-title">{t('book.reading.endDate')}</h3>
+              <DatePicker id="reading-end-date-date-picker" value={endDate} setValue={() => {}} disabled />
+            </div>
           </div>
-          <div>
-            <h3 className="reading-title">{t('book.reading.endDate')}</h3>
-            <DatePicker id="reading-end-date-date-picker" value={endDate} setValue={() => {}} disabled />
-          </div>
+          {bookmarks.length > 0 && (
+            <div className="reading-bookmark">
+              <h3 className="reading-title">{t('book.reading.bookmark')}</h3>
+              <BookmarkList bookmarks={bookmarks} />
+            </div>
+          )}
         </div>
-        {bookmarks.length > 0 && (
-          <div className="reading-bookmark">
-            <h3 className="reading-title">{t('book.reading.bookmark')}</h3>
-            <BookmarkList bookmarks={bookmarks} />
-          </div>
-        )}
       </div>
-    </>
+    </div>
   )
 }
 
