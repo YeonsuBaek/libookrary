@@ -27,8 +27,8 @@ export interface BookmarkType {
 export type SpecialType = 'reread' | 'recommend'
 
 export enum SPECIAL_VALUES {
-  reread = 'reread',
-  recommend = 'recommend',
+  reread = 'wantToReRead',
+  recommend = 'isRecommended',
 }
 
 export const MAX_BOOKMARK_CONTENT = 1000

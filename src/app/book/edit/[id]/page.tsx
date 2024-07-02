@@ -1,4 +1,4 @@
-import { getBookInfo } from '@/apis/book'
+import { getBookInfo, getUserBookDetailInfo } from '@/apis/book'
 import ReadingEdit from '@/components/book/ReadingEdit'
 import PageTitle from '@/components/common/PageTitle'
 import Skeleton from '@/components/common/Skeleton'
@@ -11,16 +11,7 @@ async function page({ params }: { params: { id: string } }) {
   return (
     <Suspense fallback={<Skeleton />}>
       <PageTitle route={info?.title} />
-      <ReadingEdit
-        isbn={id}
-        title={info?.title}
-        cover={info?.cover}
-        defStartDate={info?.startDate}
-        defEndDate={info?.endDate}
-        defBookmarks={info?.bookmarks}
-        defIsRecommended={info?.isRecommended}
-        defWantToReRead={info?.wantToReRead}
-      />
+      <ReadingEdit id={id} title={info?.title} cover={info?.cover} />
     </Suspense>
   )
 }
