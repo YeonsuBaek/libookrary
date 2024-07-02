@@ -13,6 +13,8 @@ import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
 import { getBookColor } from '@/utils/color'
 
+const baseUrl = process.env.PUBLIC_API_BASE_URL
+
 export const fetchNewSpecial = async ({ onSuccess, onError }: FuncType) => {
   try {
     const response = await fetch(`/api/book/newSpecial`)
@@ -64,7 +66,7 @@ export const fetchSearchBook = async ({ search, startIndex }: BookSearchRequest,
 
 export const fetchAladinBookInfo = async ({ isbn }: AladinBookInfoRequest) => {
   try {
-    const response = await fetch(`/api/book/info?isbn=${isbn}`)
+    const response = await fetch(`${baseUrl}/api/book/info?isbn=${isbn}`)
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }
