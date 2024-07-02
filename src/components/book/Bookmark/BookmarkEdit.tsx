@@ -1,4 +1,5 @@
 'use client'
+import { MAX_BOOKMARK_CONTENT } from '@/types/book'
 import { Icon, IconButton, TextArea, TextField } from '@yeonsubaek/yeonsui'
 import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,6 +10,8 @@ interface BookmarkEditProps {
   onAdd?: () => void
   setPage?: (val: string) => void
   setContent?: (val: string) => void
+  isNotPage?: boolean
+  isOverMaxContent?: boolean
 }
 
 function BookmarkEdit({
@@ -17,6 +20,8 @@ function BookmarkEdit({
   setPage = () => {},
   content,
   setContent = () => {},
+  isNotPage = false,
+  isOverMaxContent = false,
 }: BookmarkEditProps) {
   const { t } = useTranslation('')
 
@@ -31,6 +36,8 @@ function BookmarkEdit({
             onChange={(e: ChangeEvent<HTMLInputElement>) => setPage(e.target.value)}
             size="small"
             placeholder={t('book.placeholder.bookmark.page')}
+            isError={isNotPage}
+            helperText={isNotPage ? t('helperText.bookmark.page') : ''}
           />
         </div>
         <div className="bookmark-buttons">
@@ -42,6 +49,10 @@ function BookmarkEdit({
         value={content}
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
         placeholder={t('book.placeholder.bookmark.content')}
+        cols={3}
+        maxText={MAX_BOOKMARK_CONTENT}
+        isError={isOverMaxContent}
+        helperText={isOverMaxContent ? t('helperText.bookmark.content', { number: MAX_BOOKMARK_CONTENT }) : ''}
       />
     </div>
   )

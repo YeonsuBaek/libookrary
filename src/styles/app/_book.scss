@@ -1,19 +1,21 @@
+$layout-gap-tablet: 40px;
+$book-card-width: 172px;
+
 .book {
   &-layout {
     @include responsive('T') {
       display: flex;
-      gap: 40px;
-      flex-shrink: 0;
-    }
+      gap: $layout-gap-tablet;
 
-    &-right {
-      width: 100%;
+      &-right {
+        width: calc(100% - $book-card-width - $layout-gap-tablet);
+      }
     }
   }
 
   &-image {
     position: relative;
-    width: 172px;
+    width: $book-card-width;
     height: 229px;
     margin: 0 auto 40px;
     flex-shrink: 0;

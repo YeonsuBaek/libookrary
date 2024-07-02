@@ -7,7 +7,7 @@ import { addBookToUser, fetchAladinBookInfo, saveBookInfo, saveUserSavedBook } f
 import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
 import onToast from '../common/Toast'
-import { BookmarkType, SPECIAL_VALUES } from '@/types/book'
+import { BookmarkType, MAX_BOOKMARK_CONTENT, SPECIAL_VALUES } from '@/types/book'
 
 interface ReadingAddProps {
   isbn: string
@@ -23,6 +23,8 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   const [bookmarks, setBookmarks] = useState<BookmarkType[]>([])
   const [page, setPage] = useState('')
   const [content, setContent] = useState('')
+  const [isNotPage, setIsNotPage] = useState(false)
+  const [isOverMaxContent, setIsOverMaxContent] = useState(false)
   const SPECIAL_OPTIONS = [
     { value: SPECIAL_VALUES.reread, text: t('book.reading.reread'), id: 'special1' },
     { value: SPECIAL_VALUES.recommend, text: t('book.reading.recommend'), id: 'special2' },
@@ -44,7 +46,27 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   }
 
   const handleAddBookmark = () => {
-    setBookmarks((prev) => [...prev, { id: prev.length > 0 ? prev[prev.length - 1].id + 1 : 0, page, content }])
+    const invalidPage = isNaN(Number(page)) || page.trim() === ''
+    const invalidContent = content.length > MAX_BOOKMARK_CONTENT
+    if (invalidPage || invalidContent) {
+      if (invalidPage) {
+        setIsNotPage(true)
+      }
+      if (invalidContent) {
+        setIsOverMaxContent(true)
+      }
+    } else {
+      setBookmarks((prev) => [...prev, { id: prev.length > 0 ? prev[prev.length - 1].id + 1 : 0, page, content }])
+      setContent('')
+      setPage('')
+
+      if (isNotPage) {
+        setIsNotPage(false)
+      }
+      if (isOverMaxContent) {
+        setIsOverMaxContent(false)
+      }
+    }
   }
 
   const handleRemoveBookmark = (idToRemove: number) => {
@@ -140,6 +162,8 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
               setPage={setPage}
               content={content}
               setContent={setContent}
+              isNotPage={isNotPage}
+              isOverMaxContent={isOverMaxContent}
             />
           </div>
           <div className="reading-special">
