@@ -12,16 +12,16 @@ async function page({ params }: { params: { id: string } }) {
 
   return (
     <Suspense fallback={<Skeleton />}>
-      <PageTitle route={info.title} />
-      <ReadingInfo id={id} title={info.title} cover={info.cover} />
+      <PageTitle route={info?.title} />
+      <ReadingInfo id={id} title={info?.title} cover={info?.cover} />
       <BookInfo
-        author={info.author}
-        publisher={info.publisher}
-        pubdate={info.pubdate}
-        desc={info.desc}
-        category={info.category}
+        author={info?.author}
+        publisher={info?.publisher}
+        pubdate={info?.pubdate}
+        desc={info?.desc}
+        category={info?.category}
         isbn={id}
-        price={info.price}
+        price={info?.price}
       />
       <BookPageButtons id={id} />
     </Suspense>
