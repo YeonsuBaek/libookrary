@@ -13,7 +13,7 @@ import { FuncType } from './types/userTypes'
 import { db } from '../../firebase.config'
 import { getBookColor } from '@/utils/color'
 
-const baseUrl = process.env.PUBLIC_API_BASE_URL
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export const fetchNewSpecial = async ({ onSuccess, onError }: FuncType) => {
   try {
