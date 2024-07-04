@@ -1,0 +1,28 @@
+.reading {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  &-title {
+    margin: 0 0 8px 0;
+    font: var(--Font-Body-Bold);
+    color: var(--Font-Color-Title);
+  }
+
+  &-date {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &-bookmark-edit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    .reading-title {
+      margin-bottom: 0;
+    }
+  }
+}

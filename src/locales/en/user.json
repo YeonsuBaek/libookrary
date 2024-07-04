@@ -1,0 +1,22 @@
+{
+  "login": "Login",
+  "join": "Join",
+  "info": "User Information",
+  "form": {
+    "email": "Email",
+    "nickname": "Nickname",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "hintPassword": "Password Hint",
+    "language": "Language"
+  },
+  "button": {
+    "login": "Login",
+    "join": "Join",
+    "findPassword": "Find password",
+    "joinUs": "Join us",
+    "logout": "Logout",
+    "unsubscribe": "Unsubscribe",
+    "edit": "Edit"
+  }
+}

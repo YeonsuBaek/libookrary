@@ -1,0 +1,22 @@
+{
+  "login": "로그인",
+  "join": "회원가입",
+  "info": "회원정보",
+  "form": {
+    "email": "이메일",
+    "nickname": "닉네임",
+    "password": "비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "hintPassword": "비밀번호 힌트",
+    "language": "언어"
+  },
+  "button": {
+    "login": "로그인",
+    "join": "회원가입",
+    "findPassword": "비밀번호 찾기",
+    "joinUs": "회원 가입하기",
+    "logout": "로그아웃",
+    "unsubscribe": "회원탈퇴",
+    "edit": "정보수정"
+  }
+}

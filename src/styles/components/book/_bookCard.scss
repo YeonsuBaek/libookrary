@@ -1,0 +1,28 @@
+.book-card {
+  margin: 0;
+  list-style-type: none;
+
+  &-button {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+  }
+}
+
+.book-card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 8px;
+  margin: 0;
+  padding: 0;
+
+  &.nowrap {
+    flex-wrap: nowrap;
+    gap: 8px;
+
+    @media screen and (max-width: 420px) {
+      gap: 8px;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "button": {
+    "ok": "확인",
+    "cancel": "취소"
+  },
+  "language": {
+    "en-en": "English",
+    "ko-ko": "한국어",
+    "en-ko": "영어",
+    "ko-en": "Korean"
+  }
+}

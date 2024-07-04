@@ -1,0 +1,10 @@
+{
+  "title": "Libookrary",
+  "search": {
+    "placeholder": "Search by book title or author.",
+    "recommended": {
+      "new": "New Special",
+      "best": "Best Seller"
+    }
+  }
+}

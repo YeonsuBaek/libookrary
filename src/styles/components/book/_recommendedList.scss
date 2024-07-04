@@ -1,0 +1,16 @@
+.recommended-list {
+  &-title {
+    color: var(--Font-Color-Title);
+    font: var(--Font-Header-5);
+    color: var(--Font-Color-Title);
+  }
+
+  &-books {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .book-card-list {
+    justify-content: flex-start;
+  }
+}

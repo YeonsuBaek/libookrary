@@ -1,0 +1,45 @@
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+
+  &-line {
+    width: 100%;
+    display: block;
+    height: 16px;
+    border-radius: 4px;
+    animation: background-animation 2000ms infinite alternate;
+
+    &:first-child {
+      width: 50%;
+      margin-bottom: 4px;
+    }
+
+    &:last-child {
+      width: 75%;
+    }
+  }
+}
+
+@keyframes background-animation {
+  0% {
+    background-color: rgba(var(--Gray4RGB), 0.5);
+  }
+
+  25% {
+    background-color: rgba(var(--Gray4RGB), 0.75);
+  }
+
+  50% {
+    background-color: rgba(var(--Gray4RGB), 1);
+  }
+
+  75% {
+    background-color: rgba(var(--Gray4RGB), 0.75);
+  }
+
+  100% {
+    background-color: rgba(var(--Gray4RGB), 0.5);
+  }
+}
