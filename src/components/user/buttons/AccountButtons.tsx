@@ -11,6 +11,7 @@ function AccountButtons() {
   const router = useRouter()
   const { t } = useTranslation()
   const { unsubscribe } = useUserStore()
+  const { setIsLoggedIn } = useUserStore()
 
   const handleOpenSignOut = () => {
     onModal({
@@ -22,6 +23,7 @@ function AccountButtons() {
   const onSignOut = () => {
     signOutApi({
       onSuccess: () => {
+        setIsLoggedIn(false)
         onToast({ id: 'sign-out-success-toast', message: t('toast.user.logout.success') })
         router.push('/')
       },
