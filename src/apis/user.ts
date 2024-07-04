@@ -1,4 +1,12 @@
-import { createUserWithEmailAndPassword, deleteUser, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import {
+  browserLocalPersistence,
+  createUserWithEmailAndPassword,
+  deleteUser,
+  getAuth,
+  setPersistence,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth'
 import { app, db } from '../../firebase.config'
 import { SignInRequest, SignUpRequest, FuncType, EditUserInfoRequest } from './types/userTypes'
 import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
@@ -30,9 +38,14 @@ export const signUpApi = async (
 export const signInApi = async ({ email, password }: SignInRequest, { onSuccess, onError }: FuncType) => {
   try {
     const auth = getAuth(app)
+    await setPersistence(auth, browserLocalPersistence)
+
     const res = await signInWithEmailAndPassword(auth, email, password)
 
-    typeof window !== 'undefined' && localStorage.setItem('userToken', res.user.email || '')
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('userToken', res.user.email || '')
+    }
+
     onSuccess(res)
   } catch (error) {
     onError(error)

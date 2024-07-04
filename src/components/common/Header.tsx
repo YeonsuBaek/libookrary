@@ -8,9 +8,8 @@ import { useEffect, useState } from 'react'
 
 function Header() {
   const router = useRouter()
-  const { isLoggedIn: loginState } = useUserStore()
+  const { isLoggedIn, setIsLoggedIn } = useUserStore()
   const { searchWord, setSearchWord } = useSearchStore()
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [themeIcon, setThemeIcon] = useState<'Sun' | 'Moon'>('Sun')
 
   const handleChangeTheme = () => {
@@ -29,7 +28,7 @@ function Header() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setIsLoggedIn(Boolean(localStorage.getItem('userToken')) || loginState)
+      setIsLoggedIn(Boolean(localStorage.getItem('userToken')) || isLoggedIn)
       setThemeIcon(localStorage.getItem('theme') === 'theme-dark' ? 'Moon' : 'Sun')
     }
   }, [])
