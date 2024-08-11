@@ -5,7 +5,8 @@
     "bookmark": "Bookmarks",
     "special": "Select as a Special Book",
     "reread": "Book to Reread",
-    "recommend": "Recommended Book"
+    "recommend": "Recommended Book",
+    "color": "Cover Color"
   },
   "info": {
     "author": "Author",

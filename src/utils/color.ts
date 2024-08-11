@@ -12,11 +12,33 @@ const hexToRGB = (hexString: string) => {
 
 export const getBookColor = async (cover: string) => {
   const palette = await Vibrant.from(cover).getPalette()
+  const colorList = []
   if (palette?.LightVibrant) {
     const hex = rgbToHex(palette.LightVibrant.getRgb())
-    return hex
+    colorList.push(hex)
   }
-  return '#f0f0f0'
+  if (palette?.Vibrant) {
+    const hex = rgbToHex(palette.Vibrant.getRgb())
+    colorList.push(hex)
+  }
+  if (palette?.DarkVibrant) {
+    const hex = rgbToHex(palette.DarkVibrant.getRgb())
+    colorList.push(hex)
+  }
+  if (palette?.LightMuted) {
+    const hex = rgbToHex(palette.LightMuted.getRgb())
+    colorList.push(hex)
+  }
+  if (palette?.Muted) {
+    const hex = rgbToHex(palette.Muted.getRgb())
+    colorList.push(hex)
+  }
+  if (palette?.DarkMuted) {
+    const hex = rgbToHex(palette.DarkMuted.getRgb())
+    colorList.push(hex)
+  }
+
+  return colorList
 }
 
 export const getFontColor = (hex: string) => {

@@ -8,14 +8,16 @@ import BookmarkEdit from './Bookmark/BookmarkEdit'
 import BookmarkList from './Bookmark/BookmarkList'
 import onToast from '../common/Toast'
 import { BookmarkType, MAX_BOOKMARK_CONTENT, SPECIAL_VALUES } from '@/types/book'
+import ColorRadio from '../common/ColorRadio'
 
 interface ReadingAddProps {
   isbn: string
   title: string
   cover: string
+  colorList: string[]
 }
 
-function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
+function ReadingAdd({ isbn, title, cover, colorList }: ReadingAddProps) {
   const { t } = useTranslation('')
   const router = useRouter()
   const [startDate, setStartDate] = useState('')
@@ -35,6 +37,7 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
       return acc
     }, {} as { [key: string]: boolean })
   )
+  const [bookColor, setBookColor] = useState(colorList[0])
 
   const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -174,6 +177,22 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleSelect(e)}
               wrap
             />
+          </div>
+          <div>
+            <h3 className="reading-title">{t('book.reading.color')}</h3>
+            <div className="color-radio-list">
+              {colorList?.map((color) => (
+                <ColorRadio
+                  id={color}
+                  name="book-color"
+                  value={color}
+                  key={color}
+                  checked={bookColor.includes(color)}
+                  onChange={(selected) => selected && setBookColor(color)}
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <div className="book-buttons">

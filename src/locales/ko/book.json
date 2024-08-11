@@ -5,7 +5,8 @@
     "bookmark": "북마크 목록",
     "special": "특별한 책으로 선정",
     "reread": "다시 읽고 싶은 책",
-    "recommend": "추천하고 싶은 책"
+    "recommend": "추천하고 싶은 책",
+    "color": "커버 색상"
   },
   "info": {
     "author": "저자",
