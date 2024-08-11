@@ -119,7 +119,7 @@ export const getUserBookDetailInfo = async ({ isbn }: UserBookDetailInfoRequest)
 }
 
 export const addBookToUser = async (
-  { isbn, title, depth, height, author, cover }: BookToUserRequest,
+  { isbn, title, depth, height, author, cover, color }: BookToUserRequest,
   { onSuccess, onError }: FuncType
 ) => {
   try {
@@ -137,13 +137,11 @@ export const addBookToUser = async (
       if (isBookExits) {
         console.error('이미 동일한 책이 목록에 있습니다.')
       } else {
-        const bookColor = await getBookColor(cover)
-
         const updatedBooks = [
           {
             isbn,
             title,
-            color: bookColor,
+            color,
             depth,
             height,
             author,

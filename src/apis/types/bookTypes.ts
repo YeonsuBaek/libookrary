@@ -21,6 +21,7 @@ export interface BookToUserRequest {
   height: string
   author: string
   cover: string
+  color: string
 }
 
 export interface EditedBookToUserRequest {

@@ -89,6 +89,7 @@ function ReadingAdd({ isbn, title, cover, colorList }: ReadingAddProps) {
             height: bookInfo.subInfo.packing.sizeHeight,
             author: bookInfo.author,
             cover: bookInfo.cover,
+            color: bookColor,
           },
           {
             onSuccess: () => {},
