@@ -1,4 +1,4 @@
-import { Card } from '@yeonsubaek/yeonsui'
+import Card from '@/components/common/Card'
 import React from 'react'
 
 interface BookCardSkeletonProps {

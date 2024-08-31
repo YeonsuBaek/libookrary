@@ -1,5 +1,5 @@
 'use client'
-import { Card } from '@yeonsubaek/yeonsui'
+import Card from '@/components/common/Card'
 import { useRouter } from 'next/navigation'
 
 interface BookCardProps {
