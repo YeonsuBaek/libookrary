@@ -43,7 +43,9 @@ function AccountInfo() {
         </div>
       </dl>
       <div className="account-button">
-        <Button onClick={() => router.push('/account/edit')}>{t('user.button.edit')}</Button>
+        <Button styleType="filled" styleVariant="primary" onClick={() => router.push('/account/edit')}>
+          {t('user.button.edit')}
+        </Button>
       </div>
     </>
   )

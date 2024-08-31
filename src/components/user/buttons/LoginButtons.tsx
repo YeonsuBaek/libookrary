@@ -9,8 +9,10 @@ function LoginButtons() {
 
   return (
     <div className="login-etc-buttons">
-      <Button variant="link">{t('user.button.findPassword')}</Button>
-      <Button variant="link" onClick={() => router.push('/join')}>
+      <Button styleType="ghost" styleVariant="primary" size="small">
+        {t('user.button.findPassword')}
+      </Button>
+      <Button styleType="ghost" styleVariant="primary" size="small" onClick={() => router.push('/join')}>
         {t('user.button.joinUs')}
       </Button>
     </div>

@@ -12,13 +12,13 @@ import i18n from '@/locales/i18n'
 function JoinForm() {
   const { t } = useTranslation('')
   const LANGUAGE_LIST = [
-    { value: LANGUAGE_VALUES.ko, text: t('common.language.ko-ko'), id: 'language1' },
-    { value: LANGUAGE_VALUES.en, text: t('common.language.en-en'), id: 'language2' },
+    { value: LANGUAGE_VALUES.ko, label: t('common.language.ko-ko'), id: 'language1' },
+    { value: LANGUAGE_VALUES.en, label: t('common.language.en-en'), id: 'language2' },
   ]
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
-  const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType)
+  const [language, setLanguage] = useState(i18n.language)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
@@ -32,7 +32,7 @@ function JoinForm() {
 
     if (isCheckedPassword) {
       signUpApi(
-        { email, password, nickname, language },
+        { email, password, nickname, language: language as LanguageType },
         {
           onSuccess: () => {
             onToast({ id: 'sign-up-success-toast', message: t('toast.user.join.success') })
@@ -68,49 +68,50 @@ function JoinForm() {
     <UserForm buttonName={t('user.button.join')} onClick={handleCheckValid}>
       <TextField
         id="user-join-form-email"
+        type="email"
         label={t('user.form.email')}
         size="large"
         value={email}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+        onChange={setEmail}
         isError={invalids.includes('email')}
         helperText={invalids.includes('email') ? t('helperText.join.email') : ''}
-        required
+        placeholder={t('user.form.email')}
+        // TODO: 필수 옵션 추가
+        // required
       />
       <TextField
         id="user-join-form-nickname"
         label={t('user.form.nickname')}
         size="large"
         value={nickname}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setNickname(e.target.value)}
+        onChange={setNickname}
         isError={invalids.includes('nickname')}
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
-        required
+        placeholder={t('user.form.nickname')}
+        // required
       />
-      <RadioGroup
-        id="user-account-edit-language"
-        options={LANGUAGE_LIST}
-        selectedOption={language}
-        onSelect={(lan) => setLanguage(lan as LanguageType)}
-      />
-      <TextField.Password
+      <RadioGroup name="language" options={LANGUAGE_LIST} checkedOption={language} onChange={setLanguage} />
+      <TextField
         id="user-join-form-password"
+        type="password"
         label={t('user.form.password')}
         size="large"
         value={password}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+        onChange={setPassword}
         isError={invalids.includes('password')}
         helperText={invalids.includes('password') ? t('helperText.join.password') : ''}
         placeholder={t('user.form.password')}
-        required
+        // required
       />
-      <TextField.Password
+      <TextField
         id="user-join-form-confirm-password"
+        type="password"
         label={t('user.form.confirmPassword')}
         size="large"
         value={confirmPassword}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+        onChange={setConfirmPassword}
         placeholder={t('user.form.confirmPassword')}
-        required
+        // required
       />
     </UserForm>
   )
