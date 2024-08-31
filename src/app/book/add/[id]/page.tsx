@@ -1,4 +1,4 @@
-import { fetchAladinBookInfo, getBookInfo } from '@/apis/book'
+import { fetchAladinBookInfo } from '@/apis/book'
 import BookInfo from '@/components/book/BookInfo'
 import PopstateLogic from '@/components/book/PopstateLogic'
 import ReadingAdd from '@/components/book/ReadingAdd'
