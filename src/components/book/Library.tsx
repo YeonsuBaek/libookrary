@@ -1,5 +1,5 @@
 'use client'
-import { Loading, Segmented } from '@yeonsubaek/yeonsui'
+import { Spinner, SegmentedControl } from '@yeonsubaek/yeonsui'
 import Bookshelf from './Bookshelf/Bookshelf'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
@@ -36,12 +36,19 @@ function Library() {
   if (loadingStatus === 'signedIn' && nickname) {
     return (
       <>
-        <Segmented
-          id="library-segmented"
-          options={SEGMENTED_LIST}
-          selectedOption={selectedOption}
-          onSelect={(val) => setSelectedOption(val as LIBRARY_VALUES)}
-        />
+        <SegmentedControl
+          resizing="fill"
+          selectedValue={selectedOption}
+          onChange={(val) => setSelectedOption(val as LIBRARY_VALUES)}
+        >
+          {SEGMENTED_LIST.map((segmented) => {
+            return (
+              <SegmentedControl.Button key={segmented.id} value={segmented.value}>
+                {segmented.text}
+              </SegmentedControl.Button>
+            )
+          })}
+        </SegmentedControl>
         {selectedOption === LIBRARY_VALUES.bookshelf && <Bookshelf nickname={nickname} books={books} />}
         {selectedOption === LIBRARY_VALUES.list && <UserBookCard books={books} />}
       </>
@@ -54,7 +61,8 @@ function Library() {
 
   return (
     <div className="library-loading">
-      <Loading message={t('book.message.enter')} />
+      <Spinner />
+      <p>{t('book.message.enter')}</p>
     </div>
   )
 }

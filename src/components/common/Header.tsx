@@ -1,35 +1,37 @@
 'use client'
-import { IconButton } from '@yeonsubaek/yeonsui'
+import { AlienIcon, BookOpenTextIcon, Button, SearchIcon, SunIcon, MoonIcon } from '@yeonsubaek/yeonsui'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/user'
 import { useSearchStore } from '@/stores/search'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 function Header() {
   const router = useRouter()
   const { isLoggedIn, setIsLoggedIn } = useUserStore()
   const { searchWord, setSearchWord } = useSearchStore()
-  const [themeIcon, setThemeIcon] = useState<'Sun' | 'Moon'>('Sun')
+  const [isLightTheme, setIsLightTheme] = useState(true)
 
   const handleChangeTheme = () => {
     if (localStorage.getItem('theme') === 'theme-light') {
       localStorage.setItem('theme', 'theme-dark')
       document.body.classList.add('theme-dark')
       document.body.classList.remove('theme-light')
-      setThemeIcon('Moon')
+      setIsLightTheme(false)
     } else {
       localStorage.setItem('theme', 'theme-light')
       document.body.classList.add('theme-light')
       document.body.classList.remove('theme-dark')
-      setThemeIcon('Sun')
+      setIsLightTheme(true)
     }
   }
+
+  const ThemeIcon = useMemo(() => (isLightTheme ? SunIcon : MoonIcon), [isLightTheme])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsLoggedIn(Boolean(localStorage.getItem('userToken')) || isLoggedIn)
-      setThemeIcon(localStorage.getItem('theme') === 'theme-dark' ? 'Moon' : 'Sun')
+      setIsLightTheme(localStorage.getItem('theme') !== 'theme-dark')
     }
   }, [])
 
@@ -37,20 +39,29 @@ function Header() {
     <header className="header">
       <div className="header-logo">
         <Link href="/">
-          <IconButton icon="Read" size="large" />
+          <Button styleType="icon" styleVariant="primary">
+            <BookOpenTextIcon />
+          </Button>
         </Link>
       </div>
       <div className="header-buttons">
-        <IconButton icon={themeIcon} size="large" onClick={handleChangeTheme} />
-        <IconButton
-          icon="Search"
-          size="large"
+        <Button styleType="icon" styleVariant="primary" onClick={handleChangeTheme}>
+          {<ThemeIcon size={24} />}
+        </Button>
+        <Button
+          styleType="icon"
+          styleVariant="primary"
           onClick={() => {
             router.push('/search')
             if (searchWord) setSearchWord('')
           }}
-        />
-        <IconButton icon="User" size="large" onClick={() => router.push(isLoggedIn ? '/account' : '/login')} />
+        >
+          <SearchIcon />
+        </Button>
+        <Button styleType="icon" styleVariant="primary" onClick={() => router.push(isLoggedIn ? '/account' : '/login')}>
+          {/* TODO: User Icon 추가 */}
+          <AlienIcon />
+        </Button>
       </div>
     </header>
   )

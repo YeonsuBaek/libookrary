@@ -2,7 +2,7 @@
 import { useSearchStore } from '@/stores/search'
 import { TextField } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const SearchBar = () => {
@@ -18,13 +18,22 @@ const SearchBar = () => {
     }
   }
 
+  const onEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSearch()
+    }
+  }
+
   return (
-    <TextField.Search
+    <TextField
       id="header-search"
       placeholder={t('header.search.placeholder')}
       value={word}
-      onChange={(e: ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
-      onSearch={handleSearch}
+      onChange={setWord}
+      onKeyDown={onEnter}
+      // TODO: Search TextField
+      // onSearch={handleSearch}
     />
   )
 }

@@ -17,7 +17,7 @@ const MAX_HEIGHT = 168
 function BookshelfItem({ isbn, title, depth, height, color }: BookshelfItemProps) {
   const router = useRouter()
 
-  const sizingWidth = useMemo(() => (depth < MIN_DEPTH ? MIN_DEPTH : depth), [depth])
+  const sizingWidth = useMemo(() => (depth * 1.5 < MIN_DEPTH ? MIN_DEPTH : Math.floor(depth * 1.5)), [depth])
   const sizingHeight = useMemo(
     () => (Math.floor(height / 1.8) > MAX_HEIGHT ? MAX_HEIGHT : Math.floor(height / 1.8)),
     [height]

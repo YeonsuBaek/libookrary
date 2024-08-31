@@ -10,14 +10,14 @@
   }
 
   &-title {
-    font: var(--Font-Body-Bold);
-    color: var(--Font-Color-Primary);
+    font: var(--Body-Font-2);
+    color: var(--Gray-Color-8);
     white-space: nowrap;
   }
 
   &-detail {
     margin: 0;
-    font: var(--Font-Body-Regular);
-    color: var(--Font-Color-Primary);
+    font: var(--Body-Font-1);
+    color: var(--Gray-Color-8);
   }
 }

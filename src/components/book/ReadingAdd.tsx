@@ -1,5 +1,5 @@
 'use client'
-import { Button, Checkbox, DatePicker } from '@yeonsubaek/yeonsui'
+import { Button, Checkbox, CheckboxGroup, DatePicker } from '@yeonsubaek/yeonsui'
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
@@ -26,24 +26,10 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
   const [isNotPage, setIsNotPage] = useState(false)
   const [isOverMaxContent, setIsOverMaxContent] = useState(false)
   const SPECIAL_OPTIONS = [
-    { value: SPECIAL_VALUES.reread, text: t('book.reading.reread'), id: 'special1' },
-    { value: SPECIAL_VALUES.recommend, text: t('book.reading.recommend'), id: 'special2' },
+    { value: SPECIAL_VALUES.reread, label: t('book.reading.reread'), id: 'special1' },
+    { value: SPECIAL_VALUES.recommend, label: t('book.reading.recommend'), id: 'special2' },
   ]
-  const [selectedSpecial, setSelectedSpecial] = useState(
-    SPECIAL_OPTIONS.reduce((acc, option) => {
-      acc[option.value] = false
-      return acc
-    }, {} as { [key: string]: boolean })
-  )
-
-  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    const newSelectedOptions = {
-      ...selectedSpecial,
-      [value]: !selectedSpecial[value],
-    }
-    setSelectedSpecial(newSelectedOptions)
-  }
+  const [selectedSpecial, setSelectedSpecial] = useState<string[]>([])
 
   const handleAddBookmark = () => {
     const invalidPage = isNaN(Number(page)) || page.trim() === ''
@@ -100,8 +86,8 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
             startDate,
             endDate,
             bookmarks,
-            isRecommended: selectedSpecial[SPECIAL_VALUES.recommend],
-            wantToReRead: selectedSpecial[SPECIAL_VALUES.reread],
+            isRecommended: selectedSpecial.includes(SPECIAL_VALUES.recommend),
+            wantToReRead: selectedSpecial.includes(SPECIAL_VALUES.reread),
           },
           {
             onSuccess: () => {},
@@ -139,7 +125,7 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
               <DatePicker
                 id="reading-start-date-date-picker"
                 value={startDate}
-                setValue={(date: string) => setStartDate(date)}
+                onChange={(date: string) => setStartDate(date)}
               />
             </div>
             <div>
@@ -147,7 +133,7 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
               <DatePicker
                 id="reading-end-date-date-picker"
                 value={endDate}
-                setValue={(date: string) => setEndDate(date)}
+                onChange={(date: string) => setEndDate(date)}
               />
             </div>
           </div>
@@ -168,19 +154,21 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
           </div>
           <div className="reading-special">
             <h3 className="reading-title">{t('book.reading.special')}</h3>
-            <Checkbox.Group
+            <CheckboxGroup
               options={SPECIAL_OPTIONS}
+              name="special"
               checkedOptions={selectedSpecial}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleSelect(e)}
-              wrap
+              onChange={setSelectedSpecial}
             />
           </div>
         </div>
         <div className="book-buttons">
-          <Button variant="text" onClick={() => router.push('/')}>
+          <Button styleType="ghost" styleVariant="secondary" onClick={() => router.push('/')}>
             {t('book.button.cancel')}
           </Button>
-          <Button onClick={handleAddBook}>{t('book.button.add')}</Button>
+          <Button styleType="ghost" styleVariant="primary" onClick={handleAddBook}>
+            {t('book.button.add')}
+          </Button>
         </div>
       </div>
     </div>

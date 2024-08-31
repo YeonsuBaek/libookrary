@@ -32,15 +32,15 @@
     align-items: center;
     justify-content: center;
 
-    &-icon {
+    svg {
       path {
-        fill: var(--Red5);
+        fill: var(--Danger-Color-6);
       }
     }
 
     &-message {
-      color: var(--Font-Color-Primary);
-      font: var(--Font-Header-5);
+      color: var(--Gray-Color-8);
+      font: var(--Body-Font-2);
     }
   }
 }

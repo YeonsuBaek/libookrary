@@ -58,15 +58,16 @@ function LoginForm() {
         id="user-login-form-email"
         placeholder={t('user.form.email')}
         value={email}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+        onChange={setEmail}
         isError={invalids.includes('email')}
         helperText={invalids.includes('email') ? t('helperText.login.email') : ''}
       />
-      <TextField.Password
+      <TextField
         id="user-login-form-password"
+        type="password"
         placeholder={t('user.form.password')}
         value={password}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+        onChange={setPassword}
         isError={invalids.includes('password')}
         helperText={invalids.includes('password') ? t('helperText.login.password') : ''}
       />

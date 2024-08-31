@@ -11,7 +11,9 @@ function UserForm({ children, buttonName, onClick }: UserFormProps) {
   return (
     <div className="user-form">
       <div className="user-form-input">{children}</div>
-      <Button onClick={onClick}>{buttonName}</Button>
+      <Button styleType="filled" styleVariant="primary" onClick={onClick}>
+        {buttonName}
+      </Button>
     </div>
   )
 }

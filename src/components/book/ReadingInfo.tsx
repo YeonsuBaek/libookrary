@@ -1,9 +1,10 @@
 'use client'
-import { DatePicker, RibbonBadge } from '@yeonsubaek/yeonsui'
+import { DatePicker } from '@yeonsubaek/yeonsui'
 import { useTranslation } from 'react-i18next'
 import BookmarkList from './Bookmark/BookmarkList'
 import { useEffect, useState } from 'react'
 import { getUserBookDetailInfo } from '@/apis/book'
+import RibbonBadge from '../common/RibbonBadge'
 
 interface ReadingInfoProps {
   id: string
@@ -50,11 +51,11 @@ function ReadingInfo({ id, title, cover }: ReadingInfoProps) {
           <div className="reading-date">
             <div>
               <h3 className="reading-title">{t('book.reading.startDate')}</h3>
-              <DatePicker id="reading-start-date-date-picker" value={startDate} setValue={() => {}} disabled />
+              <DatePicker id="reading-start-date-date-picker" value={startDate} disabled />
             </div>
             <div>
               <h3 className="reading-title">{t('book.reading.endDate')}</h3>
-              <DatePicker id="reading-end-date-date-picker" value={endDate} setValue={() => {}} disabled />
+              <DatePicker id="reading-end-date-date-picker" value={endDate} disabled />
             </div>
           </div>
           {bookmarks.length > 0 && (
