@@ -40,10 +40,10 @@ function BookPageButtons({ id }: BookPageProps) {
 
   return (
     <div className="book-buttons">
-      <Button variant="link" color="success" onClick={() => router.push(`/book/edit/${id}`)}>
+      <Button styleType="ghost" styleVariant="primary" onClick={() => router.push(`/book/edit/${id}`)}>
         {t('book.button.edit')}
       </Button>
-      <Button variant="link" color="error" onClick={handleOpenDeleteModal}>
+      <Button styleType="ghost" styleVariant="secondary" color="error" onClick={handleOpenDeleteModal}>
         {t('book.button.delete')}
       </Button>
     </div>
