@@ -1,3 +1,7 @@
+html:root {
+  --primary-color: 120, 50%;
+}
+
 @import './base/break-point';
 @import './base/responsive';
 @import './base/visibility';
