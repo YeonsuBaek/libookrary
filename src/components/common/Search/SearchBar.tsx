@@ -1,6 +1,6 @@
 'use client'
 import { useSearchStore } from '@/stores/search'
-import { TextField } from '@yeonsubaek/yeonsui'
+import { SearchIcon, TextField } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,8 +32,8 @@ const SearchBar = () => {
       value={word}
       onChange={setWord}
       onKeyDown={onEnter}
-      // TODO: Search TextField
-      // onSearch={handleSearch}
+      ButtonIcon={SearchIcon}
+      onClickButton={handleSearch}
     />
   )
 }
