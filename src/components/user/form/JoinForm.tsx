@@ -76,8 +76,7 @@ function JoinForm() {
         isError={invalids.includes('email')}
         helperText={invalids.includes('email') ? t('helperText.join.email') : ''}
         placeholder={t('user.form.email')}
-        // TODO: 필수 옵션 추가
-        // required
+        required
       />
       <TextField
         id="user-join-form-nickname"
@@ -88,7 +87,7 @@ function JoinForm() {
         isError={invalids.includes('nickname')}
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         placeholder={t('user.form.nickname')}
-        // required
+        required
       />
       <RadioGroup name="language" options={LANGUAGE_LIST} checkedOption={language} onChange={setLanguage} />
       <TextField
@@ -101,7 +100,7 @@ function JoinForm() {
         isError={invalids.includes('password')}
         helperText={invalids.includes('password') ? t('helperText.join.password') : ''}
         placeholder={t('user.form.password')}
-        // required
+        required
       />
       <TextField
         id="user-join-form-confirm-password"
@@ -111,7 +110,7 @@ function JoinForm() {
         value={confirmPassword}
         onChange={setConfirmPassword}
         placeholder={t('user.form.confirmPassword')}
-        // required
+        required
       />
     </UserForm>
   )
