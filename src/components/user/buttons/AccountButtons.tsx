@@ -51,11 +51,10 @@ function AccountButtons() {
 
   return (
     <div className="account-etc-buttons">
-      <Button styleType="ghost" styleVariant="secondary" onClick={handleOpenSignOut}>
+      <Button styleType="ghost" styleVariant="primary" onClick={handleOpenSignOut}>
         {t('user.button.logout')}
       </Button>
-      {/* RED 색상으로 */}
-      <Button styleType="ghost" styleVariant="primary" onClick={handleOpenUnsubscribeModal}>
+      <Button styleType="ghost" styleVariant="primary" onClick={handleOpenUnsubscribeModal} color="danger">
         {t('user.button.unsubscribe')}
       </Button>
     </div>
