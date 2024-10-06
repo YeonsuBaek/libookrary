@@ -43,8 +43,7 @@ function BookPageButtons({ id }: BookPageProps) {
       <Button styleType="ghost" styleVariant="primary" onClick={() => router.push(`/book/edit/${id}`)}>
         {t('book.button.edit')}
       </Button>
-      {/* TODO: RED 색상으로 */}
-      <Button styleType="ghost" styleVariant="secondary" color="error" onClick={handleOpenDeleteModal}>
+      <Button styleType="ghost" color="danger" onClick={handleOpenDeleteModal}>
         {t('book.button.delete')}
       </Button>
     </div>
