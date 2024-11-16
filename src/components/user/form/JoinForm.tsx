@@ -36,7 +36,7 @@ function JoinForm() {
         {
           onSuccess: () => {
             onToast({ id: 'sign-up-success-toast', message: t('toast.user.join.success'), state: 'success' })
-            router.push('/')
+            router.push('/login')
           },
           onError: () => onToast({ id: 'sign-up-error-toast', message: t('toast.user.join.error'), state: 'error' }),
         }

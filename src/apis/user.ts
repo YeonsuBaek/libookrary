@@ -29,6 +29,7 @@ export const signUpApi = async (
       await updateDoc(docRef, { email, nickname, language })
     }
 
+    await signOut(auth)
     onSuccess()
   } catch (error) {
     onError(error)
