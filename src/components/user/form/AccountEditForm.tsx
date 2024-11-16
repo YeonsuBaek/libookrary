@@ -16,8 +16,8 @@ import { EmailAuthProvider } from 'firebase/auth/cordova'
 function AccountEditForm() {
   const { t } = useTranslation('')
   const LANGUAGE_LIST = [
-    { value: LANGUAGE_VALUES.ko, text: t('common.language.ko-ko'), id: 'language1' },
-    { value: LANGUAGE_VALUES.en, text: t('common.language.en-en'), id: 'language2' },
+    { value: LANGUAGE_VALUES.ko, label: t('common.language.ko-ko'), id: 'language1' },
+    { value: LANGUAGE_VALUES.en, label: t('common.language.en-en'), id: 'language2' },
   ]
   const router = useRouter()
   const { email: emailStore, nickname: nicknameStore } = useUserStore()
@@ -75,7 +75,7 @@ function AccountEditForm() {
         label={t('user.form.email')}
         size="large"
         value={email}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+        onChange={setEmail}
         isError={invalids.includes('email')}
         helperText={invalids.includes('email') ? t('helperText.join.email') : ''}
         required
@@ -85,23 +85,25 @@ function AccountEditForm() {
         label={t('user.form.nickname')}
         size="large"
         value={nickname}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setNickname(e.target.value)}
+        onChange={setNickname}
         isError={invalids.includes('nickname')}
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         required
       />
       <RadioGroup
-        id="user-account-edit-language"
+        label={t('user.form.language')}
+        name="user-account-edit-language"
         options={LANGUAGE_LIST}
-        selectedOption={language}
-        onSelect={(lan) => setLanguage(lan as LanguageType)}
+        checkedOption={language}
+        onChange={(lan) => setLanguage(lan as LanguageType)}
       />
-      <TextField.Password
+      <TextField
         id="user-account-edit-confirm-password"
         label={t('user.form.confirmPassword')}
         size="large"
         value={confirmPassword}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+        onChange={setConfirmPassword}
+        type="password"
         placeholder={t('user.form.confirmPassword')}
         required
       />
