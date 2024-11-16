@@ -30,10 +30,11 @@ function BookPageButtons({ id }: BookPageProps) {
           onToast({
             id: 'delete-success-toast',
             message: t('toast.book.delete.success'),
+            state: 'success',
           })
           router.push('/')
         },
-        onError: () => onToast({ id: 'delete-error-toast', message: t('toast.book.delete.error'), color: 'error' }),
+        onError: () => onToast({ id: 'delete-error-toast', message: t('toast.book.delete.error'), state: 'error' }),
       }
     )
   }

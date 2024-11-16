@@ -39,17 +39,17 @@ function AccountEditForm() {
           {
             onSuccess: () => {
               i18n.changeLanguage(language)
-              onToast({ id: 'edit-success-toast', message: t('toast.user.account.success') })
+              onToast({ id: 'edit-success-toast', message: t('toast.user.account.success'), state: 'success' })
               router.push('/')
             },
-            onError: () => onToast({ id: 'edit-error-toast', message: t('toast.user.account.error'), color: 'error' }),
+            onError: () => onToast({ id: 'edit-error-toast', message: t('toast.user.account.error'), state: 'error' }),
           }
         )
       } catch (error) {
-        onToast({ id: 'password-error-toast', message: t('toast.user.account.password'), color: 'warning' })
+        onToast({ id: 'password-error-toast', message: t('toast.user.account.password'), state: 'warning' })
       }
     } else {
-      onToast({ id: 'email-error-toast', message: t('toast.user.account.email'), color: 'error' })
+      onToast({ id: 'email-error-toast', message: t('toast.user.account.email'), state: 'error' })
     }
   }
 
