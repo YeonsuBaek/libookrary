@@ -26,12 +26,12 @@ function LoginForm() {
       },
       {
         onSuccess: (res) => {
-          onToast({ id: 'submit-success-toast', message: t('toast.user.login.success') })
+          onToast({ id: 'submit-success-toast', message: t('toast.user.login.success'), state: 'success' })
           setIsLoggedIn(true)
           router.replace('/')
         },
         onError: () => {
-          onToast({ id: 'submit-error-toast', message: t('toast.user.login.error'), color: 'error' })
+          onToast({ id: 'submit-error-toast', message: t('toast.user.login.error'), state: 'error' })
         },
       }
     )

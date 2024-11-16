@@ -24,10 +24,10 @@ function AccountButtons() {
     signOutApi({
       onSuccess: () => {
         setIsLoggedIn(false)
-        onToast({ id: 'sign-out-success-toast', message: t('toast.user.logout.success') })
+        onToast({ id: 'sign-out-success-toast', message: t('toast.user.logout.success'), state: 'success' })
         router.push('/')
       },
-      onError: () => onToast({ id: 'sign-out-error-toast', message: t('toast.user.logout.error'), color: 'error' }),
+      onError: () => onToast({ id: 'sign-out-error-toast', message: t('toast.user.logout.error'), state: 'error' }),
     })
   }
 
@@ -42,20 +42,19 @@ function AccountButtons() {
     unsubscribeApi({
       onSuccess: () => {
         unsubscribe()
-        onToast({ id: 'unsubscribe-success-toast', message: t('toast.user.unsubscribe.success') })
+        onToast({ id: 'unsubscribe-success-toast', message: t('toast.user.unsubscribe.success'), state: 'success' })
         router.push('/')
       },
-      onError: () => onToast({ id: 'unsubscribe-error-toast', message: t('toast.user.unsubscribe'), color: 'error' }),
+      onError: () => onToast({ id: 'unsubscribe-error-toast', message: t('toast.user.unsubscribe'), state: 'error' }),
     })
   }
 
   return (
     <div className="account-etc-buttons">
-      <Button styleType="ghost" styleVariant="secondary" onClick={handleOpenSignOut}>
+      <Button styleType="ghost" styleVariant="primary" onClick={handleOpenSignOut}>
         {t('user.button.logout')}
       </Button>
-      {/* RED 색상으로 */}
-      <Button styleType="ghost" styleVariant="primary" onClick={handleOpenUnsubscribeModal}>
+      <Button styleType="ghost" styleVariant="primary" onClick={handleOpenUnsubscribeModal} color="danger">
         {t('user.button.unsubscribe')}
       </Button>
     </div>

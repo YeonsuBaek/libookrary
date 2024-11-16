@@ -1,5 +1,5 @@
 'use client'
-import { AlienIcon, BookOpenTextIcon, Button, SearchIcon, SunIcon, MoonIcon } from '@yeonsubaek/yeonsui'
+import { BookOpenTextIcon, Button, SearchIcon, SunIcon, MoonIcon, UserIcon } from '@yeonsubaek/yeonsui'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/user'
@@ -59,8 +59,7 @@ function Header() {
           <SearchIcon />
         </Button>
         <Button styleType="icon" styleVariant="primary" onClick={() => router.push(isLoggedIn ? '/account' : '/login')}>
-          {/* TODO: User Icon 추가 */}
-          <AlienIcon />
+          <UserIcon />
         </Button>
       </div>
     </header>

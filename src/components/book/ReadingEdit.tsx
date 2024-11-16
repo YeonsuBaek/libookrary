@@ -74,10 +74,10 @@ function ReadingEdit({ id, title, cover }: ReadingEditProps) {
       },
       {
         onSuccess: () => {
-          onToast({ id: 'edit-success-toast', message: t('toast.book.edit.success') })
+          onToast({ id: 'edit-success-toast', message: t('toast.book.edit.success'), state: 'success' })
           router.push(`/book/${id}`)
         },
-        onError: () => onToast({ id: 'edit-error-toast', message: t('toast.book.edit.error'), color: 'error' }),
+        onError: () => onToast({ id: 'edit-error-toast', message: t('toast.book.edit.error'), state: 'error' }),
       }
     )
   }

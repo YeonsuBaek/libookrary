@@ -45,7 +45,7 @@ function onModal({ ...config }: ModalProps) {
     const children = <>{props.message}</>
 
     root.render(
-      <Modal isOpen={props.isOpen} onClose={close}>
+      <Modal isOpen={props.isOpen} onClose={close} hasBackdrop>
         <Modal.Header hasCloseButton={close}>
           {config.title && <Modal.Title state="success">{props.title}</Modal.Title>}
         </Modal.Header>

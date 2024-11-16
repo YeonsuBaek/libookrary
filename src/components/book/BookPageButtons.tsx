@@ -30,10 +30,11 @@ function BookPageButtons({ id }: BookPageProps) {
           onToast({
             id: 'delete-success-toast',
             message: t('toast.book.delete.success'),
+            state: 'success',
           })
           router.push('/')
         },
-        onError: () => onToast({ id: 'delete-error-toast', message: t('toast.book.delete.error'), color: 'error' }),
+        onError: () => onToast({ id: 'delete-error-toast', message: t('toast.book.delete.error'), state: 'error' }),
       }
     )
   }
@@ -43,8 +44,7 @@ function BookPageButtons({ id }: BookPageProps) {
       <Button styleType="ghost" styleVariant="primary" onClick={() => router.push(`/book/edit/${id}`)}>
         {t('book.button.edit')}
       </Button>
-      {/* TODO: RED 색상으로 */}
-      <Button styleType="ghost" styleVariant="secondary" color="error" onClick={handleOpenDeleteModal}>
+      <Button styleType="ghost" color="danger" onClick={handleOpenDeleteModal}>
         {t('book.button.delete')}
       </Button>
     </div>

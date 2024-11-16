@@ -104,10 +104,10 @@ function ReadingAdd({ isbn, title, cover }: ReadingAddProps) {
         }),
       ])
 
-      onToast({ id: 'add-book-success-toast', message: t('toast.book.save.success') })
+      onToast({ id: 'add-book-success-toast', message: t('toast.book.save.success'), state: 'success' })
       router.push('/')
     } catch (error) {
-      onToast({ id: 'add-book-error-toast', message: t('toast.book.login') })
+      onToast({ id: 'add-book-error-toast', message: t('toast.book.login'), state: 'error' })
       router.push('/login')
     }
   }

@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="polar">
+      <body>
         <ScriptTheme />
         <Providers>
           <Header />

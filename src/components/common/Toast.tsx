@@ -6,7 +6,7 @@ interface ToastProps {
   id: string
   message: string
   duration?: number
-  color?: 'success' | 'info' | 'warning' | 'error'
+  state?: 'success' | 'information' | 'warning' | 'error'
   hasIcon?: boolean
   hasCloseButton?: boolean
 }
