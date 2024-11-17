@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserForm from '../layout/UserForm'
 import { RadioGroup, TextField } from '@yeonsubaek/yeonsui'
@@ -63,6 +63,12 @@ function AccountEditForm() {
     }
   }
 
+  const onEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleCheckValid()
+    }
+  }
+
   return (
     <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid}>
       <TextField
@@ -94,6 +100,7 @@ function AccountEditForm() {
         type="password"
         placeholder={t('user.form.confirmPassword')}
         required
+        onKeyDown={onEnter}
       />
     </UserForm>
   )

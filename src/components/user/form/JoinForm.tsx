@@ -1,7 +1,7 @@
 'use client'
 import { RadioGroup, TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../layout/UserForm'
-import { useEffect, useState } from 'react'
+import { KeyboardEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { signUpApi } from '@/apis/user'
@@ -61,6 +61,12 @@ function JoinForm() {
 
     if (formInvalids.length === 0) {
       onSubmit()
+    }
+  }
+
+  const onEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleCheckValid()
     }
   }
 
@@ -124,6 +130,7 @@ function JoinForm() {
         helperText={invalids.includes('confirmPassword') ? t('helperText.join.confirmPassword') : ''}
         placeholder={t('user.form.placeholder.confirmPassword')}
         required
+        onKeyDown={onEnter}
       />
       <RadioGroup
         label={t('user.form.language')}

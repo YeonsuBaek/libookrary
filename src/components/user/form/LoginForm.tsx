@@ -27,7 +27,7 @@ function LoginForm() {
         password,
       },
       {
-        onSuccess: (res) => {
+        onSuccess: () => {
           onToast({ id: 'submit-success-toast', message: t('toast.user.login.success'), state: 'success' })
           setIsLoggedIn(true)
           router.replace('/')
