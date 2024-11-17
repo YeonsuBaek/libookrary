@@ -30,20 +30,21 @@ function BookPageButtons({ id }: BookPageProps) {
           onToast({
             id: 'delete-success-toast',
             message: t('toast.book.delete.success'),
+            state: 'success',
           })
           router.push('/')
         },
-        onError: () => onToast({ id: 'delete-error-toast', message: t('toast.book.delete.error'), color: 'error' }),
+        onError: () => onToast({ id: 'delete-error-toast', message: t('toast.book.delete.error'), state: 'error' }),
       }
     )
   }
 
   return (
     <div className="book-buttons">
-      <Button variant="link" color="success" onClick={() => router.push(`/book/edit/${id}`)}>
+      <Button styleType="ghost" styleVariant="primary" onClick={() => router.push(`/book/edit/${id}`)}>
         {t('book.button.edit')}
       </Button>
-      <Button variant="link" color="error" onClick={handleOpenDeleteModal}>
+      <Button styleType="ghost" color="danger" onClick={handleOpenDeleteModal}>
         {t('book.button.delete')}
       </Button>
     </div>

@@ -1,61 +1,61 @@
 'use client'
 import { RadioGroup, TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../layout/UserForm'
-import { ChangeEvent, useState } from 'react'
+import { KeyboardEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { signUpApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
 import { InvalidsType, LANGUAGE_VALUES, LanguageType } from '@/types/user'
 import i18n from '@/locales/i18n'
+import { charRegex, emailRegex } from '@/utils/regex'
 
 function JoinForm() {
   const { t } = useTranslation('')
   const LANGUAGE_LIST = [
-    { value: LANGUAGE_VALUES.ko, text: t('common.language.ko-ko'), id: 'language1' },
-    { value: LANGUAGE_VALUES.en, text: t('common.language.en-en'), id: 'language2' },
+    { value: LANGUAGE_VALUES.ko, label: t('common.language.ko-ko'), id: 'language1' },
+    { value: LANGUAGE_VALUES.en, label: t('common.language.en-en'), id: 'language2' },
   ]
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
-  const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
-
-  const checkPassword = () => {
-    return password.trim() === confirmPassword.trim()
-  }
+  const [isSending, setIsSending] = useState(false)
+  const [lang, setLang] = useState('ko')
 
   const onSubmit = () => {
-    const isCheckedPassword = checkPassword()
-
-    if (isCheckedPassword) {
-      signUpApi(
-        { email, password, nickname, language },
-        {
-          onSuccess: () => {
-            onToast({ id: 'sign-up-success-toast', message: t('toast.user.join.success') })
-            router.push('/')
-          },
-          onError: () => onToast({ id: 'sign-up-error-toast', message: t('toast.user.join.error'), color: 'error' }),
-        }
-      )
-    } else {
-      onToast({ id: 'submit-error-toast', message: t('toast.user.join.password'), color: 'warning' })
-    }
+    setIsSending(true)
+    signUpApi(
+      { email, password, nickname, language: lang as LanguageType },
+      {
+        onSuccess: () => {
+          onToast({ id: 'sign-up-success-toast', message: t('toast.user.join.success'), state: 'success' })
+          router.push('/login')
+          setIsSending(false)
+        },
+        onError: () => {
+          onToast({ id: 'sign-up-error-toast', message: t('toast.user.join.error'), state: 'error' })
+          setIsSending(false)
+        },
+      }
+    )
   }
 
   const handleCheckValid = () => {
     const formInvalids: InvalidsType[] = []
-    if (email.trim() === '') {
+    if (email.trim() === '' || !emailRegex.test(email.trim())) {
       formInvalids.push('email')
     }
-    if (nickname.trim() === '') {
+    if (nickname.trim() === '' || charRegex.test(nickname.trim())) {
       formInvalids.push('nickname')
     }
-    if (password.trim() === '') {
+    if (password.trim() === '' || password.trim().length < 6) {
       formInvalids.push('password')
+    }
+    if (password.trim() !== confirmPassword.trim()) {
+      formInvalids.push('confirmPassword')
     }
     setInvalids(formInvalids)
 
@@ -64,16 +64,36 @@ function JoinForm() {
     }
   }
 
+  const onEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleCheckValid()
+    }
+  }
+
+  const onChangeLanguage = (lang: LANGUAGE_VALUES) => {
+    localStorage.setItem('lang', lang)
+    i18n.changeLanguage(lang)
+    setLang(lang)
+  }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setLang(localStorage.getItem('lang') || 'ko')
+    }
+  }, [])
+
   return (
-    <UserForm buttonName={t('user.button.join')} onClick={handleCheckValid}>
+    <UserForm buttonName={t('user.button.join')} onClick={handleCheckValid} isSending={isSending}>
       <TextField
         id="user-join-form-email"
+        type="email"
         label={t('user.form.email')}
         size="large"
         value={email}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+        onChange={setEmail}
         isError={invalids.includes('email')}
         helperText={invalids.includes('email') ? t('helperText.join.email') : ''}
+        placeholder={t('user.form.placeholder.email')}
         required
       />
       <TextField
@@ -81,36 +101,43 @@ function JoinForm() {
         label={t('user.form.nickname')}
         size="large"
         value={nickname}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setNickname(e.target.value)}
+        onChange={setNickname}
         isError={invalids.includes('nickname')}
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
+        placeholder={t('user.form.placeholder.nickname')}
         required
       />
-      <RadioGroup
-        id="user-account-edit-language"
-        options={LANGUAGE_LIST}
-        selectedOption={language}
-        onSelect={(lan) => setLanguage(lan as LanguageType)}
-      />
-      <TextField.Password
+      <TextField
         id="user-join-form-password"
+        type="password"
         label={t('user.form.password')}
         size="large"
         value={password}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+        onChange={setPassword}
         isError={invalids.includes('password')}
         helperText={invalids.includes('password') ? t('helperText.join.password') : ''}
-        placeholder={t('user.form.password')}
+        placeholder={t('user.form.placeholder.password')}
         required
       />
-      <TextField.Password
+      <TextField
         id="user-join-form-confirm-password"
+        type="password"
         label={t('user.form.confirmPassword')}
         size="large"
         value={confirmPassword}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
-        placeholder={t('user.form.confirmPassword')}
+        onChange={setConfirmPassword}
+        isError={invalids.includes('confirmPassword')}
+        helperText={invalids.includes('confirmPassword') ? t('helperText.join.confirmPassword') : ''}
+        placeholder={t('user.form.placeholder.confirmPassword')}
         required
+        onKeyDown={onEnter}
+      />
+      <RadioGroup
+        label={t('user.form.language')}
+        name="language"
+        options={LANGUAGE_LIST}
+        checkedOption={lang}
+        onChange={(lang) => onChangeLanguage(lang as LANGUAGE_VALUES)}
       />
     </UserForm>
   )

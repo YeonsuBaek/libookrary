@@ -1,7 +1,7 @@
 'use client'
 import { BookmarkType, MAX_BOOKMARK_CONTENT, SPECIAL_VALUES } from '@/types/book'
-import { Button, Checkbox, DatePicker } from '@yeonsubaek/yeonsui'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { Button, CheckboxGroup, DatePicker } from '@yeonsubaek/yeonsui'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { editBookToUser, getUserBookDetailInfo } from '@/apis/book'
@@ -26,25 +26,12 @@ function ReadingEdit({ id, title, cover }: ReadingEditProps) {
   const [isNotPage, setIsNotPage] = useState(false)
   const [isOverMaxContent, setIsOverMaxContent] = useState(false)
   const SPECIAL_OPTIONS = [
-    { value: SPECIAL_VALUES.reread, text: t('book.reading.reread'), id: 'special1' },
-    { value: SPECIAL_VALUES.recommend, text: t('book.reading.recommend'), id: 'special2' },
+    { value: SPECIAL_VALUES.reread, label: t('book.reading.reread'), id: 'special1' },
+    { value: SPECIAL_VALUES.recommend, label: t('book.reading.recommend'), id: 'special2' },
   ]
-  const [selectedSpecial, setSelectedSpecial] = useState(
-    SPECIAL_OPTIONS.reduce((acc, option) => {
-      acc[option.value] = false
-      return acc
-    }, {} as { [key: string]: boolean })
-  )
-  const userToken = typeof window !== 'undefined' ? localStorage.getItem('userToken') : ''
+  const [selectedSpecial, setSelectedSpecial] = useState<string[]>([])
 
-  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    const newSelectedOptions = {
-      ...selectedSpecial,
-      [value]: !selectedSpecial[value],
-    }
-    setSelectedSpecial(newSelectedOptions)
-  }
+  const userToken = typeof window !== 'undefined' ? localStorage.getItem('userToken') : ''
 
   const handleAddBookmark = () => {
     const invalidPage = isNaN(Number(page)) || page.trim() === ''
@@ -82,15 +69,15 @@ function ReadingEdit({ id, title, cover }: ReadingEditProps) {
         startDate,
         endDate,
         bookmarks,
-        isRecommended: selectedSpecial[SPECIAL_VALUES.recommend],
-        wantToReRead: selectedSpecial[SPECIAL_VALUES.reread],
+        isRecommended: selectedSpecial.includes(SPECIAL_VALUES.recommend),
+        wantToReRead: selectedSpecial.includes(SPECIAL_VALUES.reread),
       },
       {
         onSuccess: () => {
-          onToast({ id: 'edit-success-toast', message: t('toast.book.edit.success') })
+          onToast({ id: 'edit-success-toast', message: t('toast.book.edit.success'), state: 'success' })
           router.push(`/book/${id}`)
         },
-        onError: () => onToast({ id: 'edit-error-toast', message: t('toast.book.edit.error'), color: 'error' }),
+        onError: () => onToast({ id: 'edit-error-toast', message: t('toast.book.edit.error'), state: 'error' }),
       }
     )
   }
@@ -103,9 +90,11 @@ function ReadingEdit({ id, title, cover }: ReadingEditProps) {
           setStartDate(info?.startDate || '')
           setEndDate(info?.endDate || '')
           setBookmarks(info?.bookmarks || [])
-          setSelectedSpecial({
-            wantToReRead: info?.special.wantToReRead || false,
-            isRecommended: info?.special.isRecommended || false,
+          setSelectedSpecial(() => {
+            const selectedKeys = []
+            if (info?.special.wantToReRead) selectedKeys.push(SPECIAL_VALUES.reread)
+            if (info?.special.isRecommended) selectedKeys.push(SPECIAL_VALUES.recommend)
+            return selectedKeys
           })
         }
       })()
@@ -126,7 +115,7 @@ function ReadingEdit({ id, title, cover }: ReadingEditProps) {
               <DatePicker
                 id="reading-start-date-date-picker"
                 value={startDate}
-                setValue={(date: string) => setStartDate(date)}
+                onChange={(date: string) => setStartDate(date)}
               />
             </div>
             <div>
@@ -134,7 +123,7 @@ function ReadingEdit({ id, title, cover }: ReadingEditProps) {
               <DatePicker
                 id="reading-end-date-date-picker"
                 value={endDate}
-                setValue={(date: string) => setEndDate(date)}
+                onChange={(date: string) => setEndDate(date)}
               />
             </div>
           </div>
@@ -155,19 +144,21 @@ function ReadingEdit({ id, title, cover }: ReadingEditProps) {
           </div>
           <div className="reading-special">
             <h3 className="reading-title">{t('book.reading.special')}</h3>
-            <Checkbox.Group
+            <CheckboxGroup
               options={SPECIAL_OPTIONS}
+              name="special"
               checkedOptions={selectedSpecial}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleSelect(e)}
-              wrap
+              onChange={setSelectedSpecial}
             />
           </div>
         </div>
         <div className="book-buttons">
-          <Button variant="text" onClick={() => router.push(`/book/${id}`)}>
+          <Button styleType="ghost" styleVariant="secondary" onClick={() => router.push(`/book/${id}`)}>
             {t('book.button.cancel')}
           </Button>
-          <Button onClick={handleEdit}>{t('book.button.edit')}</Button>
+          <Button styleType="ghost" styleVariant="primary" onClick={handleEdit}>
+            {t('book.button.edit')}
+          </Button>
         </div>
       </div>
     </div>

@@ -8,7 +8,13 @@
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "hintPassword": "Password Hint",
-    "language": "Language"
+    "language": "Language",
+    "placeholder": {
+      "email": "Enter a valid email address.",
+      "nickname": "Enter without special characters.",
+      "password": "Enter at least 6 characters.",
+      "confirmPassword": "Enter your password."
+    }
   },
   "button": {
     "login": "Login",

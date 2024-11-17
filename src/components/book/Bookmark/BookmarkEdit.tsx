@@ -1,6 +1,6 @@
 'use client'
 import { MAX_BOOKMARK_CONTENT } from '@/types/book'
-import { Icon, IconButton, TextArea, TextField } from '@yeonsubaek/yeonsui'
+import { Button, PlusIcon, TagIcon, TextArea, TextField } from '@yeonsubaek/yeonsui'
 import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -29,11 +29,11 @@ function BookmarkEdit({
     <div className="bookmark">
       <div className="bookmark-header">
         <div className="bookmark-page">
-          <Icon icon="Tag" size="xsmall" />
+          <TagIcon size={20} />
           <TextField
             id="bookmark-page"
             value={page}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setPage(e.target.value)}
+            onChange={setPage}
             size="small"
             placeholder={t('book.placeholder.bookmark.page')}
             isError={isNotPage}
@@ -41,17 +41,19 @@ function BookmarkEdit({
           />
         </div>
         <div className="bookmark-buttons">
-          <IconButton icon="PlusCircle" color="success" onClick={onAdd} />
+          <Button styleType="icon" styleVariant="primary" size="small">
+            <PlusIcon />
+          </Button>
         </div>
       </div>
       <TextArea
         id="bookmark-content"
         value={content}
-        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
+        onChange={setContent}
         placeholder={t('book.placeholder.bookmark.content')}
-        cols={3}
-        maxText={MAX_BOOKMARK_CONTENT}
-        isError={isOverMaxContent}
+        rows={3}
+        maxLength={MAX_BOOKMARK_CONTENT}
+        error={isOverMaxContent}
         helperText={isOverMaxContent ? t('helperText.bookmark.content', { number: MAX_BOOKMARK_CONTENT }) : ''}
       />
     </div>

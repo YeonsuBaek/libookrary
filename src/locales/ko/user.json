@@ -8,7 +8,13 @@
     "password": "비밀번호",
     "confirmPassword": "비밀번호 확인",
     "hintPassword": "비밀번호 힌트",
-    "language": "언어"
+    "language": "언어",
+    "placeholder": {
+      "email": "유효한 이메일 주소를 입력하세요.",
+      "nickname": "특수문자 없이 입력하세요.",
+      "password": "6자리 이상 입력하세요.",
+      "confirmPassword": "비밀번호를 입력하세요."
+    }
   },
   "button": {
     "login": "로그인",

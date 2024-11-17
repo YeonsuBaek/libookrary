@@ -1,0 +1,56 @@
+html:root {
+  .theme-light {
+    --Image-Cover-Card: url('../../../assets/img-cover.jpg');
+  }
+
+  .theme-dark {
+    --Image-Cover-Card: url('../../../assets/img-cover-dark.jpg');
+  }
+}
+
+@mixin textEllipsis($height, $line) {
+  max-height: #{$height * $line}px;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: #{$line};
+  -webkit-box-orient: vertical;
+  overflow-wrap: break-word;
+}
+
+.card {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 0;
+  border: 1px solid var(--Gray-Color-2);
+  border-radius: 2px;
+  cursor: pointer;
+
+  &-image {
+    width: 100%;
+    aspect-ratio: 3/4;
+
+    &.blank {
+      content: var(--Image-Cover-Card);
+    }
+  }
+
+  &-figcaption {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 16px;
+
+    &-title {
+      font: var(--Body-Font-2);
+      color: var(--Gray-Color-9);
+      @include textEllipsis(24, 1);
+    }
+
+    &-info {
+      font: var(--Body-Font-1);
+      color: var(--Gray-Color-7);
+      @include textEllipsis(21, 1);
+    }
+  }
+}

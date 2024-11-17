@@ -1,0 +1,22 @@
+.ribbon-badge {
+  position: relative;
+  display: inline-flex;
+  padding: 2px 8px;
+  color: var(--Gray1);
+  font: var(--Font-Body-Regular);
+  border-radius: 2px 2px 0 2px;
+  background-color: var(--Primary-Color-5);
+
+  &::after {
+    position: absolute;
+    top: 28px;
+    right: 0px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid var(--Primary-Color-5);
+    border-left: 4px solid var(--Primary-Color-5);
+    border-right: 4px solid transparent;
+  }
+}

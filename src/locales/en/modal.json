@@ -4,6 +4,7 @@
   },
   "user": {
     "logout": "Are you sure you want to log out?",
-    "unsubscribe": "Are you sure you want to unsubscribe?"
+    "unsubscribe": "Are you sure you want to unsubscribe?",
+    "checkPassword": "Please enter your password to proceed with unsubscribing."
   }
 }

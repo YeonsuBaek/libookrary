@@ -45,8 +45,19 @@ function onModal({ ...config }: ModalProps) {
     const children = <>{props.message}</>
 
     root.render(
-      <Modal {...props} labelClose={labelClose} labelSave={labelSave} onClose={close} onSave={save}>
-        {children}
+      <Modal isOpen={props.isOpen} onClose={close} hasBackdrop>
+        <Modal.Header hasCloseButton={close}>
+          {config.title && <Modal.Title state="success">{props.title}</Modal.Title>}
+        </Modal.Header>
+        {config.message && <Modal.Content>{children}</Modal.Content>}
+        <Modal.Footer>
+          <Modal.Button onClick={close}>{labelClose}</Modal.Button>
+          {config.onSave && (
+            <Modal.Button type="ok" onClick={save}>
+              {labelSave}
+            </Modal.Button>
+          )}
+        </Modal.Footer>
       </Modal>
     )
   }

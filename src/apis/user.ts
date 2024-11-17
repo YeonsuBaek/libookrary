@@ -1,8 +1,10 @@
 import {
+  EmailAuthProvider,
   browserLocalPersistence,
   createUserWithEmailAndPassword,
   deleteUser,
   getAuth,
+  reauthenticateWithCredential,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
@@ -29,6 +31,7 @@ export const signUpApi = async (
       await updateDoc(docRef, { email, nickname, language })
     }
 
+    await signOut(auth)
     onSuccess()
   } catch (error) {
     onError(error)
@@ -111,19 +114,19 @@ export const unsubscribeApi = async ({ onSuccess, onError }: FuncType) => {
   }
 }
 
-export const getUserLanguage = async () => {
+export const reauthenticateUserApi = async (password: string, { onSuccess, onError }: FuncType) => {
+  const auth = getAuth()
+  const user = auth.currentUser
+
+  if (!user) {
+    throw new Error('No user is currently logged in.')
+  }
+
   try {
-    const userToken = localStorage.getItem('userToken')
-    const userQuery = query(collection(db, 'user'), where('email', '==', userToken))
-    const dataSnapShot = await getDocs(userQuery)
-
-    if (dataSnapShot.empty) {
-      return 'ko'
-    }
-
-    const userData = dataSnapShot.docs[0].data()
-    return userData.language
+    const credential = EmailAuthProvider.credential(user.email!, password)
+    await reauthenticateWithCredential(user, credential)
+    onSuccess()
   } catch (error) {
-    return 'ko'
+    onError(error)
   }
 }
