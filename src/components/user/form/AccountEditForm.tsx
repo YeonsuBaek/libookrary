@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserForm from '../layout/UserForm'
 import { RadioGroup, TextField } from '@yeonsubaek/yeonsui'
@@ -15,10 +15,6 @@ import { EmailAuthProvider } from 'firebase/auth/cordova'
 
 function AccountEditForm() {
   const { t } = useTranslation('')
-  const LANGUAGE_LIST = [
-    { value: LANGUAGE_VALUES.ko, label: t('common.language.ko-ko'), id: 'language1' },
-    { value: LANGUAGE_VALUES.en, label: t('common.language.en-en'), id: 'language2' },
-  ]
   const router = useRouter()
   const { email: emailStore, nickname: nicknameStore } = useUserStore()
   const [email, setEmail] = useState(emailStore)
@@ -26,8 +22,10 @@ function AccountEditForm() {
   const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType)
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
+  const [isSending, setIsSending] = useState(false)
 
   const onSubmit = async () => {
+    setIsSending(true)
     const user = auth.currentUser
 
     if (user && user.email) {
@@ -38,7 +36,6 @@ function AccountEditForm() {
           { email, nickname, language },
           {
             onSuccess: () => {
-              i18n.changeLanguage(language)
               onToast({ id: 'edit-success-toast', message: t('toast.user.account.success'), state: 'success' })
               router.push('/')
             },
@@ -47,9 +44,12 @@ function AccountEditForm() {
         )
       } catch (error) {
         onToast({ id: 'password-error-toast', message: t('toast.user.account.password'), state: 'warning' })
+      } finally {
+        setIsSending(false)
       }
     } else {
       onToast({ id: 'email-error-toast', message: t('toast.user.account.email'), state: 'error' })
+      setIsSending(false)
     }
   }
 
@@ -68,8 +68,14 @@ function AccountEditForm() {
     }
   }
 
+  const onEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleCheckValid()
+    }
+  }
+
   return (
-    <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid}>
+    <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid} isSending={isSending}>
       <TextField
         id="user-account-edit-email"
         label={t('user.form.email')}
@@ -90,13 +96,6 @@ function AccountEditForm() {
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         required
       />
-      <RadioGroup
-        label={t('user.form.language')}
-        name="user-account-edit-language"
-        options={LANGUAGE_LIST}
-        checkedOption={language}
-        onChange={(lan) => setLanguage(lan as LanguageType)}
-      />
       <TextField
         id="user-account-edit-confirm-password"
         label={t('user.form.confirmPassword')}
@@ -106,6 +105,7 @@ function AccountEditForm() {
         type="password"
         placeholder={t('user.form.confirmPassword')}
         required
+        onKeyDown={onEnter}
       />
     </UserForm>
   )

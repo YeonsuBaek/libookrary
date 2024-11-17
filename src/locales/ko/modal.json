@@ -4,6 +4,7 @@
   },
   "user": {
     "logout": "로그아웃하시겠습니까?",
-    "unsubscribe": "회원 탈퇴하시겠습니까?"
+    "unsubscribe": "회원 탈퇴하시겠습니까?",
+    "checkPassword": "회원탈퇴를 위해 비밀번호를 입력해주세요."
   }
 }

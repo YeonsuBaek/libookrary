@@ -1,17 +1,17 @@
 import { Button } from '@yeonsubaek/yeonsui'
-import { FormEvent } from 'react'
 
 interface UserFormProps {
   children: React.ReactNode | React.ReactNode[]
   buttonName: string
   onClick: () => void
+  isSending?: boolean
 }
 
-function UserForm({ children, buttonName, onClick }: UserFormProps) {
+function UserForm({ children, buttonName, onClick, isSending = false }: UserFormProps) {
   return (
     <div className="user-form">
       <div className="user-form-input">{children}</div>
-      <Button styleType="filled" styleVariant="primary" onClick={onClick}>
+      <Button styleType="filled" styleVariant="primary" onClick={onClick} disabled={isSending}>
         {buttonName}
       </Button>
     </div>

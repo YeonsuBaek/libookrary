@@ -19,6 +19,8 @@ const ScriptTheme = () => {
   const codeToRunOnClient = `(function() {
     const colorMode = localStorage.getItem('theme') || 'theme-light'
     document.body.classList.add(colorMode)
+    const langMode = localStorage.getItem('lang') || 'ko'
+    document.body.classList.add(langMode)
   })()`
 
   return <script dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />
@@ -31,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>
+      <body suppressHydrationWarning>
         <ScriptTheme />
         <Providers>
           <Header />
