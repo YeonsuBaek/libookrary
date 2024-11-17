@@ -14,12 +14,15 @@ function UnsubscribeModalButton() {
   const [isOpen, setIsOpen] = useState(false)
   const [password, setPassword] = useState('')
   const [isErrorPassword, setIsErrorPassword] = useState(false)
+  const [isSending, setIsSending] = useState(false)
 
   const checkPassword = () => {
+    setIsSending(true)
     reauthenticateUserApi(password, {
       onSuccess: onUnsubscribe,
       onError: () => {
         setIsErrorPassword(true)
+        setIsSending(false)
       },
     })
   }
@@ -30,8 +33,12 @@ function UnsubscribeModalButton() {
         unsubscribe()
         onToast({ id: 'unsubscribe-success-toast', message: t('toast.user.unsubscribe.success'), state: 'success' })
         router.push('/')
+        setIsSending(false)
       },
-      onError: () => onToast({ id: 'unsubscribe-error-toast', message: t('toast.user.unsubscribe'), state: 'error' }),
+      onError: () => {
+        onToast({ id: 'unsubscribe-error-toast', message: t('toast.user.unsubscribe'), state: 'error' })
+        setIsSending(false)
+      },
     })
   }
 
@@ -70,7 +77,7 @@ function UnsubscribeModalButton() {
           <Modal.Button type="cancel" onClick={() => setIsOpen(false)}>
             {t('common.button.cancel')}
           </Modal.Button>
-          <Button styleType="filled" onClick={checkPassword} disabled={!password}>
+          <Button styleType="filled" onClick={checkPassword} disabled={!password || isSending}>
             {t('user.button.unsubscribe')}
           </Button>
         </Modal.Footer>
