@@ -1,12 +1,13 @@
 {
   "login": {
-    "email": "Please enter your email.",
-    "password": "Please enter your password."
+    "email": "Please make sure your email is correct.",
+    "password": "Please make sure your password is correct."
   },
   "join": {
-    "email": "Please enter your email.",
-    "nickname": "Please enter your nickname.",
-    "password": "Please enter your password."
+    "email": "Please make sure your email is correct.",
+    "nickname": "Please make sure your nickname is correct.",
+    "password": "Please make sure your password is correct.",
+    "confirmPassword": "Passwords do not match."
   },
   "bookmark": {
     "page": "Please enter the page number.",

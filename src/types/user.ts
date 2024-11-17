@@ -1,4 +1,4 @@
-export type InvalidsType = 'email' | 'nickname' | 'password'
+export type InvalidsType = 'email' | 'nickname' | 'password' | 'confirmPassword'
 
 export type LanguageType = 'ko' | 'en'
 

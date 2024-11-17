@@ -1,13 +1,14 @@
 'use client'
 import { RadioGroup, TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../layout/UserForm'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { signUpApi } from '@/apis/user'
 import onToast from '@/components/common/Toast'
 import { InvalidsType, LANGUAGE_VALUES, LanguageType } from '@/types/user'
 import i18n from '@/locales/i18n'
+import { charRegex, emailRegex } from '@/utils/regex'
 
 function JoinForm() {
   const { t } = useTranslation('')
@@ -23,39 +24,33 @@ function JoinForm() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
 
-  const checkPassword = () => {
-    return password.trim() === confirmPassword.trim()
-  }
-
   const onSubmit = () => {
-    const isCheckedPassword = checkPassword()
-
-    if (isCheckedPassword) {
-      signUpApi(
-        { email, password, nickname, language: language as LanguageType },
-        {
-          onSuccess: () => {
-            onToast({ id: 'sign-up-success-toast', message: t('toast.user.join.success'), state: 'success' })
-            router.push('/login')
-          },
-          onError: () => onToast({ id: 'sign-up-error-toast', message: t('toast.user.join.error'), state: 'error' }),
-        }
-      )
-    } else {
-      onToast({ id: 'submit-error-toast', message: t('toast.user.join.password'), state: 'warning' })
-    }
+    signUpApi(
+      // 중복 방지
+      { email, password, nickname, language: language as LanguageType },
+      {
+        onSuccess: () => {
+          onToast({ id: 'sign-up-success-toast', message: t('toast.user.join.success'), state: 'success' })
+          router.push('/login')
+        },
+        onError: () => onToast({ id: 'sign-up-error-toast', message: t('toast.user.join.error'), state: 'error' }),
+      }
+    )
   }
 
   const handleCheckValid = () => {
     const formInvalids: InvalidsType[] = []
-    if (email.trim() === '') {
+    if (email.trim() === '' || !emailRegex.test(email.trim())) {
       formInvalids.push('email')
     }
-    if (nickname.trim() === '') {
+    if (nickname.trim() === '' || charRegex.test(nickname.trim())) {
       formInvalids.push('nickname')
     }
-    if (password.trim() === '') {
+    if (password.trim() === '' || password.trim().length < 6) {
       formInvalids.push('password')
+    }
+    if (password.trim() !== confirmPassword.trim()) {
+      formInvalids.push('confirmPassword')
     }
     setInvalids(formInvalids)
 
@@ -75,7 +70,7 @@ function JoinForm() {
         onChange={setEmail}
         isError={invalids.includes('email')}
         helperText={invalids.includes('email') ? t('helperText.join.email') : ''}
-        placeholder={t('user.form.email')}
+        placeholder={t('user.form.placeholder.email')}
         required
       />
       <TextField
@@ -86,10 +81,9 @@ function JoinForm() {
         onChange={setNickname}
         isError={invalids.includes('nickname')}
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
-        placeholder={t('user.form.nickname')}
+        placeholder={t('user.form.placeholder.nickname')}
         required
       />
-      <RadioGroup name="language" options={LANGUAGE_LIST} checkedOption={language} onChange={setLanguage} />
       <TextField
         id="user-join-form-password"
         type="password"
@@ -99,7 +93,7 @@ function JoinForm() {
         onChange={setPassword}
         isError={invalids.includes('password')}
         helperText={invalids.includes('password') ? t('helperText.join.password') : ''}
-        placeholder={t('user.form.password')}
+        placeholder={t('user.form.placeholder.password')}
         required
       />
       <TextField
@@ -109,8 +103,17 @@ function JoinForm() {
         size="large"
         value={confirmPassword}
         onChange={setConfirmPassword}
-        placeholder={t('user.form.confirmPassword')}
+        isError={invalids.includes('confirmPassword')}
+        helperText={invalids.includes('confirmPassword') ? t('helperText.join.confirmPassword') : ''}
+        placeholder={t('user.form.placeholder.confirmPassword')}
         required
+      />
+      <RadioGroup
+        label={t('user.form.language')}
+        name="language"
+        options={LANGUAGE_LIST}
+        checkedOption={language}
+        onChange={setLanguage}
       />
     </UserForm>
   )
