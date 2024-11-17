@@ -22,8 +22,10 @@ function AccountEditForm() {
   const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType)
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
+  const [isSending, setIsSending] = useState(false)
 
   const onSubmit = async () => {
+    setIsSending(true)
     const user = auth.currentUser
 
     if (user && user.email) {
@@ -42,9 +44,12 @@ function AccountEditForm() {
         )
       } catch (error) {
         onToast({ id: 'password-error-toast', message: t('toast.user.account.password'), state: 'warning' })
+      } finally {
+        setIsSending(false)
       }
     } else {
       onToast({ id: 'email-error-toast', message: t('toast.user.account.email'), state: 'error' })
+      setIsSending(false)
     }
   }
 
@@ -70,7 +75,7 @@ function AccountEditForm() {
   }
 
   return (
-    <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid}>
+    <UserForm buttonName={t('user.button.edit')} onClick={handleCheckValid} isSending={isSending}>
       <TextField
         id="user-account-edit-email"
         label={t('user.form.email')}
