@@ -1,8 +1,10 @@
 import {
+  EmailAuthProvider,
   browserLocalPersistence,
   createUserWithEmailAndPassword,
   deleteUser,
   getAuth,
+  reauthenticateWithCredential,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
@@ -106,6 +108,23 @@ export const unsubscribeApi = async ({ onSuccess, onError }: FuncType) => {
     }
 
     typeof window !== 'undefined' && localStorage.removeItem('userToken')
+    onSuccess()
+  } catch (error) {
+    onError(error)
+  }
+}
+
+export const reauthenticateUserApi = async (password: string, { onSuccess, onError }: FuncType) => {
+  const auth = getAuth()
+  const user = auth.currentUser
+
+  if (!user) {
+    throw new Error('No user is currently logged in.')
+  }
+
+  try {
+    const credential = EmailAuthProvider.credential(user.email!, password)
+    await reauthenticateWithCredential(user, credential)
     onSuccess()
   } catch (error) {
     onError(error)

@@ -12,5 +12,8 @@
   "bookmark": {
     "page": "Please enter the page number.",
     "content": "Please keep it under {{number}} characters."
+  },
+  "unsubscribe": {
+    "confirmPassword": "Passwords do not match."
   }
 }

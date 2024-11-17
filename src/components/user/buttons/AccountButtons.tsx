@@ -1,16 +1,16 @@
 'use client'
-import { signOutApi, unsubscribeApi } from '@/apis/user'
+import { signOutApi } from '@/apis/user'
 import onModal from '@/components/common/Modal'
 import onToast from '@/components/common/Toast'
 import { useUserStore } from '@/stores/user'
 import { Button } from '@yeonsubaek/yeonsui'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import UnsubscribeModalButton from '../modal/UnsubscribeModalButton'
 
 function AccountButtons() {
   const router = useRouter()
   const { t } = useTranslation()
-  const { unsubscribe } = useUserStore()
   const { setIsLoggedIn } = useUserStore()
 
   const handleOpenSignOut = () => {
@@ -31,32 +31,12 @@ function AccountButtons() {
     })
   }
 
-  const handleOpenUnsubscribeModal = () => {
-    onModal({
-      message: t('modal.user.unsubscribe'),
-      onSave: onUnsubscribe,
-    })
-  }
-
-  const onUnsubscribe = () => {
-    unsubscribeApi({
-      onSuccess: () => {
-        unsubscribe()
-        onToast({ id: 'unsubscribe-success-toast', message: t('toast.user.unsubscribe.success'), state: 'success' })
-        router.push('/')
-      },
-      onError: () => onToast({ id: 'unsubscribe-error-toast', message: t('toast.user.unsubscribe'), state: 'error' }),
-    })
-  }
-
   return (
     <div className="account-etc-buttons">
       <Button styleType="ghost" styleVariant="primary" onClick={handleOpenSignOut}>
         {t('user.button.logout')}
       </Button>
-      <Button styleType="ghost" styleVariant="primary" onClick={handleOpenUnsubscribeModal} color="danger">
-        {t('user.button.unsubscribe')}
-      </Button>
+      <UnsubscribeModalButton />
     </div>
   )
 }

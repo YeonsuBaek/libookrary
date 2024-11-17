@@ -12,5 +12,8 @@
   "bookmark": {
     "page": "페이지 번호를 입력해주세요.",
     "content": "{{number}}자 이하로 작성해주세요."
+  },
+  "unsubscribe": {
+    "confirmPassword": "비밀번호가 일치하지 않습니다."
   }
 }
