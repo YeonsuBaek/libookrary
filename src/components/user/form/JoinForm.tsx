@@ -1,7 +1,7 @@
 'use client'
 import { RadioGroup, TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../layout/UserForm'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { signUpApi } from '@/apis/user'
@@ -19,16 +19,16 @@ function JoinForm() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
-  const [language, setLanguage] = useState(i18n.language)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
   const [isSending, setIsSending] = useState(false)
+  const [lang, setLang] = useState('ko')
 
   const onSubmit = () => {
     setIsSending(true)
     signUpApi(
-      { email, password, nickname, language: language as LanguageType },
+      { email, password, nickname, language: lang as LanguageType },
       {
         onSuccess: () => {
           onToast({ id: 'sign-up-success-toast', message: t('toast.user.join.success'), state: 'success' })
@@ -63,6 +63,18 @@ function JoinForm() {
       onSubmit()
     }
   }
+
+  const onChangeLanguage = (lang: LANGUAGE_VALUES) => {
+    localStorage.setItem('lang', lang)
+    i18n.changeLanguage(lang)
+    setLang(lang)
+  }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setLang(localStorage.getItem('lang') || 'ko')
+    }
+  }, [])
 
   return (
     <UserForm buttonName={t('user.button.join')} onClick={handleCheckValid} isSending={isSending}>
@@ -117,8 +129,8 @@ function JoinForm() {
         label={t('user.form.language')}
         name="language"
         options={LANGUAGE_LIST}
-        checkedOption={language}
-        onChange={setLanguage}
+        checkedOption={lang}
+        onChange={(lang) => onChangeLanguage(lang as LANGUAGE_VALUES)}
       />
     </UserForm>
   )

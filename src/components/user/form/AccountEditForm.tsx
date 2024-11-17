@@ -15,10 +15,6 @@ import { EmailAuthProvider } from 'firebase/auth/cordova'
 
 function AccountEditForm() {
   const { t } = useTranslation('')
-  const LANGUAGE_LIST = [
-    { value: LANGUAGE_VALUES.ko, label: t('common.language.ko-ko'), id: 'language1' },
-    { value: LANGUAGE_VALUES.en, label: t('common.language.en-en'), id: 'language2' },
-  ]
   const router = useRouter()
   const { email: emailStore, nickname: nicknameStore } = useUserStore()
   const [email, setEmail] = useState(emailStore)
@@ -38,7 +34,6 @@ function AccountEditForm() {
           { email, nickname, language },
           {
             onSuccess: () => {
-              i18n.changeLanguage(language)
               onToast({ id: 'edit-success-toast', message: t('toast.user.account.success'), state: 'success' })
               router.push('/')
             },
@@ -89,13 +84,6 @@ function AccountEditForm() {
         isError={invalids.includes('nickname')}
         helperText={invalids.includes('nickname') ? t('helperText.join.nickname') : ''}
         required
-      />
-      <RadioGroup
-        label={t('user.form.language')}
-        name="user-account-edit-language"
-        options={LANGUAGE_LIST}
-        checkedOption={language}
-        onChange={(lan) => setLanguage(lan as LanguageType)}
       />
       <TextField
         id="user-account-edit-confirm-password"
