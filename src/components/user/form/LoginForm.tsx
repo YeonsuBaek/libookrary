@@ -1,7 +1,7 @@
 'use client'
 import { TextField } from '@yeonsubaek/yeonsui'
 import UserForm from '../layout/UserForm'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/user'
@@ -52,6 +52,12 @@ function LoginForm() {
     }
   }
 
+  const onEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleCheckValid()
+    }
+  }
+
   return (
     <UserForm buttonName={t('user.button.login')} onClick={handleCheckValid}>
       <TextField
@@ -70,6 +76,7 @@ function LoginForm() {
         onChange={setPassword}
         isError={invalids.includes('password')}
         helperText={invalids.includes('password') ? t('helperText.login.password') : ''}
+        onKeyDown={onEnter}
       />
     </UserForm>
   )
