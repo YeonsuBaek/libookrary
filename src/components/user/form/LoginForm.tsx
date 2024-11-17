@@ -17,8 +17,10 @@ function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [invalids, setInvalids] = useState<InvalidsType[]>([])
+  const [isSending, setIsSending] = useState(false)
 
   const onSubmit = () => {
+    setIsSending(true)
     signInApi(
       {
         email,
@@ -29,9 +31,11 @@ function LoginForm() {
           onToast({ id: 'submit-success-toast', message: t('toast.user.login.success'), state: 'success' })
           setIsLoggedIn(true)
           router.replace('/')
+          setIsSending(false)
         },
         onError: () => {
           onToast({ id: 'submit-error-toast', message: t('toast.user.login.error'), state: 'error' })
+          setIsSending(false)
         },
       }
     )
@@ -59,7 +63,7 @@ function LoginForm() {
   }
 
   return (
-    <UserForm buttonName={t('user.button.login')} onClick={handleCheckValid}>
+    <UserForm buttonName={t('user.button.login')} onClick={handleCheckValid} isSending={isSending}>
       <TextField
         id="user-login-form-email"
         placeholder={t('user.form.email')}
